@@ -1,0 +1,38 @@
+[
+  {
+    "id": "b4d6cd4b-8a1d-4e96-8242-cf9f77dd1cee",
+    "description": "teste",
+    "amount": 10,
+    "date": "03/05/2026",
+    "type": "expense",
+    "operation": "payment",
+    "category": "Transporte",
+    "account": "Cartão de crédito",
+    "status": "success",
+    "note": "teste"
+  },
+  {
+    "id": "72fd0b35-2448-4583-b7a2-4b9dc4484147",
+    "description": "mateus",
+    "amount": 48.48,
+    "date": "13/01/2029",
+    "type": "income",
+    "operation": "deposit",
+    "category": "Alimentação",
+    "account": "Conta corrente",
+    "status": "success",
+    "note": "teste"
+  },
+  {
+    "id": "8d6ce22c-c272-49b6-8aa8-77e419fcec81",
+    "description": "Teste do pobrinho",
+    "amount": 1212.12,
+    "date": "13/01/2026",
+    "type": "income",
+    "operation": "receipt",
+    "category": "Transporte",
+    "account": "Conta corrente",
+    "status": "success",
+    "note": "testeeee"
+  }
+]
