@@ -1,30 +1,32 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, typography, spacing } from "@/styles/tokens";
 
 export const statusTagStyles = {
   base: {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    px: "8px",
+    px: spacing.sm,
     py: "2px",
-    borderRadius: "999px",
+    borderRadius: radius.full,
+    ...typography.label,
     fontSize: "12px",
     fontWeight: 500,
     whiteSpace: "nowrap",
   },
 
   success: {
-    bgcolor: "#E9F4EE",
-    color: "#285A3F",
+    bgcolor: colors.success[100],
+    color: colors.success[700],
   },
 
   error: {
-    bgcolor: "#F4EAEA",
-    color: "#8F2F2F",
+    bgcolor: colors.error[100],
+    color: colors.error[700],
   },
 
   pending: {
-    bgcolor: "#FFF4E5",
-    color: "#7A4E0B",
+    bgcolor: colors.primary[100],
+    color: colors.primary[600],
   },
 } satisfies Record<string, SxProps<Theme>>;

@@ -11,7 +11,6 @@ import {
   confirmationModalTitleStyle,
   confirmationModalDescriptionStyle,
   confirmationModalFooterStyle,
-  confirmationModalDangerButtonStyle,
 } from "@/styles/confirmationModalStyles";
 
 type ConfirmationModalProps = {
@@ -79,11 +78,10 @@ export default function ConfirmationModal({
           </Button>
 
           <Button
-            variantType="primary"
+            variantType={danger ? "danger" : "primary"}
             onClick={onConfirm}
             disabled={loading}
             aria-label={confirmLabel}
-            sx={danger ? confirmationModalDangerButtonStyle : undefined}
           >
             {loading ? "Processando..." : confirmLabel}
           </Button>

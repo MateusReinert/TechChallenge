@@ -16,6 +16,7 @@ export default function InputSearch({
   onChange,
   placeholder = "Buscar...",
   id = "input-search",
+  slotProps,
   ...props
 }: InputSearchProps) {
   return (
@@ -29,7 +30,9 @@ export default function InputSearch({
       {...props}
       sx={inputSearchStyles.root}
       slotProps={{
+        ...slotProps,
         input: {
+          ...slotProps?.input,
           sx: inputSearchStyles.input,
           startAdornment: (
             <InputAdornment position="start">

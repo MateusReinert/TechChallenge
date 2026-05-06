@@ -20,8 +20,7 @@ export default function PageHeader({
 
       <Box sx={pageHeaderStyles.breadcrumb}>
         {breadcrumb.map((item, index) => {
-          const isLast =
-            index === breadcrumb.length - 1;
+          const isLast = index === breadcrumb.length - 1;
 
           return (
             <Box
@@ -39,11 +38,7 @@ export default function PageHeader({
               </Typography>
 
               {!isLast && (
-                <Typography
-                  sx={
-                    pageHeaderStyles.breadcrumbSeparator
-                  }
-                >
+                <Typography sx={pageHeaderStyles.breadcrumbSeparator}>
                   &gt;
                 </Typography>
               )}

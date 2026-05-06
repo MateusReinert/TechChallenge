@@ -254,7 +254,6 @@ function TransactionModalContent({
               label="Valor"
               value={form.amount}
               onChange={(value) => updateForm("amount", value)}
-              placeholder="R$ 0,00"
               error={Boolean(errors.amount)}
               helperText={errors.amount}
             />
@@ -273,7 +272,6 @@ function TransactionModalContent({
               label="Natureza"
               value={form.type}
               onChange={(value) => updateForm("type", value)}
-              placeholder="Selecione a natureza"
               error={Boolean(errors.type)}
               helperText={errors.type}
               options={TRANSACTION_MODAL_TYPE_OPTIONS}
@@ -283,7 +281,6 @@ function TransactionModalContent({
               label="Tipo de transação"
               value={form.operation}
               onChange={(value) => updateForm("operation", value)}
-              placeholder="Selecione o tipo"
               error={Boolean(errors.operation)}
               helperText={errors.operation}
               options={TRANSACTION_MODAL_OPERATION_OPTIONS}
@@ -295,7 +292,6 @@ function TransactionModalContent({
               label="Categoria"
               value={form.category}
               onChange={(value) => updateForm("category", value)}
-              placeholder="Selecione a categoria"
               error={Boolean(errors.category)}
               helperText={errors.category}
               options={TRANSACTION_MODAL_CATEGORY_OPTIONS}
@@ -305,7 +301,6 @@ function TransactionModalContent({
               label="Conta"
               value={form.account}
               onChange={(value) => updateForm("account", value)}
-              placeholder="Selecione a conta"
               error={Boolean(errors.account)}
               helperText={errors.account}
               options={TRANSACTION_MODAL_ACCOUNT_OPTIONS}
@@ -314,7 +309,6 @@ function TransactionModalContent({
 
           <Input
             label="Observação"
-            placeholder="Observação"
             value={form.note}
             onChange={(event) => updateForm("note", event.target.value)}
           />
@@ -323,8 +317,7 @@ function TransactionModalContent({
         <Box sx={isEditing ? modalFooterEditingStyle : modalFooterStyle}>
           {isEditing && (
             <Button
-              variantType="outlined"
-              aria-label={`Excluir transação ${transaction?.description}`}
+              variantType="dangerOutlined"
               onClick={() => setIsDeleteModalOpen(true)}
             >
               Excluir
@@ -332,23 +325,11 @@ function TransactionModalContent({
           )}
 
           <Box sx={modalActionsGroupStyle}>
-            <Button
-              variantType="outlined"
-              aria-label="Cancelar e fechar modal de transação"
-              onClick={onClose}
-            >
+            <Button variantType="outlined" onClick={onClose}>
               Cancelar
             </Button>
 
-            <Button
-              variantType="primary"
-              aria-label={
-                isEditing
-                  ? "Salvar alterações da transação"
-                  : "Salvar nova transação"
-              }
-              onClick={handleSave}
-            >
+            <Button variantType="primary" onClick={handleSave}>
               {isEditing ? "Salvar alterações" : "Salvar transação"}
             </Button>
           </Box>
@@ -380,15 +361,9 @@ export function TransactionModal({
   const initialData = getInitialForm(transaction);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      sx={modalOverlayStyle}
-      aria-labelledby="transaction-modal-title"
-      aria-describedby="transaction-modal-description"
-    >
+    <Modal open={open} onClose={onClose} sx={modalOverlayStyle}>
       <TransactionModalContent
-        key={transaction?.id || "new-transaction"}
+        key={transaction?.id || "new"}
         initialData={initialData}
         transaction={transaction}
         isEditing={isEditing}

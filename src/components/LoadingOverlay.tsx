@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 import { loadingOverlayStyles } from "@/styles/loadingOverlayStyles";
+import { sizes } from "@/styles/tokens";
 
 type LoadingOverlayProps = {
   open: boolean;
@@ -31,7 +32,7 @@ export default function LoadingOverlay({
     >
       <Box sx={loadingOverlayStyles.container}>
         <CircularProgress
-          size={42}
+          size={sizes.spinner}
           thickness={4}
           sx={loadingOverlayStyles.spinner}
           aria-hidden="true"

@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, radius, typography, sizes } from "@/styles/tokens";
 
 export const transactionsClientStyles = {
   layout: {
@@ -9,13 +10,13 @@ export const transactionsClientStyles = {
 
   content: {
     p: {
-      xs: "16px",
-      md: "24px",
-      lg: "32px",
+      xs: spacing.lg,
+      md: spacing.xl,
+      lg: spacing.xxl,
     },
     display: "flex",
     flexDirection: "column",
-    gap: "24px",
+    gap: spacing.xl,
     overflow: "auto",
   } as SxProps<Theme>,
 
@@ -30,7 +31,7 @@ export const transactionsClientStyles = {
       xs: "column",
       md: "row",
     },
-    gap: "16px",
+    gap: spacing.lg,
   } as SxProps<Theme>,
 
   searchWrapper: {
@@ -55,31 +56,31 @@ export const transactionsClientStyles = {
       xs: "column",
       md: "row",
     },
-    gap: "12px",
+    gap: spacing.md,
     mt: "-8px",
   } as SxProps<Theme>,
 
   paginationText: {
-    fontSize: "13px",
-    color: "#6B7280",
+    ...typography.label,
+    color: colors.gray[500],
   } as SxProps<Theme>,
 
   paginationActions: {
     display: "flex",
     alignItems: "center",
-    gap: "12px",
+    gap: spacing.md,
     flexWrap: "wrap",
   } as SxProps<Theme>,
 
   paginationButtons: {
     display: "flex",
-    gap: "8px",
+    gap: spacing.sm,
   } as SxProps<Theme>,
 
   paginationButton: {
-    width: "32px",
-    height: "32px",
-    border: "1px solid #D1D5DB",
-    borderRadius: "8px",
+    width: sizes.icon,
+    height: sizes.icon,
+    border: `1px solid ${colors.gray[300]}`,
+    borderRadius: radius.sm,
   } as SxProps<Theme>,
 };

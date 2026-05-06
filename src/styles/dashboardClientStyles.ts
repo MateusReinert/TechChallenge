@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, typography, sizes } from "@/styles/tokens";
 
 export const dashboardClientStyles = {
   layout: {
@@ -9,13 +10,13 @@ export const dashboardClientStyles = {
 
   content: {
     p: {
-      xs: "16px",
-      md: "24px",
-      lg: "32px",
+      xs: spacing.lg,
+      md: spacing.xl,
+      lg: spacing.xxl,
     },
     display: "flex",
     flexDirection: "column",
-    gap: "24px",
+    gap: spacing.xl,
     overflow: "auto",
   } as SxProps<Theme>,
 
@@ -26,7 +27,7 @@ export const dashboardClientStyles = {
       sm: "1fr 1fr",
       xl: "repeat(4, 1fr)",
     },
-    gap: "16px",
+    gap: spacing.lg,
   } as SxProps<Theme>,
 
   sectionHeader: {
@@ -40,18 +41,17 @@ export const dashboardClientStyles = {
       xs: "column",
       md: "row",
     },
-    gap: "16px",
+    gap: spacing.lg,
   } as SxProps<Theme>,
 
   sectionTitle: {
-    fontSize: "18px",
-    fontWeight: 600,
-    color: "#111827",
+    ...typography.subtitle,
+    color: colors.gray[900],
   } as SxProps<Theme>,
 
   actions: {
     display: "flex",
-    gap: "12px",
+    gap: spacing.md,
     width: {
       xs: "100%",
       md: "auto",
@@ -67,8 +67,8 @@ export const dashboardClientStyles = {
   } as SxProps<Theme>,
 
   iconButton: {
-    width: 24,
-    height: 24,
+    width: sizes.icon,
+    height: sizes.icon,
     p: 0,
     color: "inherit",
   } as SxProps<Theme>,

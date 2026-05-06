@@ -18,10 +18,10 @@ export default function StatusTag({ status, label }: StatusTagProps) {
       component="span"
       role="status"
       aria-label={`Status: ${displayLabel}`}
-      sx={{
-        ...statusTagStyles.base,
-        ...statusTagStyles[status],
-      }}
+      sx={[
+        statusTagStyles.base,
+        statusTagStyles[status],
+      ]}
     >
       {displayLabel}
     </Box>

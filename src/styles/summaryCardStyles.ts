@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, shadow, spacing, typography, sizes } from "@/styles/tokens";
 
 type SummaryCardVariant = "positive" | "negative" | "neutral";
 
@@ -11,14 +12,14 @@ export const summaryCardStyles = {
   root: {
     width: "100%",
     minHeight: "152px",
-    bgcolor: "#FFFFFF",
-    border: "1px solid #E5E7EB",
-    borderRadius: "16px",
-    p: "24px",
+    bgcolor: colors.background.default,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.lg,
+    p: spacing.xl,
     display: "flex",
     flexDirection: "column",
-    gap: "18px",
-    boxShadow: "0px 8px 24px rgba(15, 23, 42, 0.04)",
+    gap: spacing.lg,
+    boxShadow: shadow.sm,
   },
 
   header: {
@@ -30,38 +31,38 @@ export const summaryCardStyles = {
   headerContent: {
     display: "flex",
     alignItems: "center",
-    gap: "12px",
+    gap: spacing.md,
     width: "100%",
   },
 
   icon: {
-    width: "36px",
-    height: "36px",
-    borderRadius: "8px",
+    width: sizes.summaryIcon,
+    height: sizes.summaryIcon,
+    borderRadius: radius.sm,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
 
     "& svg": {
-      fontSize: 24,
+      fontSize: sizes.icon,
     },
   },
 
   iconVariants: {
     positive: {
-      bgcolor: "#ECFDF3",
-      color: "#16A34A",
+      bgcolor: colors.success[100],
+      color: colors.success[500],
     },
 
     negative: {
-      bgcolor: "#FEF2F2",
-      color: "#EF4444",
+      bgcolor: colors.error[100],
+      color: colors.error[500],
     },
 
     neutral: {
-      bgcolor: "#F5F3FF",
-      color: "#7C3AED",
+      bgcolor: colors.neutral[100],
+      color: colors.neutral[500],
     },
   },
 
@@ -70,13 +71,13 @@ export const summaryCardStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: "8px",
+    gap: spacing.sm,
   },
 
   label: {
-    fontSize: "15px",
+    ...typography.body,
     fontWeight: 700,
-    color: "#374151",
+    color: colors.gray[600],
   },
 
   action: {
@@ -85,20 +86,16 @@ export const summaryCardStyles = {
   },
 
   value: {
-    fontSize: {
-      xs: "26px",
-      md: "30px",
-    },
-    fontWeight: 700,
-    color: "#111827",
+    ...typography.title,
     lineHeight: 1.1,
+    color: colors.gray[900],
   },
 
   trend: {
     display: "flex",
     alignItems: "center",
-    gap: "6px",
-    fontSize: "13px",
+    gap: spacing.xs,
+    ...typography.label,
     fontWeight: 600,
 
     "& svg": {
@@ -112,15 +109,15 @@ export const summaryCardStyles = {
 
   trendVariants: {
     positive: {
-      color: "#16A34A",
+      color: colors.success[500],
     },
 
     negative: {
-      color: "#EF4444",
+      color: colors.error[500],
     },
 
     neutral: {
-      color: "#6B7280",
+      color: colors.gray[500],
     },
   },
 } satisfies SummaryCardStyles;

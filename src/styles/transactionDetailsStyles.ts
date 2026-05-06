@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, typography, sizes } from "@/styles/tokens";
 
 export const transactionDetailsStyles = {
   root: {
@@ -15,83 +16,78 @@ export const transactionDetailsStyles = {
       lg: "100vh",
     },
     p: {
-      xs: "16px",
-      md: "24px",
+      xs: spacing.lg,
+      md: spacing.xl,
     },
-    bgcolor: "#FFFFFF",
+    bgcolor: colors.background.default,
     borderLeft: {
       xs: "none",
-      lg: "1px solid #E5E7EB",
+      lg: `1px solid ${colors.gray[200]}`,
     },
     borderTop: {
-      xs: "1px solid #E5E7EB",
+      xs: `1px solid ${colors.gray[200]}`,
       lg: "none",
     },
     display: "flex",
     flexDirection: "column",
-    gap: "24px",
+    gap: spacing.xl,
   } as SxProps<Theme>,
 
   summary: {
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
+    gap: spacing.lg,
   } as SxProps<Theme>,
 
   title: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: "#4B5563",
+    ...typography.subtitle,
+    color: colors.gray[600],
   } as SxProps<Theme>,
 
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: spacing.md,
   } as SxProps<Theme>,
 
   meta: {
     display: "flex",
     alignItems: "center",
-    gap: "8px",
-    fontSize: 14,
-    color: "#9CA3AF",
+    gap: spacing.sm,
+    ...typography.body,
+    color: colors.gray[400],
     flexWrap: "wrap",
   } as SxProps<Theme>,
 
   amount: {
-    fontSize: {
-      xs: 22,
-      md: 24,
-    },
+    ...typography.title,
     fontWeight: 600,
-    color: "#111827",
+    color: colors.gray[900],
     wordBreak: "break-word",
   } as SxProps<Theme>,
 
   detailsList: {
     display: "flex",
     flexDirection: "column",
-    gap: "24px",
+    gap: spacing.xl,
   } as SxProps<Theme>,
 
   detailsItem: {
     display: "flex",
     flexDirection: "column",
-    gap: "4px",
+    gap: spacing.xs,
     minWidth: 0,
   } as SxProps<Theme>,
 
   label: {
-    fontSize: 12,
-    fontWeight: 400,
-    color: "#9CA3AF",
+    ...typography.label,
+    color: colors.gray[400],
   } as SxProps<Theme>,
 
   value: {
-    fontSize: 14,
+    ...typography.body,
     fontWeight: 500,
-    color: "#111827",
+    color: colors.gray[900],
     wordBreak: "break-word",
   } as SxProps<Theme>,
 
@@ -99,22 +95,21 @@ export const transactionDetailsStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: "8px",
+    gap: spacing.sm,
     minWidth: 0,
   } as SxProps<Theme>,
 
-  // 🔥 NOVO: botão acessível de copiar
   copyButton: {
-    width: 32,
-    height: 32,
-    color: "#6B7280",
+    width: sizes.icon,
+    height: sizes.icon,
+    color: colors.gray[500],
     flexShrink: 0,
     "&:hover": {
-      bgcolor: "#F3F4F6",
-      color: "#315CC3",
+      bgcolor: colors.gray[100],
+      color: colors.primary[500],
     },
     "&:focus-visible": {
-      outline: "2px solid #315CC3",
+      outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "2px",
     },
   } as SxProps<Theme>,
@@ -123,17 +118,15 @@ export const transactionDetailsStyles = {
     fontSize: 16,
   } as SxProps<Theme>,
 
-  // 🔥 NOVO: feedback de "copiado"
   copyFeedback: {
-    fontSize: 12,
-    fontWeight: 500,
-    color: "#285A3F",
-    ml: "4px",
+    ...typography.label,
+    color: colors.success[700],
+    ml: spacing.xs,
   } as SxProps<Theme>,
 
   actions: {
     display: "flex",
-    gap: "8px",
+    gap: spacing.sm,
     mt: "auto",
     flexDirection: {
       xs: "column",
@@ -143,10 +136,9 @@ export const transactionDetailsStyles = {
   } as SxProps<Theme>,
 
   emptyText: {
-    mt: "16px",
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#4B5563",
+    mt: spacing.lg,
+    ...typography.body,
+    color: colors.gray[600],
     lineHeight: 1.5,
   } as SxProps<Theme>,
 };

@@ -68,7 +68,11 @@ export default function Sidebar({ currentPath, onNavigate }: SidebarProps) {
           </Typography>
         </Box>
 
-        <Box component="nav" aria-label="Navegação principal" sx={sidebarStyles.nav}>
+        <Box
+          component="nav"
+          aria-label="Navegação principal"
+          sx={sidebarStyles.nav}
+        >
           {SIDEBAR_MENU_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -90,10 +94,10 @@ export default function Sidebar({ currentPath, onNavigate }: SidebarProps) {
                       onNavigate(item.href);
                     }
                   }}
-                  sx={{
-                    ...sidebarStyles.item,
-                    ...(isActive ? sidebarStyles.itemActive : {}),
-                  }}
+                  sx={[
+                    sidebarStyles.item,
+                    ...(isActive ? [sidebarStyles.itemActive] : []),
+                  ]}
                 >
                   <Icon sx={sidebarStyles.itemIcon} aria-hidden="true" />
                   {item.label}

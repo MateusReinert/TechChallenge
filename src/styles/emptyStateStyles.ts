@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, radius, typography, sizes } from "@/styles/tokens";
 
 export const emptyStateRootStyle = {
   width: "100%",
@@ -6,7 +7,7 @@ export const emptyStateRootStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  p: "32px",
+  p: spacing.xxl,
 } as SxProps<Theme>;
 
 export const emptyStateContainerStyle = {
@@ -19,35 +20,33 @@ export const emptyStateContainerStyle = {
 } as SxProps<Theme>;
 
 export const emptyStateIconWrapperStyle = {
-  width: "64px",
-  height: "64px",
-  borderRadius: "999px",
-  bgcolor: "#EEF2FF",
+  width: sizes.emptyStateIcon,
+  height: sizes.emptyStateIcon,
+  borderRadius: radius.full,
+  bgcolor: colors.primary[100],
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  mb: "20px",
+  mb: spacing.lg,
 } as SxProps<Theme>;
 
 export const emptyStateIconStyle = {
   fontSize: 28,
-  color: "#315CC3",
+  color: colors.primary[500],
 } as SxProps<Theme>;
 
 export const emptyStateTitleStyle = {
-  fontSize: "20px",
-  fontWeight: 700,
+  ...typography.title,
   lineHeight: 1.3,
-  color: "#111827",
-  mb: "8px",
+  color: colors.gray[900],
+  mb: spacing.sm,
 } as SxProps<Theme>;
 
 export const emptyStateDescriptionStyle = {
-  fontSize: "14px",
-  fontWeight: 400,
+  ...typography.body,
   lineHeight: 1.5,
-  color: "#6B7280",
-  mb: "24px",
+  color: colors.gray[500],
+  mb: spacing.xl,
 } as SxProps<Theme>;
 
 export const emptyStateActionStyle = {

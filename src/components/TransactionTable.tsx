@@ -69,10 +69,14 @@ export default function TransactionTable({
           type="button"
           onClick={() => onSort?.(field)}
           aria-label={`Ordenar por ${label}`}
-          sx={{
-            ...transactionTableStyles.sortableHeader,
-            ...(isActive ? transactionTableStyles.sortableHeaderActive : {}),
-          }}
+          sx={
+            isActive
+              ? [
+                  transactionTableStyles.sortableHeader,
+                  transactionTableStyles.sortableHeaderActive,
+                ]
+              : transactionTableStyles.sortableHeader
+          }
         >
           {label} {isActive ? (sortDirection === "asc" ? "↑" : "↓") : ""}
         </Typography>
@@ -155,20 +159,26 @@ export default function TransactionTable({
             aria-pressed={isSelected}
             onClick={(event) => handleSelectTransaction(transaction, event)}
             onKeyDown={(event) => handleRowKeyDown(event, transaction)}
-            sx={{
-              ...transactionTableStyles.row,
-              ...(isSelected ? transactionTableStyles.rowSelected : {}),
-            }}
+            sx={
+              isSelected
+                ? [transactionTableStyles.row, transactionTableStyles.rowSelected]
+                : transactionTableStyles.row
+            }
           >
             <Box sx={transactionTableStyles.descriptionCell}>
               <Box
                 aria-hidden="true"
-                sx={{
-                  ...transactionTableStyles.iconWrapper,
-                  ...(isPositive
-                    ? transactionTableStyles.incomeIcon
-                    : transactionTableStyles.expenseIcon),
-                }}
+                sx={
+                  isPositive
+                    ? [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.incomeIcon,
+                      ]
+                    : [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.expenseIcon,
+                      ]
+                }
               >
                 {isPositive ? (
                   <NorthEastRoundedIcon sx={transactionTableStyles.icon} />

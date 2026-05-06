@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, typography, sizes } from "@/styles/tokens";
 
 export const inputStyles = {
   root: {
@@ -7,35 +8,35 @@ export const inputStyles = {
 
   field: {
     "& .MuiOutlinedInput-root": {
-      borderRadius: "8px",
-      height: 48,
-      backgroundColor: "#FFFFFF",
+      borderRadius: radius.sm,
+      height: sizes.inputHeight,
+      backgroundColor: colors.background.default,
     },
 
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#D1D5DB",
+      borderColor: colors.gray[300],
     },
 
     "&:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#315CC3",
+      borderColor: colors.primary[500],
     },
 
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#315CC3",
+      borderColor: colors.primary[500],
       borderWidth: "1px",
     },
 
     "& .MuiInputLabel-root": {
-      color: "#9CA3AF",
+      color: colors.gray[400],
     },
 
     "& .MuiInputLabel-root.Mui-focused": {
-      color: "#315CC3",
+      color: colors.primary[500],
     },
 
     "& .MuiInputBase-input": {
-      fontSize: "14px",
-      color: "#111827",
+      ...typography.body,
+      color: colors.gray[900],
     },
   } as SxProps<Theme>,
 

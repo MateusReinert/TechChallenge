@@ -49,10 +49,7 @@ export default function Lookup({
         id={labelId}
         component="label"
         htmlFor={inputId}
-        sx={{
-          ...lookupStyles.label,
-          ...(error ? lookupStyles.labelError : {}),
-        }}
+        sx={[lookupStyles.label, error && lookupStyles.labelError]}
       >
         {label}
       </Typography>
@@ -67,10 +64,7 @@ export default function Lookup({
         onChange={(event) => onChange?.(event.target.value)}
         aria-labelledby={labelId}
         aria-describedby={helperTextId}
-        sx={{
-          ...lookupStyles.textField,
-          ...lookupStyles.helperText,
-        }}
+        sx={[lookupStyles.textField, lookupStyles.helperText]}
         slotProps={{
           formHelperText: {
             id: helperTextId,

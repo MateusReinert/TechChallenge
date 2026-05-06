@@ -1,57 +1,55 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, shadow, spacing, typography } from "@/styles/tokens";
 
 export const confirmationModalOverlayStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: "24px",
+  padding: spacing.xl,
 } as SxProps<Theme>;
 
 export const confirmationModalContainerStyle = {
   width: "100%",
   maxWidth: "440px",
-  backgroundColor: "#FFFFFF",
-  borderRadius: "16px",
-  border: "1px solid #E5E7EB",
-  boxShadow: "0px 20px 40px rgba(15, 23, 42, 0.12)",
-  padding: "24px",
+  backgroundColor: colors.background.default,
+  borderRadius: radius.lg,
+  border: `1px solid ${colors.gray[200]}`,
+  boxShadow: shadow.md,
+  padding: spacing.xl,
 } as SxProps<Theme>;
 
 export const confirmationModalHeaderStyle = {
   display: "flex",
   flexDirection: "column",
-  gap: "8px",
-  marginBottom: "24px",
+  gap: spacing.sm,
+  marginBottom: spacing.xl,
 } as SxProps<Theme>;
 
 export const confirmationModalTitleStyle = {
-  fontSize: "20px",
-  fontWeight: 700,
+  ...typography.title,
   lineHeight: 1.3,
-  color: "#111827",
+  color: colors.gray[900],
 } as SxProps<Theme>;
 
 export const confirmationModalDescriptionStyle = {
-  fontSize: "14px",
-  fontWeight: 400,
+  ...typography.body,
   lineHeight: 1.5,
-  color: "#6B7280",
+  color: colors.gray[500],
 } as SxProps<Theme>;
 
 export const confirmationModalFooterStyle = {
   display: "flex",
   justifyContent: "flex-end",
-  gap: "12px",
+  gap: spacing.md,
   flexWrap: "wrap",
 } as SxProps<Theme>;
 
 export const confirmationModalDangerButtonStyle = {
-  backgroundColor: "#DC2626",
-  borderColor: "#DC2626",
-  color: "#FFFFFF",
-
+  backgroundColor: colors.danger[500],
+  borderColor: colors.danger[500],
+  color: colors.background.default,
   "&:hover": {
-    backgroundColor: "#B91C1C",
-    borderColor: "#B91C1C",
+    backgroundColor: colors.danger[700],
+    borderColor: colors.danger[700],
   },
 } as SxProps<Theme>;

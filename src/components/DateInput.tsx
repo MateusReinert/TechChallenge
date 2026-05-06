@@ -10,6 +10,7 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 
 import Input from "./Input";
 import { formatDateInput } from "@/utils/dateUtils";
+import { spacing, sizes } from "@/styles/tokens";
 
 type DateInputProps = {
   label: string;
@@ -94,6 +95,10 @@ export default function DateInput({
                   edge="end"
                   aria-label="Abrir calendário"
                   onClick={openCalendar}
+                  sx={{
+                    width: sizes.icon,
+                    height: sizes.icon,
+                  }}
                 >
                   <CalendarMonthOutlinedIcon fontSize="small" />
                 </IconButton>
@@ -103,7 +108,6 @@ export default function DateInput({
         }}
       />
 
-      {/* input invisível usado só pra abrir o calendário */}
       <input
         ref={calendarInputRef}
         type="date"
@@ -122,8 +126,8 @@ export default function DateInput({
           right: 8,
           top: "50%",
           transform: "translateY(-50%)",
-          width: 32,
-          height: 32,
+          width: sizes.icon,
+          height: sizes.icon,
           opacity: 0,
         }}
       />

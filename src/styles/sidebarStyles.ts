@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, radius, typography, sizes, zIndex } from "@/styles/tokens";
 
 export const sidebarStyles = {
   root: {
@@ -15,16 +16,16 @@ export const sidebarStyles = {
       md: "100vh",
     },
     p: {
-      xs: "16px",
-      md: "24px",
+      xs: spacing.lg,
+      md: spacing.xl,
     },
-    bgcolor: "#FFFFFF",
+    bgcolor: colors.background.default,
     borderRight: {
       xs: "none",
-      md: "1px solid #E5E7EB",
+      md: `1px solid ${colors.gray[200]}`,
     },
     borderBottom: {
-      xs: "1px solid #E5E7EB",
+      xs: `1px solid ${colors.gray[200]}`,
       md: "none",
     },
     display: "flex",
@@ -35,28 +36,27 @@ export const sidebarStyles = {
       md: "relative",
     },
     top: 0,
-    zIndex: 20,
+    zIndex: zIndex.sidebar,
   },
 
   topContent: {
     display: "flex",
     flexDirection: "column",
     gap: {
-      xs: "16px",
-      md: "24px",
+      xs: spacing.lg,
+      md: spacing.xl,
     },
   },
 
   logo: {
     display: "flex",
     alignItems: "center",
-    gap: "12px",
+    gap: spacing.md,
   },
 
   logoText: {
-    fontSize: 20,
-    fontWeight: 500,
-    color: "#315CC3",
+    ...typography.subtitle,
+    color: colors.primary[500],
   },
 
   greeting: {
@@ -65,19 +65,17 @@ export const sidebarStyles = {
       md: "flex",
     },
     flexDirection: "column",
-    gap: "4px",
+    gap: spacing.xs,
   },
 
   greetingTitle: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: "#111827",
+    ...typography.subtitle,
+    color: colors.gray[900],
   },
 
   greetingDate: {
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#4B5563",
+    ...typography.body,
+    color: colors.gray[600],
   },
 
   nav: {
@@ -87,15 +85,15 @@ export const sidebarStyles = {
       md: "column",
     },
     gap: {
-      xs: "12px",
-      md: "24px",
+      xs: spacing.md,
+      md: spacing.xl,
     },
     overflowX: {
       xs: "auto",
       md: "visible",
     },
     pb: {
-      xs: "4px",
+      xs: spacing.xs,
       md: 0,
     },
   },
@@ -103,7 +101,7 @@ export const sidebarStyles = {
   navGroup: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: spacing.md,
     minWidth: {
       xs: "fit-content",
       md: "auto",
@@ -115,42 +113,41 @@ export const sidebarStyles = {
       xs: "none",
       md: "block",
     },
-    fontSize: 12,
-    fontWeight: 500,
-    color: "#9CA3AF",
+    ...typography.label,
+    color: colors.gray[400],
   },
 
   item: {
-    height: 44,
-    px: "12px",
-    borderRadius: "8px",
+    height: sizes.buttonHeight,
+    px: spacing.md,
+    borderRadius: radius.sm,
     display: "flex",
     alignItems: "center",
-    gap: "8px",
-    fontSize: 14,
+    gap: spacing.sm,
+    ...typography.body,
     fontWeight: 500,
-    color: "#4B5563",
+    color: colors.gray[600],
     textDecoration: "none",
     whiteSpace: "nowrap",
     "&:hover": {
-      bgcolor: "#E6EDFB",
-      color: "#315CC3",
+      bgcolor: colors.primary[100],
+      color: colors.primary[500],
     },
     "&:focus-visible": {
-      outline: "2px solid #315CC3",
+      outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "2px",
     },
   },
 
   itemActive: {
-    bgcolor: "#315CC3",
-    color: "#FFFFFF",
+    bgcolor: colors.primary[500],
+    color: colors.background.default,
     "&:hover": {
-      bgcolor: "#2A4DA8",
-      color: "#FFFFFF",
+      bgcolor: colors.primary[600],
+      color: colors.background.default,
     },
     "&:focus-visible": {
-      outline: "2px solid #111827",
+      outline: `2px solid ${colors.gray[900]}`,
       outlineOffset: "2px",
     },
   },
@@ -165,23 +162,22 @@ export const sidebarStyles = {
   },
 
   profileName: {
-    fontSize: 14,
+    ...typography.body,
     fontWeight: 500,
-    color: "#111827",
+    color: colors.gray[900],
   },
 
   profileEmail: {
-    fontSize: 12,
-    fontWeight: 400,
-    color: "#9CA3AF",
+    ...typography.label,
+    color: colors.gray[400],
   },
 
   logoIcon: {
-    fontSize: 24,
-    color: "#315CC3",
+    fontSize: sizes.icon,
+    color: colors.primary[500],
   },
 
   itemIcon: {
-    fontSize: 20,
+    fontSize: sizes.icon,
   },
 } satisfies Record<string, SxProps<Theme>>;

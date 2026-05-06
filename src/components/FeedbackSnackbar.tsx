@@ -38,11 +38,11 @@ export default function FeedbackSnackbar({
         variant="filled"
         role="alert"
         aria-live="assertive"
-        sx={{
-          ...feedbackSnackbarStyles.content,
-          ...variantStyle,
-          ...feedbackSnackbarStyles.alertParts,
-        }}
+        sx={[
+          feedbackSnackbarStyles.content,
+          variantStyle,
+          feedbackSnackbarStyles.alertParts,
+        ]}
       >
         {message}
       </Alert>

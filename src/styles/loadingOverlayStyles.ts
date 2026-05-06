@@ -1,40 +1,40 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, spacing, shadow, typography, zIndex } from "@/styles/tokens";
 
 export const loadingOverlayStyles = {
   backdrop: {
-    zIndex: 9999,
-    backgroundColor: "rgba(17, 24, 39, 0.35)",
+    zIndex: zIndex.overlay,
+    backgroundColor: colors.background.overlay,
     backdropFilter: "blur(2px)",
   } as SxProps<Theme>,
 
   container: {
     width: "320px",
     maxWidth: "90vw",
-    backgroundColor: "#FFFFFF",
-    borderRadius: "16px",
-    padding: "32px 24px",
+    backgroundColor: colors.background.default,
+    borderRadius: radius.lg,
+    padding: `${spacing.xxl} ${spacing.xl}`,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "18px",
-    boxShadow:
-      "0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.04)",
+    gap: spacing.lg,
+    boxShadow: shadow.lg,
   } as SxProps<Theme>,
 
   spinner: {
-    color: "#315CC3",
+    color: colors.primary[500],
   } as SxProps<Theme>,
 
   title: {
-    fontSize: "15px",
+    ...typography.body,
     fontWeight: 600,
-    color: "#111827",
+    color: colors.gray[900],
     textAlign: "center",
   } as SxProps<Theme>,
 
   subtitle: {
-    fontSize: "13px",
-    color: "#6B7280",
+    ...typography.label,
+    color: colors.gray[500],
     textAlign: "center",
   } as SxProps<Theme>,
 };

@@ -2,7 +2,7 @@ import { Button as MuiButton, ButtonProps } from "@mui/material";
 import { buttonStyles } from "@/styles/buttonStyles";
 
 type CustomButtonProps = Omit<ButtonProps, "variant"> & {
-  variantType?: "primary" | "outlined" | "ghost";
+  variantType?: "primary" | "outlined" | "ghost" | "danger" | "dangerOutlined";
 };
 
 export default function Button({
@@ -14,9 +14,9 @@ export default function Button({
   ...props
 }: CustomButtonProps) {
   const muiVariant: ButtonProps["variant"] =
-    variantType === "primary"
+    variantType === "primary" || variantType === "danger"
       ? "contained"
-      : variantType === "outlined"
+      : variantType === "outlined" || variantType === "dangerOutlined"
       ? "outlined"
       : "text";
 

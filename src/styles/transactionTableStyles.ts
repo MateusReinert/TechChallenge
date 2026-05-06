@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, radius, typography, sizes } from "@/styles/tokens";
 
 export const transactionTableStyles = {
   root: {
@@ -7,9 +8,9 @@ export const transactionTableStyles = {
       xs: "1120px",
       lg: "100%",
     },
-    bgcolor: "#FFFFFF",
-    border: "1px solid #E5E7EB",
-    borderRadius: "8px",
+    bgcolor: colors.background.default,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.sm,
     overflow: "hidden",
   },
 
@@ -17,17 +18,16 @@ export const transactionTableStyles = {
     display: "grid",
     gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr 1fr 120px",
     px: {
-      xs: "12px",
-      md: "16px",
+      xs: spacing.sm,
+      md: spacing.md,
     },
-    py: "12px",
-    borderBottom: "1px solid #E5E7EB",
+    py: spacing.sm,
+    borderBottom: `1px solid ${colors.gray[200]}`,
   },
 
   sortableHeader: {
-    fontSize: 12,
-    fontWeight: 500,
-    color: "#4B5563",
+    ...typography.label,
+    color: colors.gray[600],
     whiteSpace: "nowrap",
     cursor: "pointer",
     userSelect: "none",
@@ -37,15 +37,15 @@ export const transactionTableStyles = {
     textAlign: "left",
     fontFamily: "inherit",
     "&:focus-visible": {
-      outline: "2px solid #315CC3",
+      outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "2px",
-      borderRadius: "4px",
+      borderRadius: radius.sm,
     },
   },
 
   sortableHeaderActive: {
     fontWeight: 700,
-    color: "#111827",
+    color: colors.gray[900],
   },
 
   row: {
@@ -53,11 +53,11 @@ export const transactionTableStyles = {
     gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr 1fr 120px",
     alignItems: "center",
     px: {
-      xs: "12px",
-      md: "16px",
+      xs: spacing.sm,
+      md: spacing.md,
     },
-    py: "12px",
-    borderBottom: "1px solid #E5E7EB",
+    py: spacing.sm,
+    borderBottom: `1px solid ${colors.gray[200]}`,
     cursor: "pointer",
     bgcolor: "transparent",
     transition: "background-color 0.2s ease",
@@ -65,29 +65,29 @@ export const transactionTableStyles = {
       borderBottom: "none",
     },
     "&:hover": {
-      bgcolor: "#F9FAFB",
+      bgcolor: colors.gray[50],
     },
     "&:focus-visible": {
-      outline: "2px solid #315CC3",
+      outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "-2px",
-      bgcolor: "#F9FAFB",
+      bgcolor: colors.gray[50],
     },
   },
 
   rowSelected: {
-    bgcolor: "#F9FAFB",
+    bgcolor: colors.gray[50],
   },
 
   descriptionCell: {
     display: "flex",
     alignItems: "center",
-    gap: "12px",
+    gap: spacing.md,
     minWidth: 0,
   },
 
   iconWrapper: {
-    width: 36,
-    height: 36,
+    width: sizes.summaryIcon,
+    height: sizes.summaryIcon,
     borderRadius: "10px",
     display: "flex",
     alignItems: "center",
@@ -100,45 +100,44 @@ export const transactionTableStyles = {
   },
 
   incomeIcon: {
-    bgcolor: "#E9F4EE",
-    color: "#16A34A",
+    bgcolor: colors.success[100],
+    color: colors.success[500],
   },
 
   expenseIcon: {
-    bgcolor: "#FEECEC",
-    color: "#EF4444",
+    bgcolor: colors.error[100],
+    color: colors.error[500],
   },
 
   descriptionContent: {
     display: "flex",
     flexDirection: "column",
-    gap: "4px",
+    gap: spacing.xs,
     minWidth: 0,
   },
 
   description: {
-    fontSize: 14,
+    ...typography.body,
     fontWeight: 500,
-    color: "#111827",
+    color: colors.gray[900],
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
   },
 
   cellText: {
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#4B5563",
+    ...typography.body,
+    color: colors.gray[600],
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    pr: "8px",
+    pr: spacing.sm,
   },
 
   amount: {
-    fontSize: 14,
+    ...typography.body,
     fontWeight: 500,
-    color: "#111827",
+    color: colors.gray[900],
     whiteSpace: "nowrap",
   },
 } satisfies Record<string, SxProps<Theme>>;

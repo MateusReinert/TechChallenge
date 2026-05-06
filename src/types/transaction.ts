@@ -15,7 +15,7 @@ export type Transaction = {
   amount: number;
   date: string;
   type: TransactionType;
-  operation: TransactionOperation; //
+  operation: TransactionOperation;
   category: string;
   account: string;
   status?: TransactionStatus;

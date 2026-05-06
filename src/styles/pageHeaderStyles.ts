@@ -1,24 +1,24 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, spacing, typography } from "@/styles/tokens";
 
 export const pageHeaderStyles = {
   root: {
-    mb: 3,
+    mb: spacing.lg,
   } as SxProps<Theme>,
 
   title: {
-    fontSize: "24px",
-    fontWeight: 600,
-    color: "#111827",
+    ...typography.title,
+    color: colors.gray[900],
     lineHeight: 1.2,
   } as SxProps<Theme>,
 
   breadcrumb: {
-    fontSize: "14px",
-    color: "#6B7280",
-    mt: 0.5,
+    ...typography.body,
+    color: colors.gray[500],
+    mt: spacing.xs,
     display: "flex",
     alignItems: "center",
-    gap: "6px",
+    gap: spacing.xs,
   } as SxProps<Theme>,
 
   breadcrumbGroup: {
@@ -31,11 +31,11 @@ export const pageHeaderStyles = {
   } as SxProps<Theme>,
 
   breadcrumbSeparator: {
-    color: "#9CA3AF",
+    color: colors.gray[400],
   } as SxProps<Theme>,
 
   breadcrumbLast: {
-    color: "#111827",
+    color: colors.gray[900],
     fontWeight: 500,
   } as SxProps<Theme>,
 };

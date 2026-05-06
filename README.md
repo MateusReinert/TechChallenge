@@ -1,6 +1,27 @@
 # Tech Challenge - Fase 01
 
-Aplicação web de controle financeiro desenvolvida com foco em organização, experiência do usuário e componentização.
+Aplicação web de controle financeiro desenvolvida com foco em organização, experiência do usuário, acessibilidade e componentização.
+
+---
+
+## Conceito do projeto
+
+A proposta inicial do projeto foi desenvolver uma aplicação financeira moderna, limpa e profissional, inspirada em interfaces de fintechs e bancos digitais.
+
+O design foi construído utilizando tons de azul como cor principal para transmitir:
+- confiança
+- estabilidade
+- segurança
+- clareza visual
+
+Além disso, toda a interface foi pensada para priorizar:
+- fácil leitura das informações financeiras
+- feedback visual claro
+- boa experiência de uso
+- responsividade
+- consistência visual através de design tokens
+
+O projeto também foi estruturado para facilitar evolução futura, manutenção e reutilização de componentes.
 
 ---
 
@@ -47,10 +68,22 @@ https://www.figma.com/design/9AaP8DCnZxKsxg1xk6Kvcq/FIAP---Tech-Challenge---Fase
 - Feedback com snackbar
 - Empty states
 - Responsividade
+- Estados de foco e acessibilidade
 
 ---
 
-##  Rodando o projeto
+## Rodando o projeto
+
+Este projeto foi desenvolvido utilizando:
+
+- Node.js `22.13.0`
+
+Recomenda-se utilizar exatamente esta versão para evitar incompatibilidades com dependências e ferramentas do projeto.
+
+Verificar versão instalada:
+
+```bash
+node -v
 
 ### 1. Instalar dependências
 

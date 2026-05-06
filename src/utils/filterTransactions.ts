@@ -21,7 +21,7 @@ export function filterTransactions(
       transaction.amount,
       transaction.date,
       TRANSACTION_TYPE_LABEL[transaction.type],
-      TRANSACTION_OPERATION_LABEL[transaction.operation], // ✅ NOVO
+      TRANSACTION_OPERATION_LABEL[transaction.operation],
       transaction.category,
       transaction.account,
       TRANSACTION_STATUS_LABEL[transaction.status || "pending"],

@@ -28,10 +28,10 @@ export default function SummaryCard({
       <Box sx={summaryCardStyles.header}>
         <Box sx={summaryCardStyles.headerContent}>
           <Box
-            sx={{
-              ...summaryCardStyles.icon,
-              ...summaryCardStyles.iconVariants[iconVariant],
-            }}
+            sx={[
+              summaryCardStyles.icon,
+              summaryCardStyles.iconVariants[iconVariant],
+            ]}
           >
             {icon}
           </Box>
@@ -55,7 +55,12 @@ export default function SummaryCard({
       </Typography>
 
       {trend && (
-        <Box sx={summaryCardStyles.trend}>
+        <Box
+          sx={[
+            summaryCardStyles.trend,
+            summaryCardStyles.trendVariants[iconVariant],
+          ]}
+        >
           {trendIcon}
           <span>{trend}</span>
         </Box>

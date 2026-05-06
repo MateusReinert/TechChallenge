@@ -186,7 +186,7 @@ export default function TransactionDetails({
           </Button>
 
           <Button
-            variantType="ghost"
+            variantType="dangerOutlined"
             fullWidth
             aria-label={`Excluir transação ${transaction.description}`}
             onClick={() => setIsDeleteModalOpen(true)}

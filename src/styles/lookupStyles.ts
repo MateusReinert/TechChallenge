@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+import { colors, radius, typography, sizes } from "@/styles/tokens";
 
 export const lookupStyles = {
   root: {
@@ -7,31 +8,30 @@ export const lookupStyles = {
 
   label: {
     mb: "6px",
-    fontSize: "13px",
-    fontWeight: 500,
-    color: "#374151",
+    ...typography.label,
+    color: colors.gray[600],
   },
 
   labelError: {
-    color: "#D32F2F",
+    color: colors.error[500],
   },
 
   textField: {
     "& .MuiOutlinedInput-root": {
-      height: "48px",
-      borderRadius: "8px",
-      bgcolor: "#FFFFFF",
+      height: sizes.inputHeight,
+      borderRadius: radius.sm,
+      bgcolor: colors.background.default,
 
       "& fieldset": {
-        borderColor: "#D1D5DB",
+        borderColor: colors.gray[300],
       },
 
       "&:hover fieldset": {
-        borderColor: "#315CC3",
+        borderColor: colors.primary[500],
       },
 
       "&.Mui-focused fieldset": {
-        borderColor: "#315CC3",
+        borderColor: colors.primary[500],
         borderWidth: "1px",
       },
     },
@@ -39,12 +39,12 @@ export const lookupStyles = {
     "& .MuiSelect-select": {
       display: "flex",
       alignItems: "center",
-      fontSize: "14px",
-      color: "#111827",
+      ...typography.body,
+      color: colors.gray[900],
     },
 
     "& .MuiSvgIcon-root": {
-      color: "#6B7280",
+      color: colors.gray[500],
     },
   },
 
@@ -58,6 +58,6 @@ export const lookupStyles = {
   },
 
   placeholderText: {
-    color: "#9CA3AF",
+    color: colors.gray[400],
   },
 } satisfies Record<string, SxProps<Theme> | React.CSSProperties>;
