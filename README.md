@@ -99,8 +99,8 @@ npm install
 npm run dev
 ```
 
-Acesse:  
-http://localhost:8000
+Acesse a porta indicada no cmd:  
+ex: local: http://localhost:8000
 
 ---
 
@@ -126,8 +126,8 @@ npm run start
 npm run storybook
 ```
 
-Acesse:  
-http://localhost:6006
+Acesse a porta indicada no cmd:  
+ex: local: http://localhost:6006
 
 ---
 
