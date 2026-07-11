@@ -1,5 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
-import { colors, spacing, typography, sizes } from "@/styles/tokens";
+import { colors, spacing, typography, sizes, radius } from "@/styles/tokens";
 
 export const transactionDetailsStyles = {
   root: {
@@ -124,6 +124,73 @@ export const transactionDetailsStyles = {
     ml: spacing.xs,
   } as SxProps<Theme>,
 
+  attachmentCard: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.md,
+    p: spacing.md,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.md,
+    bgcolor: colors.gray[50],
+  } as SxProps<Theme>,
+
+  attachmentHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: spacing.md,
+    minWidth: 0,
+  } as SxProps<Theme>,
+
+  attachmentIconWrapper: {
+    width: sizes.icon,
+    height: sizes.icon,
+    borderRadius: radius.md,
+    bgcolor: colors.primary[100],
+    color: colors.primary[500],
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  } as SxProps<Theme>,
+
+  attachmentIcon: {
+    fontSize: 18,
+  } as SxProps<Theme>,
+
+  attachmentInfo: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.xs,
+    minWidth: 0,
+  } as SxProps<Theme>,
+
+  attachmentTitle: {
+    ...typography.label,
+    color: colors.gray[500],
+  } as SxProps<Theme>,
+
+  attachmentName: {
+    ...typography.body,
+    fontWeight: 600,
+    color: colors.gray[900],
+    wordBreak: "break-word",
+  } as SxProps<Theme>,
+
+  attachmentMeta: {
+    ...typography.label,
+    color: colors.gray[400],
+  } as SxProps<Theme>,
+
+  attachmentActions: {
+    display: "flex",
+    gap: spacing.sm,
+    flexDirection: {
+      xs: "column",
+      sm: "row",
+      lg: "column",
+    },
+  } as SxProps<Theme>,
+
   actions: {
     display: "flex",
     gap: spacing.sm,
@@ -140,5 +207,11 @@ export const transactionDetailsStyles = {
     ...typography.body,
     color: colors.gray[600],
     lineHeight: 1.5,
+  } as SxProps<Theme>,
+
+  attachmentsSection: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.md,
   } as SxProps<Theme>,
 };

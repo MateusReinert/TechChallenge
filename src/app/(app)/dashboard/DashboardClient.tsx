@@ -1,180 +1,175 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Box, Typography, IconButton } from "@mui/material";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
+import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import TrendingDownOutlinedIcon from "@mui/icons-material/TrendingDownOutlined";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
-import PageHeader from "@/components/PageHeader";
-import TransactionTable from "@/components/TransactionTable";
-import TransactionDetails from "@/components/TransactionDetails";
 import Button from "@/components/Button";
-import SummaryCard from "@/components/SummaryCard";
-import LoadingOverlay from "@/components/LoadingOverlay";
+import DashboardCharts from "@/components/DashboardCharts";
+import DashboardInsights from "@/components/DashboardInsights";
+import DashboardSummaryCards from "@/components/DashboardSummaryCards";
 import FeedbackSnackbar from "@/components/FeedbackSnackbar";
+import FilterBar, {
+  type FilterBarValue,
+} from "@/components/FilterBar";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import PageHeader from "@/components/PageHeader";
+import TransactionDetails from "@/components/TransactionDetails";
 import { TransactionModal } from "@/components/TransactionModal";
+import TransactionTable from "@/components/TransactionTable";
 
-import { Transaction } from "@/types/transaction";
+import { useFeedback } from "@/hooks/useFeedback";
+import { useLoadingAction } from "@/hooks/useLoadingAction";
+import { useTransactionCrud } from "@/hooks/useTransactionCrud";
+import { useTransactionFilterItems } from "@/hooks/useTransactionFilterItems";
+import { useTransactionModal } from "@/hooks/useTransactionModal";
+
 import {
   DASHBOARD_BREADCRUMB,
   DASHBOARD_LATEST_LIMIT,
 } from "@/constants/dashboard";
 
+import { dashboardClientStyles } from "@/styles/dashboardClientStyles";
+
+import { initializeTransactions } from "@/store/features/transactions/transactionsSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
+
+import type { Transaction } from "@/types/transaction";
+
+import { filterDashboardTransactions } from "@/utils/dashboardFiltersUtils";
+import { getDashboardChartsData } from "@/utils/getDashboardChartsData";
 import { getDashboardSummary } from "@/utils/getDashboardSummary";
 import { getLatestTransactions } from "@/utils/getLatestTransactions";
-import {
-  saveTransactionAction,
-  deleteTransactionAction,
-} from "@/actions/transactionActions";
-import { dashboardClientStyles } from "@/styles/dashboardClientStyles";
 
 type DashboardClientProps = {
   initialTransactions: Transaction[];
 };
 
-type Feedback = {
-  open: boolean;
-  message: string;
-  type: "success" | "error";
+const INITIAL_FILTERS: FilterBarValue = {
+  search: "",
+  category: "",
+  type: "",
+  account: "",
+  status: "",
+  dateRange: "",
+  amountRange: "",
 };
-
-const MIN_LOADING_TIME = 700;
-const HIDDEN_VALUE = "R$ ••••••";
-const HIDDEN_TOTAL = "••••";
-
-function wait(milliseconds: number) {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
-
-function formatCurrency(value: number) {
-  return value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-}
-
-function getErrorMessage(error: unknown, fallbackMessage: string) {
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  return fallbackMessage;
-}
 
 export default function DashboardClient({
   initialTransactions,
 }: DashboardClientProps) {
-  const [transactions, setTransactions] =
-    useState<Transaction[]>(initialTransactions);
+  const [filters, setFilters] =
+    useState<FilterBarValue>(INITIAL_FILTERS);
 
   const [showValues, setShowValues] = useState(true);
-
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null);
-
-  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("");
-
-  const [feedback, setFeedback] = useState<Feedback>({
-    open: false,
-    message: "",
-    type: "success",
-  });
-
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const isLoading = Boolean(loadingMessage) || isPending;
-
-  const summary = getDashboardSummary(transactions);
-
-  const latestTransactions = getLatestTransactions(
-    transactions,
-    DASHBOARD_LATEST_LIMIT
+  const storedTransactions = useAppSelector(
+    (state) => state.transactions.items
   );
 
-  const balanceValue = showValues
-    ? formatCurrency(summary.balance)
-    : HIDDEN_VALUE;
+  const transactionsInitialized = useAppSelector(
+    (state) => state.transactions.initialized
+  );
 
-  const incomeValue = showValues
-    ? formatCurrency(summary.income)
-    : HIDDEN_VALUE;
+  const transactions = transactionsInitialized
+    ? storedTransactions
+    : initialTransactions;
 
-  const expenseValue = showValues
-    ? formatCurrency(summary.expense)
-    : HIDDEN_VALUE;
+  useEffect(() => {
+    dispatch(
+      initializeTransactions(initialTransactions)
+    );
+  }, [dispatch, initialTransactions]);
 
-  const totalTransactionsValue = showValues
-    ? String(summary.totalTransactions)
-    : HIDDEN_TOTAL;
+  const {
+    loadingMessage,
+    isLoading: isLoadingAction,
+    runWithLoading,
+  } = useLoadingAction();
 
-  async function runWithLoading(message: string, action: () => Promise<void>) {
-    if (loadingMessage) return;
+  const {
+    feedback,
+    showFeedback,
+    closeFeedback,
+  } = useFeedback();
 
-    setLoadingMessage(message);
+  const isLoading = isLoadingAction || isPending;
 
-    const startTime = Date.now();
+  const {
+    selectedTransaction,
+    setSelectedTransaction,
+    isTransactionModalOpen,
+    selectTransaction,
+    clearSelectedTransaction,
+    openNewTransactionModal,
+    openEditTransactionModal,
+    closeTransactionModal,
+    closeTransactionModalImmediately,
+    clearSelectedTransactionImmediately,
+  } = useTransactionModal(isLoading);
 
-    try {
-      await action();
-    } finally {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(MIN_LOADING_TIME - elapsedTime, 0);
+  const {
+    handleSaveTransaction,
+    handleDeleteTransaction,
+  } = useTransactionCrud({
+    transactions,
+    isLoading,
+    startTransition,
+    runWithLoading,
+    showFeedback,
+    setSelectedTransaction,
+    clearSelectedTransactionImmediately,
+    closeTransactionModalImmediately,
+    refresh: router.refresh,
+  });
 
-      if (remainingTime > 0) {
-        await wait(remainingTime);
-      }
+  const filteredTransactions = useMemo(
+    () =>
+      filterDashboardTransactions(
+        transactions,
+        filters
+      ),
+    [transactions, filters]
+  );
 
-      setLoadingMessage("");
-    }
-  }
+  const filterItems =
+    useTransactionFilterItems(transactions);
 
-  function showFeedback(message: string, type: Feedback["type"] = "success") {
-    setFeedback({
-      open: true,
-      message,
-      type,
-    });
-  }
+  const summary =
+    getDashboardSummary(filteredTransactions);
 
-  function handleCloseFeedback() {
-    setFeedback((currentFeedback) => ({
-      ...currentFeedback,
-      open: false,
-    }));
-  }
+  const { monthlyData, categoryData } =
+    getDashboardChartsData(filteredTransactions);
 
-  function handleToggleValues(event: React.MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation();
-    setShowValues((currentValue) => !currentValue);
-  }
+  const latestTransactions =
+    getLatestTransactions(
+      filteredTransactions,
+      DASHBOARD_LATEST_LIMIT
+    );
 
-  function handleOpenNewTransactionModal() {
-    if (isLoading) return;
+  function handleToggleValues(
+    event?: React.MouseEvent<HTMLElement>
+  ) {
+    event?.stopPropagation();
 
-    setSelectedTransaction(null);
-    setIsTransactionModalOpen(true);
-  }
-
-  function handleEditTransaction(transaction: Transaction) {
-    if (isLoading) return;
-
-    setSelectedTransaction(transaction);
-    setIsTransactionModalOpen(true);
-  }
-
-  function handleCloseTransactionModal() {
-    if (isLoading) return;
-
-    setIsTransactionModalOpen(false);
+    setShowValues(
+      (currentValue) => !currentValue
+    );
   }
 
   function handleGoToTransactions() {
@@ -183,91 +178,9 @@ export default function DashboardClient({
     router.push("/transactions");
   }
 
-  function handleSaveTransaction(savedTransaction: Transaction) {
-    if (isLoading) return;
-
-    const isEditing = Boolean(savedTransaction.id);
-
-    const loadingText = isEditing
-      ? "Atualizando transação..."
-      : "Criando transação...";
-
-    const errorText = isEditing
-      ? "Não foi possível atualizar a transação. Tente novamente."
-      : "Não foi possível criar a transação. Tente novamente.";
-
-    startTransition(async () => {
-      await runWithLoading(loadingText, async () => {
-        try {
-          const saved = await saveTransactionAction(savedTransaction);
-
-          const transactionExists = transactions.some(
-            (transaction) => transaction.id === saved.id
-          );
-
-          if (transactionExists) {
-            setTransactions((currentTransactions) =>
-              currentTransactions.map((transaction) =>
-                transaction.id === saved.id ? saved : transaction
-              )
-            );
-
-            showFeedback("Transação atualizada com sucesso.");
-          } else {
-            setTransactions((currentTransactions) => [
-              saved,
-              ...currentTransactions,
-            ]);
-
-            showFeedback("Transação criada com sucesso.");
-          }
-
-          setSelectedTransaction(saved);
-          setIsTransactionModalOpen(false);
-
-          router.refresh();
-        } catch (error) {
-          showFeedback(getErrorMessage(error, errorText), "error");
-        }
-      });
-    });
-  }
-
-  function handleDeleteTransaction(transactionId: string) {
-    if (isLoading) return;
-
-    if (!transactionId) {
-      showFeedback("Não foi possível identificar a transação.", "error");
-      return;
-    }
-
-    startTransition(async () => {
-      await runWithLoading("Excluindo transação...", async () => {
-        try {
-          await deleteTransactionAction(transactionId);
-
-          setTransactions((currentTransactions) =>
-            currentTransactions.filter(
-              (transaction) => transaction.id !== transactionId
-            )
-          );
-
-          setSelectedTransaction(null);
-          setIsTransactionModalOpen(false);
-
-          showFeedback("Transação excluída com sucesso.");
-          router.refresh();
-        } catch (error) {
-          showFeedback(
-            getErrorMessage(
-              error,
-              "Não foi possível excluir a transação. Tente novamente."
-            ),
-            "error"
-          );
-        }
-      });
-    });
+  function handleClearFilters() {
+    setFilters(INITIAL_FILTERS);
+    clearSelectedTransaction();
   }
 
   return (
@@ -275,120 +188,163 @@ export default function DashboardClient({
       <Box
         onClick={() => {
           if (!isLoading) {
-            setSelectedTransaction(null);
+            clearSelectedTransaction();
           }
         }}
         sx={{
           ...dashboardClientStyles.layout,
           gridTemplateColumns: {
             xs: "1fr",
-            lg: selectedTransaction ? "1fr 320px" : "1fr",
+            lg: selectedTransaction
+              ? "1fr 320px"
+              : "1fr",
           },
         }}
       >
         <Box sx={dashboardClientStyles.content}>
-          <PageHeader
-            title="Dashboard"
-            breadcrumb={DASHBOARD_BREADCRUMB}
-          />
+          <Box sx={dashboardClientStyles.pageTop}>
+            <PageHeader
+              title="Dashboard"
+              breadcrumb={DASHBOARD_BREADCRUMB}
+            />
 
-          <Box sx={dashboardClientStyles.cardsGrid}>
-            <SummaryCard
-              label="Saldo atual"
-              value={balanceValue}
-              icon={<AccountBalanceWalletOutlinedIcon />}
-              iconVariant="neutral"
-              trend="Visão geral da sua situação financeira"
-              action={
-                <IconButton
-                  size="small"
+            <Box
+              sx={dashboardClientStyles.topControls}
+            >
+              <FilterBar
+                value={filters}
+                filters={filterItems}
+                searchPlaceholder="Buscar transações..."
+                onChange={setFilters}
+                onClear={handleClearFilters}
+              />
+
+              <Box
+                sx={
+                  dashboardClientStyles.headerActions
+                }
+              >
+                <Button
+                  variantType="outlined"
                   onClick={handleToggleValues}
-                  aria-label={
-                    showValues
-                      ? "Ocultar valores financeiros"
-                      : "Mostrar valores financeiros"
-                  }
-                  sx={dashboardClientStyles.iconButton}
+                  disabled={isLoading}
                 >
-                  {showValues ? (
-                    <VisibilityOutlinedIcon fontSize="small" />
-                  ) : (
-                    <VisibilityOffOutlinedIcon fontSize="small" />
-                  )}
-                </IconButton>
-              }
-            />
+                  <Box
+                    sx={
+                      dashboardClientStyles.buttonContent
+                    }
+                  >
+                    {showValues ? (
+                      <VisibilityOutlinedIcon fontSize="small" />
+                    ) : (
+                      <VisibilityOffOutlinedIcon fontSize="small" />
+                    )}
 
-            <SummaryCard
-              label="Total de entradas"
-              value={incomeValue}
-              icon={<TrendingUpOutlinedIcon />}
-              iconVariant="positive"
-              trend="Dinheiro que entrou na sua conta"
-            />
+                    {showValues
+                      ? "Ocultar valores"
+                      : "Mostrar valores"}
+                  </Box>
+                </Button>
 
-            <SummaryCard
-              label="Total de saídas"
-              value={expenseValue}
-              icon={<TrendingDownOutlinedIcon />}
-              iconVariant="negative"
-              trend="Dinheiro que saiu da sua conta"
-            />
-
-            <SummaryCard
-              label="Transações cadastradas"
-              value={totalTransactionsValue}
-              icon={<TuneOutlinedIcon />}
-              iconVariant="neutral"
-              trend="Histórico de movimentações realizadas"
-            />
-          </Box>
-
-          <Box sx={dashboardClientStyles.sectionHeader}>
-            <Typography sx={dashboardClientStyles.sectionTitle}>
-              Últimas transações
-            </Typography>
-
-            <Box sx={dashboardClientStyles.actions}>
-              <Button
-                variantType="ghost"
-                onClick={handleGoToTransactions}
-                disabled={isLoading}
-              >
-                Ver todas
-              </Button>
-
-              <Button
-                variantType="primary"
-                onClick={handleOpenNewTransactionModal}
-                disabled={isLoading}
-              >
-                Nova transação
-              </Button>
+                <Button
+                  variantType="primary"
+                  onClick={openNewTransactionModal}
+                  disabled={isLoading}
+                >
+                  <Box
+                    sx={
+                      dashboardClientStyles.buttonContent
+                    }
+                  >
+                    Nova transação
+                    <AddRoundedIcon fontSize="small" />
+                  </Box>
+                </Button>
+              </Box>
             </Box>
           </Box>
 
-          <Box sx={dashboardClientStyles.tableWrapper}>
-            <TransactionTable
-              transactions={latestTransactions}
-              selectedTransactionId={selectedTransaction?.id}
-              onSelectTransaction={
-                isLoading ? undefined : setSelectedTransaction
-              }
-              emptyTitle="Nenhuma movimentação recente"
-              emptyDescription="Cadastre sua primeira transação para começar."
-              emptyActionLabel="Nova transação"
-              onEmptyAction={
-                isLoading ? undefined : handleOpenNewTransactionModal
-              }
+          <DashboardSummaryCards
+            summary={summary}
+            showValues={showValues}
+          />
+
+          <DashboardCharts
+            monthlyData={monthlyData}
+            categoryData={categoryData}
+          />
+
+          <Box
+            sx={dashboardClientStyles.dashboardGrid}
+          >
+            <DashboardInsights
+              transactions={filteredTransactions}
             />
+
+            <Box
+              sx={
+                dashboardClientStyles.transactionsCard
+              }
+            >
+              <Box
+                sx={
+                  dashboardClientStyles.sectionHeader
+                }
+              >
+                <Typography
+                  sx={
+                    dashboardClientStyles.sectionTitle
+                  }
+                >
+                  Últimas transações
+                </Typography>
+
+                <Box
+                  sx={dashboardClientStyles.actions}
+                >
+                  <Button
+                    variantType="ghost"
+                    onClick={handleGoToTransactions}
+                    disabled={isLoading}
+                  >
+                    Ver todas
+                  </Button>
+                </Box>
+              </Box>
+
+              <Box
+                sx={
+                  dashboardClientStyles.tableWrapper
+                }
+              >
+                <TransactionTable
+                  transactions={latestTransactions}
+                  selectedTransactionId={
+                    selectedTransaction?.id
+                  }
+                  onSelectTransaction={
+                    isLoading
+                      ? undefined
+                      : selectTransaction
+                  }
+                  emptyTitle="Nenhuma movimentação encontrada"
+                  emptyDescription="Ajuste os filtros ou cadastre uma nova transação."
+                  emptyActionLabel="Nova transação"
+                  onEmptyAction={
+                    isLoading
+                      ? undefined
+                      : openNewTransactionModal
+                  }
+                />
+              </Box>
+            </Box>
           </Box>
         </Box>
 
         {selectedTransaction && (
           <TransactionDetails
             transaction={selectedTransaction}
-            onEdit={handleEditTransaction}
+            onEdit={openEditTransactionModal}
             onDelete={handleDeleteTransaction}
           />
         )}
@@ -396,19 +352,22 @@ export default function DashboardClient({
 
       <TransactionModal
         open={isTransactionModalOpen}
-        onClose={handleCloseTransactionModal}
+        onClose={closeTransactionModal}
         transaction={selectedTransaction}
         onSave={handleSaveTransaction}
         onDelete={handleDeleteTransaction}
       />
 
-      <LoadingOverlay open={Boolean(loadingMessage)} message={loadingMessage} />
+      <LoadingOverlay
+        open={Boolean(loadingMessage)}
+        message={loadingMessage}
+      />
 
       <FeedbackSnackbar
         open={feedback.open}
         message={feedback.message}
         type={feedback.type}
-        onClose={handleCloseFeedback}
+        onClose={closeFeedback}
       />
     </>
   );

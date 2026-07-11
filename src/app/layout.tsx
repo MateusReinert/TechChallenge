@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+
 import Providers from "@/components/Providers";
+import StoreProvider from "@/store/StoreProvider";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +20,9 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <AppRouterCacheProvider>
-          <Providers>{children}</Providers>
+          <StoreProvider>
+            <Providers>{children}</Providers>
+          </StoreProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

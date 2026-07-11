@@ -1,34 +1,37 @@
 "use client";
 
-import type { MouseEvent } from "react";
-import { useState } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useState, type MouseEvent } from "react";
+import { Box, Typography } from "@mui/material";
 
+import AttachmentPreviewModal from "@/components/AttachmentPreviewModal";
 import Button from "@/components/Button";
-import StatusTag from "@/components/StatusTag";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import StatusTag from "@/components/StatusTag";
+import TransactionAttachmentCard from "@/components/TransactionAttachmentCard";
+import TransactionDetailItem from "@/components/TransactionDetailItem";
 
-import { transactionDetailsStyles } from "@/styles/transactionDetailsStyles";
-import { Transaction } from "@/types/transaction";
 import {
   TRANSACTION_OPERATION_LABEL,
   TRANSACTION_TYPE_LABEL,
 } from "@/constants/transaction";
 
-interface TransactionDetailsProps {
+import { transactionDetailsStyles } from "@/styles/transactionDetailsStyles";
+
+import type {
+  Transaction,
+  TransactionAttachment,
+} from "@/types/transaction";
+
+type TransactionDetailsProps = {
   transaction?: Transaction;
   onEdit?: (transaction: Transaction) => void;
   onDelete?: (transactionId: string) => void;
-}
+};
 
-interface DetailItemProps {
-  label: string;
-  value?: string;
-  copyable?: boolean;
-}
-
-function formatCurrency(value: number, type: Transaction["type"]) {
+function formatCurrency(
+  value: number,
+  type: Transaction["type"]
+) {
   const formattedValue = value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -37,67 +40,15 @@ function formatCurrency(value: number, type: Transaction["type"]) {
   return `${type === "income" ? "+ " : "- "}${formattedValue}`;
 }
 
-function DetailItem({ label, value, copyable }: DetailItemProps) {
-  const [wasCopied, setWasCopied] = useState(false);
-  const displayValue = value || "-";
-
-  async function handleCopy() {
-    if (!value) return;
-
-    await navigator.clipboard.writeText(value);
-    setWasCopied(true);
-
-    window.setTimeout(() => {
-      setWasCopied(false);
-    }, 1500);
-  }
-
-  return (
-    <Box sx={transactionDetailsStyles.detailsItem}>
-      <Typography sx={transactionDetailsStyles.label}>{label}</Typography>
-
-      {copyable ? (
-        <Box sx={transactionDetailsStyles.valueRow}>
-          <Typography sx={transactionDetailsStyles.value}>
-            {displayValue}
-          </Typography>
-
-          <IconButton
-            type="button"
-            size="small"
-            onClick={handleCopy}
-            disabled={!value}
-            aria-label={`Copiar ${label}`}
-            sx={transactionDetailsStyles.copyButton}
-          >
-            <ContentCopyIcon sx={transactionDetailsStyles.copyIcon} />
-          </IconButton>
-
-          {wasCopied && (
-            <Typography
-              component="span"
-              aria-live="polite"
-              sx={transactionDetailsStyles.copyFeedback}
-            >
-              Copiado
-            </Typography>
-          )}
-        </Box>
-      ) : (
-        <Typography sx={transactionDetailsStyles.value}>
-          {displayValue}
-        </Typography>
-      )}
-    </Box>
-  );
-}
-
 export default function TransactionDetails({
   transaction,
   onEdit,
   onDelete,
 }: TransactionDetailsProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const [selectedAttachment, setSelectedAttachment] =
+    useState<TransactionAttachment | null>(null);
 
   function handleConfirmDelete() {
     if (!transaction) return;
@@ -124,18 +75,27 @@ export default function TransactionDetails({
     );
   }
 
-  const transactionTypeLabel = TRANSACTION_TYPE_LABEL[transaction.type];
+  const transactionTypeLabel =
+    TRANSACTION_TYPE_LABEL[transaction.type];
+
   const transactionOperationLabel =
     TRANSACTION_OPERATION_LABEL[transaction.operation];
 
-  const formattedAmount = formatCurrency(transaction.amount, transaction.type);
+  const formattedAmount = formatCurrency(
+    transaction.amount,
+    transaction.type
+  );
+
+  const attachments = transaction.attachments || [];
 
   return (
     <>
       <Box
         component="aside"
         aria-label={`Detalhes da transação ${transaction.description}`}
-        onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}
+        onClick={(event: MouseEvent<HTMLDivElement>) =>
+          event.stopPropagation()
+        }
         sx={transactionDetailsStyles.root}
       >
         <Box sx={transactionDetailsStyles.summary}>
@@ -159,21 +119,63 @@ export default function TransactionDetails({
         </Box>
 
         <Box sx={transactionDetailsStyles.detailsList}>
-          <DetailItem label="ID" value={transaction.id} copyable />
-          <DetailItem label="Descrição" value={transaction.description} />
-          <DetailItem label="Data" value={transaction.date} />
-          <DetailItem
+          <TransactionDetailItem
+            label="ID"
+            value={transaction.id}
+            copyable
+          />
+
+          <TransactionDetailItem
+            label="Descrição"
+            value={transaction.description}
+          />
+
+          <TransactionDetailItem
+            label="Data"
+            value={transaction.date}
+          />
+
+          <TransactionDetailItem
             label="Natureza da transação"
             value={transactionTypeLabel}
           />
-          <DetailItem
+
+          <TransactionDetailItem
             label="Tipo de transação"
             value={transactionOperationLabel}
           />
-          <DetailItem label="Categoria" value={transaction.category} />
-          <DetailItem label="Conta" value={transaction.account} />
-          <DetailItem label="Observação" value={transaction.note} />
+
+          <TransactionDetailItem
+            label="Categoria"
+            value={transaction.category}
+          />
+
+          <TransactionDetailItem
+            label="Conta"
+            value={transaction.account}
+          />
+
+          <TransactionDetailItem
+            label="Observação"
+            value={transaction.note}
+          />
         </Box>
+
+        {attachments.length > 0 && (
+          <Box sx={transactionDetailsStyles.attachmentsSection}>
+            <Typography sx={transactionDetailsStyles.attachmentTitle}>
+              Comprovantes
+            </Typography>
+
+            {attachments.map((attachment) => (
+              <TransactionAttachmentCard
+                key={attachment.id}
+                attachment={attachment}
+                onView={setSelectedAttachment}
+              />
+            ))}
+          </Box>
+        )}
 
         <Box sx={transactionDetailsStyles.actions}>
           <Button
@@ -195,6 +197,12 @@ export default function TransactionDetails({
           </Button>
         </Box>
       </Box>
+
+      <AttachmentPreviewModal
+        open={Boolean(selectedAttachment)}
+        attachment={selectedAttachment}
+        onClose={() => setSelectedAttachment(null)}
+      />
 
       <ConfirmationModal
         open={isDeleteModalOpen}

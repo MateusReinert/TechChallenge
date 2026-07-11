@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import SouthEastRoundedIcon from "@mui/icons-material/SouthEastRounded";
+import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 
 import StatusTag from "@/components/StatusTag";
 import EmptyState from "@/components/EmptyState";
@@ -136,6 +137,7 @@ export default function TransactionTable({
         const isSelected = selectedTransactionId === transaction.id;
         const isPositive = transaction.type === "income";
         const transactionStatus = transaction.status || "pending";
+        const attachmentsCount = transaction.attachments?.length || 0;
 
         const formattedAmount = transaction.amount.toLocaleString("pt-BR", {
           style: "currency",
@@ -191,6 +193,24 @@ export default function TransactionTable({
                 <Typography sx={transactionTableStyles.description}>
                   {transaction.description}
                 </Typography>
+
+                {attachmentsCount > 0 && (
+                  <Box sx={transactionTableStyles.attachmentIndicator}>
+                    <AttachFileRoundedIcon
+                      sx={transactionTableStyles.attachmentIndicatorIcon}
+                    />
+
+                    <Typography
+                      component="span"
+                      sx={transactionTableStyles.attachmentIndicatorText}
+                    >
+                      {attachmentsCount}{" "}
+                      {attachmentsCount > 1
+                        ? "comprovantes"
+                        : "comprovante"}
+                    </Typography>
+                  </Box>
+                )}
               </Box>
             </Box>
 

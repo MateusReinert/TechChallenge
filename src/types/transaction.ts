@@ -9,6 +9,14 @@ export type TransactionOperation =
   | "purchase"
   | "receipt";
 
+export type TransactionAttachment = {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  base64: string;
+};
+
 export type Transaction = {
   id: string;
   description: string;
@@ -20,6 +28,7 @@ export type Transaction = {
   account: string;
   status?: TransactionStatus;
   note?: string;
+  attachments?: TransactionAttachment[];
 };
 
 export type CreateTransactionData = {
@@ -31,4 +40,5 @@ export type CreateTransactionData = {
   category: string;
   account: string;
   note?: string;
+  attachments?: File[];
 };

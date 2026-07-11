@@ -1,127 +1,83 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Box, Typography, IconButton } from "@mui/material";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
+
+import {
+  Box,
+  IconButton,
+  Typography,
+} from "@mui/material";
+
 import { useRouter } from "next/navigation";
+
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import PageHeader from "@/components/PageHeader";
-import InputSearch from "@/components/InputSearch";
 import Button from "@/components/Button";
-import TransactionTable from "@/components/TransactionTable";
-import TransactionDetails from "@/components/TransactionDetails";
-import LoadingOverlay from "@/components/LoadingOverlay";
 import FeedbackSnackbar from "@/components/FeedbackSnackbar";
+import FilterBar, {
+  type FilterBarValue,
+} from "@/components/FilterBar";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import PageHeader from "@/components/PageHeader";
+import TransactionDetails from "@/components/TransactionDetails";
 import { TransactionModal } from "@/components/TransactionModal";
+import TransactionTable from "@/components/TransactionTable";
 
-import { Transaction } from "@/types/transaction";
+import { useFeedback } from "@/hooks/useFeedback";
+import { useLoadingAction } from "@/hooks/useLoadingAction";
+import { useTransactionCrud } from "@/hooks/useTransactionCrud";
+import { useTransactionFilterItems } from "@/hooks/useTransactionFilterItems";
+import { useTransactionModal } from "@/hooks/useTransactionModal";
+
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+
+import { initializeTransactions } from "@/store/features/transactions/transactionsSlice";
+
 import {
   TRANSACTION_BREADCRUMB,
   TRANSACTION_ITEMS_PER_PAGE,
-  TRANSACTION_OPERATION_LABEL,
-  TRANSACTION_STATUS_LABEL,
-  TRANSACTION_TYPE_LABEL,
 } from "@/constants/transaction";
-import { filterTransactions } from "@/utils/filterTransactions";
-import { paginate } from "@/utils/paginate";
-import {
-  saveTransactionAction,
-  deleteTransactionAction,
-} from "@/actions/transactionActions";
+
 import { transactionsClientStyles } from "@/styles/transactionsClientStyles";
+
+import type { Transaction } from "@/types/transaction";
+
+import { filterDashboardTransactions } from "@/utils/dashboardFiltersUtils";
+import { getPaginatedTransactions } from "@/utils/getPaginatedTransactions";
+
+import {
+  sortTransactions,
+  type SortDirection,
+  type TransactionSortField,
+} from "@/utils/transactionSort";
 
 type TransactionsClientProps = {
   initialTransactions: Transaction[];
 };
 
-type Feedback = {
-  open: boolean;
-  message: string;
-  type: "success" | "error";
+const INITIAL_FILTERS: FilterBarValue = {
+  search: "",
+  category: "",
+  type: "",
+  account: "",
+  status: "",
+  dateRange: "",
+  amountRange: "",
 };
-
-export type TransactionSortField =
-  | "description"
-  | "category"
-  | "type"
-  | "operation"
-  | "account"
-  | "amount"
-  | "date"
-  | "status";
-
-export type SortDirection = "asc" | "desc" | null;
-
-const MIN_LOADING_TIME = 700;
-
-function wait(milliseconds: number) {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
-
-function getTransactionSortValue(
-  transaction: Transaction,
-  field: TransactionSortField
-) {
-  if (field === "type") {
-    return TRANSACTION_TYPE_LABEL[transaction.type];
-  }
-
-  if (field === "operation") {
-    return TRANSACTION_OPERATION_LABEL[transaction.operation];
-  }
-
-  if (field === "status") {
-    return TRANSACTION_STATUS_LABEL[transaction.status || "pending"];
-  }
-
-  return transaction[field] || "";
-}
-
-function sortTransactions(
-  transactions: Transaction[],
-  sortField: TransactionSortField | null,
-  sortDirection: SortDirection
-) {
-  if (!sortField || !sortDirection) {
-    return transactions;
-  }
-
-  return [...transactions].sort((firstTransaction, secondTransaction) => {
-    const firstValue = getTransactionSortValue(firstTransaction, sortField);
-    const secondValue = getTransactionSortValue(secondTransaction, sortField);
-
-    if (typeof firstValue === "number" && typeof secondValue === "number") {
-      return sortDirection === "asc"
-        ? firstValue - secondValue
-        : secondValue - firstValue;
-    }
-
-    return sortDirection === "asc"
-      ? String(firstValue).localeCompare(String(secondValue), "pt-BR", {
-          numeric: true,
-        })
-      : String(secondValue).localeCompare(String(firstValue), "pt-BR", {
-          numeric: true,
-        });
-  });
-}
-
-function getErrorMessage(error: unknown, fallbackMessage: string) {
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  return fallbackMessage;
-}
 
 export default function TransactionsClient({
   initialTransactions,
 }: TransactionsClientProps) {
-  const [transactions, setTransactions] =
-    useState<Transaction[]>(initialTransactions);
+  const [filters, setFilters] =
+    useState<FilterBarValue>(INITIAL_FILTERS);
 
-  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const [sortField, setSortField] =
@@ -130,25 +86,69 @@ export default function TransactionsClient({
   const [sortDirection, setSortDirection] =
     useState<SortDirection>(null);
 
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null);
-
-  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("");
-
-  const [feedback, setFeedback] = useState<Feedback>({
-    open: false,
-    message: "",
-    type: "success",
-  });
-
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] =
+    useTransition();
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const isLoading = Boolean(loadingMessage) || isPending;
+  const storedTransactions = useAppSelector(
+    (state) => state.transactions.items
+  );
 
-  const filteredTransactions = filterTransactions(transactions, search);
+  const transactionsInitialized = useAppSelector(
+    (state) => state.transactions.initialized
+  );
+
+  const transactions = transactionsInitialized
+    ? storedTransactions
+    : initialTransactions;
+
+  useEffect(() => {
+    dispatch(
+      initializeTransactions(initialTransactions)
+    );
+  }, [dispatch, initialTransactions]);
+
+  const {
+    loadingMessage,
+    isLoading: isLoadingAction,
+    runWithLoading,
+  } = useLoadingAction();
+
+  const {
+    feedback,
+    showFeedback,
+    closeFeedback,
+  } = useFeedback();
+
+  const isLoading =
+    isLoadingAction || isPending;
+
+  const {
+    selectedTransaction,
+    setSelectedTransaction,
+    isTransactionModalOpen,
+    selectTransaction,
+    clearSelectedTransaction,
+    openNewTransactionModal,
+    openEditTransactionModal,
+    closeTransactionModal,
+    closeTransactionModalImmediately,
+    clearSelectedTransactionImmediately,
+  } = useTransactionModal(isLoading);
+
+  const filteredTransactions = useMemo(
+    () =>
+      filterDashboardTransactions(
+        transactions,
+        filters
+      ),
+    [transactions, filters]
+  );
+
+  const filterItems =
+    useTransactionFilterItems(transactions);
 
   const sortedTransactions = sortTransactions(
     filteredTransactions,
@@ -156,59 +156,68 @@ export default function TransactionsClient({
     sortDirection
   );
 
-  const totalPages = Math.ceil(
-    sortedTransactions.length / TRANSACTION_ITEMS_PER_PAGE
-  );
-
-  const paginatedTransactions = paginate(
-    sortedTransactions,
+  const {
+    totalPages,
+    paginatedTransactions,
+  } = getPaginatedTransactions({
+    transactions: sortedTransactions,
     currentPage,
-    TRANSACTION_ITEMS_PER_PAGE
-  );
+    itemsPerPage: TRANSACTION_ITEMS_PER_PAGE,
+  });
 
-  async function runWithLoading(message: string, action: () => Promise<void>) {
-    if (loadingMessage) return;
+  const {
+    handleSaveTransaction,
+    handleDeleteTransaction,
+  } = useTransactionCrud({
+    transactions,
+    isLoading,
+    startTransition,
+    runWithLoading,
+    showFeedback,
+    setSelectedTransaction,
+    clearSelectedTransactionImmediately,
+    closeTransactionModalImmediately,
+    refresh: router.refresh,
+    onTransactionCreated: () => {
+      setCurrentPage(1);
+    },
+    onTransactionDeleted: () => {
+      const remainingTransactions =
+        filteredTransactions.length - 1;
 
-    setLoadingMessage(message);
+      const newTotalPages = Math.ceil(
+        remainingTransactions /
+          TRANSACTION_ITEMS_PER_PAGE
+      );
 
-    const startTime = Date.now();
-
-    try {
-      await action();
-    } finally {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(MIN_LOADING_TIME - elapsedTime, 0);
-
-      if (remainingTime > 0) {
-        await wait(remainingTime);
+      if (
+        currentPage > newTotalPages &&
+        currentPage > 1
+      ) {
+        setCurrentPage(
+          (currentValue) => currentValue - 1
+        );
       }
+    },
+  });
 
-      setLoadingMessage("");
-    }
-  }
-
-  function showFeedback(message: string, type: Feedback["type"] = "success") {
-    setFeedback({
-      open: true,
-      message,
-      type,
-    });
-  }
-
-  function handleCloseFeedback() {
-    setFeedback((currentFeedback) => ({
-      ...currentFeedback,
-      open: false,
-    }));
-  }
-
-  function handleSearchChange(value: string) {
-    setSearch(value);
+  function handleFiltersChange(
+    nextFilters: FilterBarValue
+  ) {
+    setFilters(nextFilters);
     setCurrentPage(1);
-    setSelectedTransaction(null);
+    clearSelectedTransaction();
   }
 
-  function handleSort(field: TransactionSortField) {
+  function handleClearFilters() {
+    setFilters(INITIAL_FILTERS);
+    setCurrentPage(1);
+    clearSelectedTransaction();
+  }
+
+  function handleSort(
+    field: TransactionSortField
+  ) {
     if (isLoading) return;
 
     if (sortField !== field) {
@@ -222,139 +231,32 @@ export default function TransactionsClient({
     }
 
     setCurrentPage(1);
-    setSelectedTransaction(null);
-  }
-
-  function handleOpenNewTransactionModal() {
-    if (isLoading) return;
-
-    setSelectedTransaction(null);
-    setIsTransactionModalOpen(true);
-  }
-
-  function handleEditTransaction(transaction: Transaction) {
-    if (isLoading) return;
-
-    setSelectedTransaction(transaction);
-    setIsTransactionModalOpen(true);
-  }
-
-  function handleCloseTransactionModal() {
-    if (isLoading) return;
-
-    setIsTransactionModalOpen(false);
-  }
-
-  function handleSaveTransaction(savedTransaction: Transaction) {
-    if (isLoading) return;
-
-    const isEditing = Boolean(savedTransaction.id);
-
-    const loadingText = isEditing
-      ? "Atualizando transação..."
-      : "Criando transação...";
-
-    const errorText = isEditing
-      ? "Não foi possível atualizar a transação. Tente novamente."
-      : "Não foi possível criar a transação. Tente novamente.";
-
-    startTransition(async () => {
-      await runWithLoading(loadingText, async () => {
-        try {
-          const saved = await saveTransactionAction(savedTransaction);
-
-          const transactionExists = transactions.some(
-            (transaction) => transaction.id === saved.id
-          );
-
-          if (transactionExists) {
-            setTransactions((currentTransactions) =>
-              currentTransactions.map((transaction) =>
-                transaction.id === saved.id ? saved : transaction
-              )
-            );
-
-            showFeedback("Transação atualizada com sucesso.");
-          } else {
-            setTransactions((currentTransactions) => [
-              saved,
-              ...currentTransactions,
-            ]);
-
-            setCurrentPage(1);
-            showFeedback("Transação criada com sucesso.");
-          }
-
-          setSelectedTransaction(saved);
-          setIsTransactionModalOpen(false);
-
-          router.refresh();
-        } catch (error) {
-          showFeedback(getErrorMessage(error, errorText), "error");
-        }
-      });
-    });
-  }
-
-  function handleDeleteTransaction(transactionId: string) {
-    if (isLoading) return;
-
-    if (!transactionId) {
-      showFeedback("Não foi possível identificar a transação.", "error");
-      return;
-    }
-
-    startTransition(async () => {
-      await runWithLoading("Excluindo transação...", async () => {
-        try {
-          await deleteTransactionAction(transactionId);
-
-          setTransactions((currentTransactions) =>
-            currentTransactions.filter(
-              (transaction) => transaction.id !== transactionId
-            )
-          );
-
-          setSelectedTransaction(null);
-          setIsTransactionModalOpen(false);
-
-          const remainingTransactions = filteredTransactions.length - 1;
-
-          const newTotalPages = Math.ceil(
-            remainingTransactions / TRANSACTION_ITEMS_PER_PAGE
-          );
-
-          if (currentPage > newTotalPages && currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-          }
-
-          showFeedback("Transação excluída com sucesso.");
-          router.refresh();
-        } catch (error) {
-          showFeedback(
-            getErrorMessage(
-              error,
-              "Não foi possível excluir a transação. Tente novamente."
-            ),
-            "error"
-          );
-        }
-      });
-    });
+    clearSelectedTransaction();
   }
 
   function handlePreviousPage() {
     if (isLoading || currentPage <= 1) return;
 
-    setCurrentPage(currentPage - 1);
-    setSelectedTransaction(null);
+    setCurrentPage(
+      (currentValue) => currentValue - 1
+    );
+
+    clearSelectedTransaction();
   }
 
   function handleNextPage() {
-    if (isLoading || currentPage >= totalPages) return;
+    if (
+      isLoading ||
+      currentPage >= totalPages
+    ) {
+      return;
+    }
 
-    setCurrentPage(currentPage + 1);
-    setSelectedTransaction(null);
+    setCurrentPage(
+      (currentValue) => currentValue + 1
+    );
+
+    clearSelectedTransaction();
   }
 
   return (
@@ -362,39 +264,67 @@ export default function TransactionsClient({
       <Box
         onClick={() => {
           if (!isLoading) {
-            setSelectedTransaction(null);
+            clearSelectedTransaction();
           }
         }}
         sx={{
           ...transactionsClientStyles.layout,
           gridTemplateColumns: {
             xs: "1fr",
-            lg: selectedTransaction ? "1fr 320px" : "1fr",
+            lg: selectedTransaction
+              ? "1fr 320px"
+              : "1fr",
           },
         }}
       >
         <Box sx={transactionsClientStyles.content}>
-          <PageHeader title="Transações" breadcrumb={TRANSACTION_BREADCRUMB} />
+          <PageHeader
+            title="Transações"
+            breadcrumb={TRANSACTION_BREADCRUMB}
+          />
 
           <Box sx={transactionsClientStyles.toolbar}>
-            <Box sx={transactionsClientStyles.searchWrapper}>
-              <InputSearch value={search} onChange={handleSearchChange} />
-            </Box>
+            <FilterBar
+              value={filters}
+              filters={filterItems}
+              searchPlaceholder="Buscar transações..."
+              onChange={handleFiltersChange}
+              onClear={handleClearFilters}
+            />
 
             <Button
-              onClick={handleOpenNewTransactionModal}
+              variantType="primary"
+              onClick={openNewTransactionModal}
               disabled={isLoading}
+              sx={
+                transactionsClientStyles.newTransactionButton
+              }
             >
-              Nova transação
+              <Box
+                sx={
+                  transactionsClientStyles.buttonContent
+                }
+              >
+                Nova transação
+                <AddRoundedIcon fontSize="small" />
+              </Box>
             </Button>
           </Box>
 
-          <Box sx={transactionsClientStyles.tableWrapper}>
+          <Box
+            sx={
+              transactionsClientStyles.tableWrapper
+            }
+          >
             <TransactionTable
               transactions={paginatedTransactions}
-              selectedTransactionId={selectedTransaction?.id}
+              selectedTransactionId={
+                selectedTransaction?.id
+              }
               onSelectTransaction={
-                isLoading ? undefined : setSelectedTransaction
+                isLoading
+                  ? undefined
+                  : selectTransaction
               }
               sortField={sortField}
               sortDirection={sortDirection}
@@ -407,36 +337,62 @@ export default function TransactionsClient({
               emptyDescription={
                 transactions.length === 0
                   ? "Comece adicionando entradas e saídas para acompanhar seu saldo."
-                  : "Tente buscar por outro termo."
+                  : "Ajuste os filtros para encontrar outras movimentações."
               }
               emptyActionLabel={
-                transactions.length === 0 ? "Nova transação" : undefined
+                transactions.length === 0
+                  ? "Nova transação"
+                  : undefined
               }
               onEmptyAction={
                 transactions.length === 0
-                  ? handleOpenNewTransactionModal
+                  ? openNewTransactionModal
                   : undefined
               }
             />
           </Box>
 
-          <Box sx={transactionsClientStyles.pagination}>
-            <Typography sx={transactionsClientStyles.paginationText}>
-              {sortedTransactions.length} registros encontrados
+          <Box
+            sx={transactionsClientStyles.pagination}
+          >
+            <Typography
+              sx={
+                transactionsClientStyles.paginationText
+              }
+            >
+              {sortedTransactions.length} registros
+              encontrados
             </Typography>
 
-            <Box sx={transactionsClientStyles.paginationActions}>
-              <Typography sx={transactionsClientStyles.paginationText}>
-                Página {currentPage} de {totalPages || 1}
+            <Box
+              sx={
+                transactionsClientStyles.paginationActions
+              }
+            >
+              <Typography
+                sx={
+                  transactionsClientStyles.paginationText
+                }
+              >
+                Página {currentPage} de{" "}
+                {totalPages || 1}
               </Typography>
 
-              <Box sx={transactionsClientStyles.paginationButtons}>
+              <Box
+                sx={
+                  transactionsClientStyles.paginationButtons
+                }
+              >
                 <IconButton
                   size="small"
                   onClick={handlePreviousPage}
-                  disabled={currentPage === 1 || isLoading}
+                  disabled={
+                    currentPage === 1 || isLoading
+                  }
                   aria-label="Página anterior"
-                  sx={transactionsClientStyles.paginationButton}
+                  sx={
+                    transactionsClientStyles.paginationButton
+                  }
                 >
                   <KeyboardArrowLeftIcon fontSize="small" />
                 </IconButton>
@@ -450,7 +406,9 @@ export default function TransactionsClient({
                     isLoading
                   }
                   aria-label="Próxima página"
-                  sx={transactionsClientStyles.paginationButton}
+                  sx={
+                    transactionsClientStyles.paginationButton
+                  }
                 >
                   <KeyboardArrowRightIcon fontSize="small" />
                 </IconButton>
@@ -462,7 +420,7 @@ export default function TransactionsClient({
         {selectedTransaction && (
           <TransactionDetails
             transaction={selectedTransaction}
-            onEdit={handleEditTransaction}
+            onEdit={openEditTransactionModal}
             onDelete={handleDeleteTransaction}
           />
         )}
@@ -470,19 +428,22 @@ export default function TransactionsClient({
 
       <TransactionModal
         open={isTransactionModalOpen}
-        onClose={handleCloseTransactionModal}
+        onClose={closeTransactionModal}
         transaction={selectedTransaction}
         onSave={handleSaveTransaction}
         onDelete={handleDeleteTransaction}
       />
 
-      <LoadingOverlay open={Boolean(loadingMessage)} message={loadingMessage} />
+      <LoadingOverlay
+        open={Boolean(loadingMessage)}
+        message={loadingMessage}
+      />
 
       <FeedbackSnackbar
         open={feedback.open}
         message={feedback.message}
         type={feedback.type}
-        onClose={handleCloseFeedback}
+        onClose={closeFeedback}
       />
     </>
   );

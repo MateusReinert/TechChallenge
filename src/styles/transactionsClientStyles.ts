@@ -83,4 +83,14 @@ export const transactionsClientStyles = {
     border: `1px solid ${colors.gray[300]}`,
     borderRadius: radius.sm,
   } as SxProps<Theme>,
+  buttonContent: {
+  display: "flex",
+  alignItems: "center",
+  gap: spacing.sm,
+  whiteSpace: "nowrap",
+} as SxProps<Theme>,
+newTransactionButton: {
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+} as SxProps<Theme>,
 };

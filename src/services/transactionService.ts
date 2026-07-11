@@ -10,7 +10,7 @@ const filePath = path.join(
   "transactions.json"
 );
 
-async function readFile(): Promise<Transaction[]> {
+async function readTransactions(): Promise<Transaction[]> {
   try {
     const file = await fs.readFile(filePath, "utf-8");
 
@@ -28,11 +28,13 @@ async function readFile(): Promise<Transaction[]> {
   }
 }
 
-async function writeFile(data: Transaction[]) {
+async function writeTransactions(
+  transactions: Transaction[]
+) {
   try {
     await fs.writeFile(
       filePath,
-      JSON.stringify(data, null, 2),
+      JSON.stringify(transactions, null, 2),
       "utf-8"
     );
   } catch {
@@ -43,17 +45,28 @@ async function writeFile(data: Transaction[]) {
 }
 
 export async function getTransactions() {
-  return await readFile();
+  return await readTransactions();
+}
+
+export async function getTransactionById(id: string) {
+  const transactions = await readTransactions();
+
+  return transactions.find(
+    (transaction) => transaction.id === id
+  );
 }
 
 export async function createTransaction(
   transaction: Transaction
 ) {
-  const transactions = await readFile();
+  const transactions = await readTransactions();
 
-  const updated = [transaction, ...transactions];
+  const updatedTransactions = [
+    transaction,
+    ...transactions,
+  ];
 
-  await writeFile(updated);
+  await writeTransactions(updatedTransactions);
 
   return transaction;
 }
@@ -61,7 +74,7 @@ export async function createTransaction(
 export async function updateTransaction(
   transaction: Transaction
 ) {
-  const transactions = await readFile();
+  const transactions = await readTransactions();
 
   const exists = transactions.some(
     (item) => item.id === transaction.id
@@ -71,17 +84,22 @@ export async function updateTransaction(
     throw new Error("Transação não encontrada.");
   }
 
-  const updated = transactions.map((item) =>
-    item.id === transaction.id ? transaction : item
+  const updatedTransactions = transactions.map(
+    (item) =>
+      item.id === transaction.id
+        ? transaction
+        : item
   );
 
-  await writeFile(updated);
+  await writeTransactions(updatedTransactions);
 
   return transaction;
 }
 
-export async function deleteTransaction(id: string) {
-  const transactions = await readFile();
+export async function deleteTransaction(
+  id: string
+) {
+  const transactions = await readTransactions();
 
   const exists = transactions.some(
     (item) => item.id === id
@@ -91,9 +109,9 @@ export async function deleteTransaction(id: string) {
     throw new Error("Transação não encontrada.");
   }
 
-  const updated = transactions.filter(
+  const updatedTransactions = transactions.filter(
     (item) => item.id !== id
   );
 
-  await writeFile(updated);
+  await writeTransactions(updatedTransactions);
 }

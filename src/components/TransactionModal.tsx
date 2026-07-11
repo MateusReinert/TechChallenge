@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Modal, Typography, IconButton } from "@mui/material";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import Input from "./Input";
-import Lookup from "./Lookup";
-import CurrencyInput from "./CurrencyInput";
-import DateInput from "./DateInput";
-import Button from "./Button";
-import ConfirmationModal from "./ConfirmationModal";
+import Button from "@/components/Button";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import CurrencyInput from "@/components/CurrencyInput";
+import DateInput from "@/components/DateInput";
+import FileDropzone from "@/components/FileDropzone";
+import Input from "@/components/Input";
+import Lookup from "@/components/Lookup";
 
-import { Transaction } from "@/types/transaction";
-import { isValidDateBR } from "@/utils/dateUtils";
 import {
   TRANSACTION_MODAL_ACCOUNT_OPTIONS,
   TRANSACTION_MODAL_CATEGORY_OPTIONS,
@@ -34,6 +33,18 @@ import {
   modalTitleStyle,
 } from "@/styles/transactionModalStyles";
 
+import type { Transaction } from "@/types/transaction";
+
+import { readFileAsBase64 } from "@/utils/fileUtils";
+import {
+  getInitialTransactionForm,
+  parseTransactionCurrency,
+  validateTransactionForm,
+  type TransactionForm,
+  type TransactionFormErrors,
+  type TransactionFormField,
+} from "@/utils/transactionFormUtils";
+
 type TransactionModalProps = {
   open: boolean;
   onClose: () => void;
@@ -41,19 +52,6 @@ type TransactionModalProps = {
   onSave?: (transaction: Transaction) => void;
   onDelete?: (transactionId: string) => void;
 };
-
-type TransactionForm = {
-  description: string;
-  amount: string;
-  date: string;
-  type: string;
-  operation: string;
-  category: string;
-  account: string;
-  note: string;
-};
-
-type TransactionFormErrors = Partial<Record<keyof TransactionForm, string>>;
 
 type TransactionModalContentProps = {
   initialData: TransactionForm;
@@ -63,83 +61,6 @@ type TransactionModalContentProps = {
   onSave?: (transaction: Transaction) => void;
   onDelete?: (transactionId: string) => void;
 };
-
-const initialForm: TransactionForm = {
-  description: "",
-  amount: "",
-  date: "",
-  type: "",
-  operation: "",
-  category: "",
-  account: "",
-  note: "",
-};
-
-function formatCurrency(value: number) {
-  return value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-}
-
-function parseCurrency(value: string) {
-  const onlyNumbers = value.replace(/\D/g, "");
-
-  if (!onlyNumbers) return 0;
-
-  return Number(onlyNumbers) / 100;
-}
-
-function getInitialForm(transaction?: Transaction | null): TransactionForm {
-  if (!transaction) return initialForm;
-
-  return {
-    description: transaction.description,
-    amount: formatCurrency(transaction.amount),
-    date: transaction.date,
-    type: transaction.type,
-    operation: transaction.operation,
-    category: transaction.category,
-    account: transaction.account,
-    note: transaction.note || "",
-  };
-}
-
-function validateForm(form: TransactionForm) {
-  const errors: TransactionFormErrors = {};
-
-  if (!form.description.trim()) {
-    errors.description = "Informe a descrição.";
-  }
-
-  if (parseCurrency(form.amount) <= 0) {
-    errors.amount = "Informe um valor maior que zero.";
-  }
-
-  if (!form.date.trim()) {
-    errors.date = "Informe a data.";
-  } else if (!isValidDateBR(form.date)) {
-    errors.date = "Informe uma data válida.";
-  }
-
-  if (!form.type.trim()) {
-    errors.type = "Selecione a natureza.";
-  }
-
-  if (!form.operation.trim()) {
-    errors.operation = "Selecione o tipo de transação.";
-  }
-
-  if (!form.category.trim()) {
-    errors.category = "Selecione a categoria.";
-  }
-
-  if (!form.account.trim()) {
-    errors.account = "Selecione a conta.";
-  }
-
-  return errors;
-}
 
 function TransactionModalContent({
   initialData,
@@ -153,7 +74,7 @@ function TransactionModalContent({
   const [errors, setErrors] = useState<TransactionFormErrors>({});
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  function updateForm(field: keyof TransactionForm, value: string) {
+  function updateForm(field: TransactionFormField, value: string) {
     setForm((currentForm) => ({
       ...currentForm,
       [field]: value,
@@ -165,18 +86,59 @@ function TransactionModalContent({
     }));
   }
 
-  function handleSave() {
-    const validationErrors = validateForm(form);
+  function addFiles(files: File[]) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      files: [...currentForm.files, ...files],
+    }));
+  }
+
+  function removeFile(index: number) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      files: currentForm.files.filter(
+        (_, fileIndex) => fileIndex !== index
+      ),
+    }));
+  }
+
+  function removeExistingAttachment(attachmentId: string) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      existingAttachments: currentForm.existingAttachments.filter(
+        (attachment) => attachment.id !== attachmentId
+      ),
+    }));
+  }
+
+  async function getAttachmentsToSave() {
+    const newAttachments = await Promise.all(
+      form.files.map(async (file) => ({
+        id: crypto.randomUUID(),
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        base64: await readFileAsBase64(file),
+      }))
+    );
+
+    return [...form.existingAttachments, ...newAttachments];
+  }
+
+  async function handleSave() {
+    const validationErrors = validateTransactionForm(form);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
+    const attachments = await getAttachmentsToSave();
+
     const savedTransaction: Transaction = {
       id: transaction?.id || "",
       description: form.description.trim(),
-      amount: parseCurrency(form.amount),
+      amount: parseTransactionCurrency(form.amount),
       date: form.date,
       type: form.type as Transaction["type"],
       operation: form.operation as Transaction["operation"],
@@ -184,6 +146,7 @@ function TransactionModalContent({
       account: form.account,
       status: transaction?.status || "success",
       note: form.note.trim(),
+      attachments,
     };
 
     onSave?.(savedTransaction);
@@ -207,7 +170,10 @@ function TransactionModalContent({
       >
         <Box sx={modalHeaderStyle}>
           <Box>
-            <Typography id="transaction-modal-title" sx={modalTitleStyle}>
+            <Typography
+              id="transaction-modal-title"
+              sx={modalTitleStyle}
+            >
               {isEditing ? "Editar transação" : "Nova transação"}
             </Typography>
 
@@ -246,7 +212,9 @@ function TransactionModalContent({
             value={form.description}
             error={Boolean(errors.description)}
             helperText={errors.description}
-            onChange={(event) => updateForm("description", event.target.value)}
+            onChange={(event) =>
+              updateForm("description", event.target.value)
+            }
           />
 
           <Box sx={modalFormGridStyle}>
@@ -310,11 +278,27 @@ function TransactionModalContent({
           <Input
             label="Observação"
             value={form.note}
-            onChange={(event) => updateForm("note", event.target.value)}
+            onChange={(event) =>
+              updateForm("note", event.target.value)
+            }
+          />
+
+          <FileDropzone
+            files={form.files}
+            attachments={form.existingAttachments}
+            onAddFiles={addFiles}
+            onRemoveFile={removeFile}
+            onRemoveAttachment={removeExistingAttachment}
           />
         </Box>
 
-        <Box sx={isEditing ? modalFooterEditingStyle : modalFooterStyle}>
+        <Box
+          sx={
+            isEditing
+              ? modalFooterEditingStyle
+              : modalFooterStyle
+          }
+        >
           {isEditing && (
             <Button
               variantType="dangerOutlined"
@@ -325,12 +309,20 @@ function TransactionModalContent({
           )}
 
           <Box sx={modalActionsGroupStyle}>
-            <Button variantType="outlined" onClick={onClose}>
+            <Button
+              variantType="outlined"
+              onClick={onClose}
+            >
               Cancelar
             </Button>
 
-            <Button variantType="primary" onClick={handleSave}>
-              {isEditing ? "Salvar alterações" : "Salvar transação"}
+            <Button
+              variantType="primary"
+              onClick={handleSave}
+            >
+              {isEditing
+                ? "Salvar alterações"
+                : "Salvar transação"}
             </Button>
           </Box>
         </Box>
@@ -358,10 +350,14 @@ export function TransactionModal({
   onDelete,
 }: TransactionModalProps) {
   const isEditing = Boolean(transaction);
-  const initialData = getInitialForm(transaction);
+  const initialData = getInitialTransactionForm(transaction);
 
   return (
-    <Modal open={open} onClose={onClose} sx={modalOverlayStyle}>
+    <Modal
+      open={open}
+      onClose={onClose}
+      sx={modalOverlayStyle}
+    >
       <TransactionModalContent
         key={transaction?.id || "new"}
         initialData={initialData}

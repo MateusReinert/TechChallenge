@@ -9,25 +9,23 @@ export const transactionTableStyles = {
       lg: "100%",
     },
     bgcolor: colors.background.default,
-    border: `1px solid ${colors.gray[200]}`,
-    borderRadius: radius.sm,
     overflow: "hidden",
   },
 
   header: {
     display: "grid",
     gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr 1fr 120px",
-    px: {
-      xs: spacing.sm,
-      md: spacing.md,
-    },
+    px: spacing.md,
     py: spacing.sm,
-    borderBottom: `1px solid ${colors.gray[200]}`,
+    bgcolor: colors.gray[50],
+    border: `1px solid ${colors.gray[100]}`,
+    borderRadius: radius.md,
+    mb: spacing.sm,
   },
 
   sortableHeader: {
     ...typography.label,
-    color: colors.gray[600],
+    color: colors.gray[500],
     whiteSpace: "nowrap",
     cursor: "pointer",
     userSelect: "none",
@@ -36,6 +34,7 @@ export const transactionTableStyles = {
     background: "transparent",
     textAlign: "left",
     fontFamily: "inherit",
+    fontWeight: 800,
     "&:focus-visible": {
       outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "2px",
@@ -44,38 +43,42 @@ export const transactionTableStyles = {
   },
 
   sortableHeaderActive: {
-    fontWeight: 700,
-    color: colors.gray[900],
+    fontWeight: 900,
+    color: colors.primary[600],
   },
 
   row: {
     display: "grid",
     gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr 1fr 120px",
     alignItems: "center",
-    px: {
-      xs: spacing.sm,
-      md: spacing.md,
-    },
-    py: spacing.sm,
-    borderBottom: `1px solid ${colors.gray[200]}`,
+    px: spacing.md,
+    py: spacing.md,
+    border: `1px solid ${colors.gray[100]}`,
+    borderRadius: radius.md,
     cursor: "pointer",
-    bgcolor: "transparent",
-    transition: "background-color 0.2s ease",
+    bgcolor: colors.background.default,
+    transition:
+      "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease",
+    mb: spacing.sm,
     "&:last-child": {
-      borderBottom: "none",
+      mb: 0,
     },
     "&:hover": {
       bgcolor: colors.gray[50],
+      borderColor: colors.gray[200],
+      boxShadow: "0 8px 24px rgba(17, 24, 39, 0.06)",
+      transform: "translateY(-1px)",
     },
     "&:focus-visible": {
       outline: `2px solid ${colors.primary[500]}`,
-      outlineOffset: "-2px",
+      outlineOffset: "2px",
       bgcolor: colors.gray[50],
     },
   },
 
   rowSelected: {
-    bgcolor: colors.gray[50],
+    bgcolor: colors.primary[100],
+    borderColor: colors.primary[500],
   },
 
   descriptionCell: {
@@ -88,7 +91,7 @@ export const transactionTableStyles = {
   iconWrapper: {
     width: sizes.summaryIcon,
     height: sizes.summaryIcon,
-    borderRadius: "10px",
+    borderRadius: radius.md,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -118,11 +121,35 @@ export const transactionTableStyles = {
 
   description: {
     ...typography.body,
-    fontWeight: 500,
+    fontWeight: 800,
     color: colors.gray[900],
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
+  },
+
+  attachmentIndicator: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: spacing.xs,
+    width: "fit-content",
+    ...typography.label,
+    color: colors.primary[600],
+    px: spacing.sm,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    bgcolor: colors.primary[100],
+  },
+
+  attachmentIndicatorIcon: {
+    fontSize: 14,
+    color: colors.primary[500],
+  },
+
+  attachmentIndicatorText: {
+    ...typography.label,
+    color: colors.primary[600],
+    fontWeight: 700,
   },
 
   cellText: {
@@ -136,7 +163,7 @@ export const transactionTableStyles = {
 
   amount: {
     ...typography.body,
-    fontWeight: 500,
+    fontWeight: 800,
     color: colors.gray[900],
     whiteSpace: "nowrap",
   },

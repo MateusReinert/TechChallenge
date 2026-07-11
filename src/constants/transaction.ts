@@ -75,6 +75,19 @@ export const TRANSACTION_MODAL_ACCOUNT_OPTIONS =
 
 export const TRANSACTION_ITEMS_PER_PAGE = 10;
 
-export const TRANSACTION_BREADCRUMB = ["Movimentações", "Transações"];
+export const TRANSACTION_BREADCRUMB = [
+  "Movimentações",
+  "Transações",
+];
 
-export const TRANSACTION_SEARCH_PLACEHOLDER = "Buscar transação";
+export const TRANSACTION_SEARCH_PLACEHOLDER =
+  "Buscar transação";
+
+export const TRANSACTION_ATTACHMENT_ACCEPT =
+  ".pdf,.png,.jpg,.jpeg";
+
+export const TRANSACTION_ATTACHMENT_MAX_SIZE =
+  5 * 1024 * 1024;
+
+export const TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL =
+  "5 MB";

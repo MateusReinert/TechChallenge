@@ -1,5 +1,12 @@
 import { SxProps, Theme } from "@mui/material";
-import { colors, radius, shadow, spacing, typography, sizes } from "@/styles/tokens";
+import {
+  colors,
+  radius,
+  shadow,
+  spacing,
+  typography,
+  sizes,
+} from "@/styles/tokens";
 
 type SummaryCardVariant = "positive" | "negative" | "neutral";
 
@@ -11,34 +18,30 @@ type SummaryCardStyles = Record<string, SxProps<Theme>> & {
 export const summaryCardStyles = {
   root: {
     width: "100%",
-    minHeight: "152px",
+    minHeight: "180px",
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     p: spacing.xl,
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
     gap: spacing.lg,
     boxShadow: shadow.sm,
+    overflow: "hidden",
   },
 
   header: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-  },
-
-  headerContent: {
-    display: "flex",
-    alignItems: "center",
     gap: spacing.md,
-    width: "100%",
   },
 
   icon: {
     width: sizes.summaryIcon,
     height: sizes.summaryIcon,
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -66,11 +69,15 @@ export const summaryCardStyles = {
     },
   },
 
-  labelWrapper: {
-    width: "100%",
+  action: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
+    ml: "auto",
+  },
+
+  content: {
+    display: "flex",
+    flexDirection: "column",
     gap: spacing.sm,
   },
 
@@ -80,11 +87,6 @@ export const summaryCardStyles = {
     color: colors.gray[600],
   },
 
-  action: {
-    display: "flex",
-    alignItems: "center",
-  },
-
   value: {
     ...typography.title,
     lineHeight: 1.1,
@@ -92,32 +94,46 @@ export const summaryCardStyles = {
   },
 
   trend: {
+    width: "fit-content",
     display: "flex",
     alignItems: "center",
     gap: spacing.xs,
+    px: spacing.sm,
+    py: spacing.xs,
+    borderRadius: radius.full,
     ...typography.label,
-    fontWeight: 600,
+    fontWeight: 700,
 
     "& svg": {
-      fontSize: 18,
+      fontSize: 16,
     },
 
     "& span": {
-      fontWeight: 500,
+      fontWeight: 700,
     },
   },
 
   trendVariants: {
     positive: {
+      bgcolor: colors.success[100],
       color: colors.success[500],
     },
 
     negative: {
+      bgcolor: colors.error[100],
       color: colors.error[500],
     },
 
     neutral: {
-      color: colors.gray[500],
+      bgcolor: colors.neutral[100],
+      color: colors.neutral[500],
     },
+  },
+
+  sparkline: {
+    height: 44,
+    mx: `-${spacing.xl}`,
+    mb: `-${spacing.xl}`,
+    overflow: "hidden",
   },
 } satisfies SummaryCardStyles;
