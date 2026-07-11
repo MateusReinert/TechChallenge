@@ -1,0 +1,42 @@
+{
+  "node": {
+    "401f79340336e56a2709341ad9484b5e21425725f5": {
+      "workers": {
+        "app/(app)/dashboard/page": {
+          "moduleId": "[project]/apps/shell/.next-internal/server/app/(app)/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/shell/src/actions/transactionActions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteTransactionAction",
+          "filename": "apps/shell/src/actions/transactionActions.ts"
+        },
+        "app/(app)/transactions/page": {
+          "moduleId": "[project]/apps/shell/.next-internal/server/app/(app)/transactions/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/shell/src/actions/transactionActions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteTransactionAction",
+          "filename": "apps/shell/src/actions/transactionActions.ts"
+        }
+      },
+      "filename": "apps/shell/src/actions/transactionActions.ts",
+      "exportedName": "deleteTransactionAction"
+    },
+    "4043fe94a62cebdef6bb9a5f84ce9410e1a494154b": {
+      "workers": {
+        "app/(app)/dashboard/page": {
+          "moduleId": "[project]/apps/shell/.next-internal/server/app/(app)/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/shell/src/actions/transactionActions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveTransactionAction",
+          "filename": "apps/shell/src/actions/transactionActions.ts"
+        },
+        "app/(app)/transactions/page": {
+          "moduleId": "[project]/apps/shell/.next-internal/server/app/(app)/transactions/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/shell/src/actions/transactionActions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveTransactionAction",
+          "filename": "apps/shell/src/actions/transactionActions.ts"
+        }
+      },
+      "filename": "apps/shell/src/actions/transactionActions.ts",
+      "exportedName": "saveTransactionAction"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "D2/4CQvuLRaZMhXpAz2kKqsgA+dmugpvMW0lUNPY6AU="
+}
