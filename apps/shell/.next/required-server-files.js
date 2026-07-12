@@ -306,7 +306,21 @@ self.__SERVER_FILES_MANIFEST={
     "turbopack": {
       "root": "C:\\Users\\Mateus\\Fiap\\TechChallenge"
     },
-    "distDirRoot": ".next"
+    "distDirRoot": ".next",
+    "_originalRewrites": {
+      "beforeFiles": [],
+      "afterFiles": [
+        {
+          "source": "/transactions",
+          "destination": "http://localhost:3001/transactions"
+        },
+        {
+          "source": "/transactions/:path*",
+          "destination": "http://localhost:3001/transactions/:path*"
+        }
+      ],
+      "fallback": []
+    }
   },
   "appDir": "C:\\Users\\Mateus\\Fiap\\TechChallenge\\apps\\shell",
   "relativeAppDir": "apps\\shell",

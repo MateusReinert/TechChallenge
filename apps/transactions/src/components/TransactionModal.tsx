@@ -1,0 +1,372 @@
+"use client";
+
+import { useState } from "react";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
+import Button from "@/components/Button";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import CurrencyInput from "@/components/CurrencyInput";
+import DateInput from "@/components/DateInput";
+import FileDropzone from "@/components/FileDropzone";
+import Input from "@/components/Input";
+import Lookup from "@/components/Lookup";
+
+import {
+  TRANSACTION_MODAL_ACCOUNT_OPTIONS,
+  TRANSACTION_MODAL_CATEGORY_OPTIONS,
+  TRANSACTION_MODAL_OPERATION_OPTIONS,
+  TRANSACTION_MODAL_TYPE_OPTIONS,
+} from "@/constants/transaction";
+
+import {
+  modalActionsGroupStyle,
+  modalCloseButtonStyle,
+  modalContainerStyle,
+  modalContentStyle,
+  modalDescriptionStyle,
+  modalFooterEditingStyle,
+  modalFooterStyle,
+  modalFormGridStyle,
+  modalHeaderStyle,
+  modalOverlayStyle,
+  modalTitleStyle,
+} from "@/styles/transactionModalStyles";
+
+import type { Transaction } from "@/types/transaction";
+
+import { readFileAsBase64 } from "@/utils/fileUtils";
+import {
+  getInitialTransactionForm,
+  parseTransactionCurrency,
+  validateTransactionForm,
+  type TransactionForm,
+  type TransactionFormErrors,
+  type TransactionFormField,
+} from "@/utils/transactionFormUtils";
+
+type TransactionModalProps = {
+  open: boolean;
+  onClose: () => void;
+  transaction?: Transaction | null;
+  onSave?: (transaction: Transaction) => void;
+  onDelete?: (transactionId: string) => void;
+};
+
+type TransactionModalContentProps = {
+  initialData: TransactionForm;
+  transaction?: Transaction | null;
+  isEditing: boolean;
+  onClose: () => void;
+  onSave?: (transaction: Transaction) => void;
+  onDelete?: (transactionId: string) => void;
+};
+
+function TransactionModalContent({
+  initialData,
+  transaction,
+  isEditing,
+  onClose,
+  onSave,
+  onDelete,
+}: TransactionModalContentProps) {
+  const [form, setForm] = useState<TransactionForm>(initialData);
+  const [errors, setErrors] = useState<TransactionFormErrors>({});
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  function updateForm(field: TransactionFormField, value: string) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      [field]: value,
+    }));
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [field]: undefined,
+    }));
+  }
+
+  function addFiles(files: File[]) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      files: [...currentForm.files, ...files],
+    }));
+  }
+
+  function removeFile(index: number) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      files: currentForm.files.filter(
+        (_, fileIndex) => fileIndex !== index
+      ),
+    }));
+  }
+
+  function removeExistingAttachment(attachmentId: string) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      existingAttachments: currentForm.existingAttachments.filter(
+        (attachment) => attachment.id !== attachmentId
+      ),
+    }));
+  }
+
+  async function getAttachmentsToSave() {
+    const newAttachments = await Promise.all(
+      form.files.map(async (file) => ({
+        id: crypto.randomUUID(),
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        base64: await readFileAsBase64(file),
+      }))
+    );
+
+    return [...form.existingAttachments, ...newAttachments];
+  }
+
+  async function handleSave() {
+    const validationErrors = validateTransactionForm(form);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    const attachments = await getAttachmentsToSave();
+
+    const savedTransaction: Transaction = {
+      id: transaction?.id || "",
+      description: form.description.trim(),
+      amount: parseTransactionCurrency(form.amount),
+      date: form.date,
+      type: form.type as Transaction["type"],
+      operation: form.operation as Transaction["operation"],
+      category: form.category,
+      account: form.account,
+      status: transaction?.status || "success",
+      note: form.note.trim(),
+      attachments,
+    };
+
+    onSave?.(savedTransaction);
+  }
+
+  function confirmDelete() {
+    if (!transaction) return;
+
+    onDelete?.(transaction.id);
+    setIsDeleteModalOpen(false);
+  }
+
+  return (
+    <>
+      <Box
+        sx={modalContainerStyle}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="transaction-modal-title"
+        aria-describedby="transaction-modal-description"
+      >
+        <Box sx={modalHeaderStyle}>
+          <Box>
+            <Typography
+              id="transaction-modal-title"
+              sx={modalTitleStyle}
+            >
+              {isEditing ? "Editar transação" : "Nova transação"}
+            </Typography>
+
+            <Typography
+              id="transaction-modal-description"
+              sx={modalDescriptionStyle}
+            >
+              {isEditing
+                ? "Altere os dados abaixo para atualizar a movimentação."
+                : "Preencha os dados abaixo para cadastrar uma nova movimentação."}
+            </Typography>
+          </Box>
+
+          <IconButton
+            type="button"
+            onClick={onClose}
+            sx={modalCloseButtonStyle}
+            aria-label="Fechar modal de transação"
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Box>
+
+        <Box
+          component="form"
+          noValidate
+          sx={modalContentStyle}
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSave();
+          }}
+        >
+          <Input
+            label="Descrição"
+            placeholder="Ex: Compra no mercado"
+            value={form.description}
+            error={Boolean(errors.description)}
+            helperText={errors.description}
+            onChange={(event) =>
+              updateForm("description", event.target.value)
+            }
+          />
+
+          <Box sx={modalFormGridStyle}>
+            <CurrencyInput
+              label="Valor"
+              value={form.amount}
+              onChange={(value) => updateForm("amount", value)}
+              error={Boolean(errors.amount)}
+              helperText={errors.amount}
+            />
+
+            <DateInput
+              label="Data"
+              value={form.date}
+              onChange={(value) => updateForm("date", value)}
+              error={Boolean(errors.date)}
+              helperText={errors.date}
+            />
+          </Box>
+
+          <Box sx={modalFormGridStyle}>
+            <Lookup
+              label="Natureza"
+              value={form.type}
+              onChange={(value) => updateForm("type", value)}
+              error={Boolean(errors.type)}
+              helperText={errors.type}
+              options={TRANSACTION_MODAL_TYPE_OPTIONS}
+            />
+
+            <Lookup
+              label="Tipo de transação"
+              value={form.operation}
+              onChange={(value) => updateForm("operation", value)}
+              error={Boolean(errors.operation)}
+              helperText={errors.operation}
+              options={TRANSACTION_MODAL_OPERATION_OPTIONS}
+            />
+          </Box>
+
+          <Box sx={modalFormGridStyle}>
+            <Lookup
+              label="Categoria"
+              value={form.category}
+              onChange={(value) => updateForm("category", value)}
+              error={Boolean(errors.category)}
+              helperText={errors.category}
+              options={TRANSACTION_MODAL_CATEGORY_OPTIONS}
+            />
+
+            <Lookup
+              label="Conta"
+              value={form.account}
+              onChange={(value) => updateForm("account", value)}
+              error={Boolean(errors.account)}
+              helperText={errors.account}
+              options={TRANSACTION_MODAL_ACCOUNT_OPTIONS}
+            />
+          </Box>
+
+          <Input
+            label="Observação"
+            value={form.note}
+            onChange={(event) =>
+              updateForm("note", event.target.value)
+            }
+          />
+
+          <FileDropzone
+            files={form.files}
+            attachments={form.existingAttachments}
+            onAddFiles={addFiles}
+            onRemoveFile={removeFile}
+            onRemoveAttachment={removeExistingAttachment}
+          />
+        </Box>
+
+        <Box
+          sx={
+            isEditing
+              ? modalFooterEditingStyle
+              : modalFooterStyle
+          }
+        >
+          {isEditing && (
+            <Button
+              variantType="dangerOutlined"
+              onClick={() => setIsDeleteModalOpen(true)}
+            >
+              Excluir
+            </Button>
+          )}
+
+          <Box sx={modalActionsGroupStyle}>
+            <Button
+              variantType="outlined"
+              onClick={onClose}
+            >
+              Cancelar
+            </Button>
+
+            <Button
+              variantType="primary"
+              onClick={handleSave}
+            >
+              {isEditing
+                ? "Salvar alterações"
+                : "Salvar transação"}
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+
+      <ConfirmationModal
+        open={isDeleteModalOpen}
+        title="Excluir transação?"
+        description="Essa ação não poderá ser desfeita. Tem certeza que deseja excluir esta transação?"
+        confirmLabel="Excluir"
+        cancelLabel="Cancelar"
+        danger
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+      />
+    </>
+  );
+}
+
+export function TransactionModal({
+  open,
+  onClose,
+  transaction,
+  onSave,
+  onDelete,
+}: TransactionModalProps) {
+  const isEditing = Boolean(transaction);
+  const initialData = getInitialTransactionForm(transaction);
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      sx={modalOverlayStyle}
+    >
+      <TransactionModalContent
+        key={transaction?.id || "new"}
+        initialData={initialData}
+        transaction={transaction}
+        isEditing={isEditing}
+        onClose={onClose}
+        onSave={onSave}
+        onDelete={onDelete}
+      />
+    </Modal>
+  );
+}

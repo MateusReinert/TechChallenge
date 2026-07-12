@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
+
 import Sidebar from "@/components/Sidebar";
+import { colors } from "@/styles/tokens";
 
 export default function AppLayout({
   children,
@@ -10,7 +12,7 @@ export default function AppLayout({
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: "#F9FAFB",
+        bgcolor: colors.background.default,
         display: "flex",
         flexDirection: {
           xs: "column",
@@ -18,7 +20,7 @@ export default function AppLayout({
         },
       }}
     >
-      <Sidebar />
+      <Sidebar currentZone="shell" />
 
       <Box
         component="main"

@@ -18,7 +18,18 @@
   "onMatchHeaders": [],
   "rewrites": {
     "beforeFiles": [],
-    "afterFiles": [],
+    "afterFiles": [
+      {
+        "source": "/transactions",
+        "destination": "http://localhost:3001/transactions",
+        "regex": "^/transactions(?:/)?$"
+      },
+      {
+        "source": "/transactions/:path*",
+        "destination": "http://localhost:3001/transactions/:path*",
+        "regex": "^/transactions(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+      }
+    ],
     "fallback": []
   },
   "dynamicRoutes": [],
@@ -46,12 +57,6 @@
       "regex": "^/dashboard(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/dashboard(?:/)?$"
-    },
-    {
-      "page": "/transactions",
-      "regex": "^/transactions(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/transactions(?:/)?$"
     }
   ],
   "dataRoutes": [],

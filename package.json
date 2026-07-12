@@ -7,10 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace @finance/shell",
-    "build": "npm run build --workspace @finance/shell",
-    "start": "npm run start --workspace @finance/shell",
-    "lint": "npm run lint --workspace @finance/shell",
+    "dev:shell": "npm run dev --workspace @finance/shell",
+    "dev:transactions": "npm run dev --workspace @finance/transactions",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
     "storybook": "npm run storybook --workspace @finance/shell",
     "build-storybook": "npm run build-storybook --workspace @finance/shell"
   }

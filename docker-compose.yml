@@ -1,0 +1,20 @@
+services:
+  shell:
+    container_name: finance-shell
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+
+  transactions:
+    container_name: finance-transactions
+    build:
+      context: .
+      dockerfile: Dockerfile.transactions
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
