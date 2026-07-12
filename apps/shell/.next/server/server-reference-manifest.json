@@ -1,15 +1,9 @@
 {
   "node": {
-    "4065f9f82dc82606e24d5363035e2f8963a2159336": {
+    "403dbef5e8bffff4e75043133ac74b99c012bf7016": {
       "workers": {
         "app/(app)/dashboard/page": {
           "moduleId": 68855,
-          "async": false,
-          "exportedName": "deleteTransactionAction",
-          "filename": "apps/shell/src/actions/transactionActions.ts"
-        },
-        "app/(app)/transactions/page": {
-          "moduleId": 874,
           "async": false,
           "exportedName": "deleteTransactionAction",
           "filename": "apps/shell/src/actions/transactionActions.ts"
@@ -18,16 +12,10 @@
       "filename": "apps/shell/src/actions/transactionActions.ts",
       "exportedName": "deleteTransactionAction"
     },
-    "409bb4dff99d2180b1f60112399446dcf5b12e0d30": {
+    "405ba69854ea070be1703185a694bcf62b593df992": {
       "workers": {
         "app/(app)/dashboard/page": {
           "moduleId": 68855,
-          "async": false,
-          "exportedName": "saveTransactionAction",
-          "filename": "apps/shell/src/actions/transactionActions.ts"
-        },
-        "app/(app)/transactions/page": {
-          "moduleId": 874,
           "async": false,
           "exportedName": "saveTransactionAction",
           "filename": "apps/shell/src/actions/transactionActions.ts"
@@ -38,5 +26,5 @@
     }
   },
   "edge": {},
-  "encryptionKey": "2Be8kEpolbG01+z/c2uFLETn91DznvxdiWqAxzAwask="
+  "encryptionKey": "3khxLR7UN1w0mr2OFKEWK70DDLzb0G4bV9czsS8uG98="
 }

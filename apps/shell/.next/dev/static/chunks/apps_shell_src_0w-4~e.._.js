@@ -16,7 +16,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$ico
 ;
 const SIDEBAR_APP_NAME = "Finance";
 const SIDEBAR_USER = {
-    greeting: "Bom dia",
     shortName: "FIAP",
     fullName: "FIAP Tech Challenge",
     email: "FIAP@email.com"
@@ -26,13 +25,15 @@ const SIDEBAR_MENU_ITEMS = [
         group: "Visão geral",
         label: "Dashboard",
         href: "/dashboard",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$icons$2d$material$2f$Dashboard$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$icons$2d$material$2f$Dashboard$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        zone: "shell"
     },
     {
         group: "Movimentações",
         label: "Transações",
         href: "/transactions",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$icons$2d$material$2f$SwapHoriz$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$icons$2d$material$2f$SwapHoriz$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        zone: "transactions"
     }
 ];
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -368,12 +369,17 @@ function getCurrentDate() {
         year: "numeric"
     });
 }
-function Sidebar({ currentPath, onNavigate }) {
+function Sidebar({ currentZone, currentPath, onNavigate }) {
     _s();
     const pathnameFromRouter = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
     const pathname = currentPath ?? pathnameFromRouter;
     const greeting = getGreeting();
     const currentDate = getCurrentDate();
+    function handleNavigation(event, path) {
+        if (!onNavigate) return;
+        event.preventDefault();
+        onNavigate(path);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
         component: "aside",
         "aria-label": "Menu lateral",
@@ -391,7 +397,7 @@ function Sidebar({ currentPath, onNavigate }) {
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                lineNumber: 51,
+                                lineNumber: 72,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Typography$2f$Typography$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -399,13 +405,13 @@ function Sidebar({ currentPath, onNavigate }) {
                                 children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SIDEBAR_APP_NAME"]
                             }, void 0, false, {
                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                lineNumber: 56,
+                                lineNumber: 77,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 50,
+                        lineNumber: 71,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -421,7 +427,7 @@ function Sidebar({ currentPath, onNavigate }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                lineNumber: 62,
+                                lineNumber: 83,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Typography$2f$Typography$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -429,13 +435,13 @@ function Sidebar({ currentPath, onNavigate }) {
                                 children: currentDate
                             }, void 0, false, {
                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                lineNumber: 66,
+                                lineNumber: 87,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 61,
+                        lineNumber: 82,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -444,7 +450,15 @@ function Sidebar({ currentPath, onNavigate }) {
                         sx: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].nav,
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SIDEBAR_MENU_ITEMS"].map((item)=>{
                             const isActive = pathname === item.href;
+                            const isSameZone = item.zone === currentZone;
                             const Icon = item.icon;
+                            const itemSx = [
+                                __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].item,
+                                ...isActive ? [
+                                    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].itemActive
+                                ] : []
+                            ];
+                            const ariaLabel = `${item.label}${isActive ? " página atual" : ""}`;
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
                                 sx: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].navGroup,
                                 children: [
@@ -453,58 +467,70 @@ function Sidebar({ currentPath, onNavigate }) {
                                         children: item.group
                                     }, void 0, false, {
                                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                        lineNumber: 82,
+                                        lineNumber: 113,
                                         columnNumber: 17
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
+                                    isSameZone ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
                                         component: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
                                         href: item.href,
                                         "aria-current": isActive ? "page" : undefined,
-                                        "aria-label": `${item.label}${isActive ? " página atual" : ""}`,
-                                        onClick: (event)=>{
-                                            if (onNavigate) {
-                                                event.preventDefault();
-                                                onNavigate(item.href);
-                                            }
-                                        },
-                                        sx: [
-                                            __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].item,
-                                            ...isActive ? [
-                                                __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].itemActive
-                                            ] : []
-                                        ],
+                                        "aria-label": ariaLabel,
+                                        onClick: (event)=>handleNavigation(event, item.href),
+                                        sx: itemSx,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
                                                 sx: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].itemIcon,
                                                 "aria-hidden": "true"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                                lineNumber: 102,
-                                                columnNumber: 19
+                                                lineNumber: 128,
+                                                columnNumber: 21
                                             }, this),
                                             item.label
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                        lineNumber: 86,
-                                        columnNumber: 17
+                                        lineNumber: 118,
+                                        columnNumber: 19
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
+                                        component: "a",
+                                        href: item.href,
+                                        "aria-current": isActive ? "page" : undefined,
+                                        "aria-label": ariaLabel,
+                                        onClick: (event)=>handleNavigation(event, item.href),
+                                        sx: itemSx,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
+                                                sx: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sidebarStyles"].itemIcon,
+                                                "aria-hidden": "true"
+                                            }, void 0, false, {
+                                                fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
+                                                lineNumber: 146,
+                                                columnNumber: 21
+                                            }, this),
+                                            item.label
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
+                                        lineNumber: 136,
+                                        columnNumber: 19
                                     }, this)
                                 ]
                             }, item.href, true, {
                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                lineNumber: 81,
+                                lineNumber: 112,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 71,
+                        lineNumber: 92,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                lineNumber: 49,
+                lineNumber: 70,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -516,7 +542,7 @@ function Sidebar({ currentPath, onNavigate }) {
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SIDEBAR_USER"].fullName
                     }, void 0, false, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 112,
+                        lineNumber: 164,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Typography$2f$Typography$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -524,19 +550,19 @@ function Sidebar({ currentPath, onNavigate }) {
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SIDEBAR_USER"].email
                     }, void 0, false, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 116,
+                        lineNumber: 168,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                lineNumber: 111,
+                lineNumber: 160,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-        lineNumber: 48,
+        lineNumber: 65,
         columnNumber: 5
     }, this);
 }
