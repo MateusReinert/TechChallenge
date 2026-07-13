@@ -3,12 +3,15 @@
 import { useState, type MouseEvent } from "react";
 import { Box, Typography } from "@mui/material";
 
-import AttachmentPreviewModal from "@/components/AttachmentPreviewModal";
-import Button from "@/components/Button";
-import ConfirmationModal from "@/components/ConfirmationModal";
-import StatusTag from "@/components/StatusTag";
+import {
+  Button,
+  ConfirmationModal,
+  AttachmentPreviewModal,
+} from "@finance/ui";
+import { StatusTag } from "@finance/ui";
 import TransactionAttachmentCard from "@/components/TransactionAttachmentCard";
 import TransactionDetailItem from "@/components/TransactionDetailItem";
+import { TRANSACTION_STATUS_LABEL } from "@/constants/transaction";
 
 import {
   TRANSACTION_OPERATION_LABEL,
@@ -114,7 +117,10 @@ export default function TransactionDetails({
               {formattedAmount}
             </Typography>
 
-            <StatusTag status={transaction.status || "pending"} />
+            <StatusTag
+              status={transaction.status ?? "pending"}
+              label={TRANSACTION_STATUS_LABEL[transaction.status ?? "pending"]}
+            />
           </Box>
         </Box>
 

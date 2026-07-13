@@ -6,7 +6,7 @@ import {
   Area,
 } from "recharts";
 
-import { colors } from "@/styles/tokens";
+import { colors } from "@finance/ui";
 import { SummaryHistoryItem } from "@/utils/getDashboardSummary";
 
 type SummarySparklineProps = {

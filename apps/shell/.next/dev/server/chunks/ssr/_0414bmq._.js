@@ -164,20 +164,17 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styl
 function AppLayout({ children }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
         sx: {
-            minHeight: "100vh",
+            height: "100dvh",
             bgcolor: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["colors"].background.default,
             display: "flex",
-            flexDirection: {
-                xs: "column",
-                md: "row"
-            }
+            overflow: "hidden"
         },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$components$2f$Sidebar$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                 currentZone: "shell"
             }, void 0, false, {
                 fileName: "[project]/apps/shell/src/app/(app)/layout.tsx",
-                lineNumber: 23,
+                lineNumber: 20,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Box$2f$Box$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -185,12 +182,15 @@ function AppLayout({ children }) {
                 sx: {
                     flex: 1,
                     minWidth: 0,
-                    width: "100%"
+                    width: "100%",
+                    height: "100dvh",
+                    overflowY: "auto",
+                    overflowX: "hidden"
                 },
                 children: children
             }, void 0, false, {
                 fileName: "[project]/apps/shell/src/app/(app)/layout.tsx",
-                lineNumber: 25,
+                lineNumber: 22,
                 columnNumber: 7
             }, this)
         ]

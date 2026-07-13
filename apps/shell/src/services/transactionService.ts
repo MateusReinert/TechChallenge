@@ -1,117 +1,76 @@
-import fs from "fs/promises";
-import path from "path";
+import type { Transaction } from "@/types/transaction";
 
-import { Transaction } from "@/types/transaction";
+const API_URL = "http://localhost:3001/transactions";
 
-const filePath = path.join(
-  process.cwd(),
-  "src",
-  "data",
-  "transactions.json"
-);
+async function request<T>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<T> {
+  const response = await fetch(input, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
 
-async function readTransactions(): Promise<Transaction[]> {
-  try {
-    const file = await fs.readFile(filePath, "utf-8");
-
-    const parsed = JSON.parse(file);
-
-    if (!Array.isArray(parsed)) {
-      throw new Error();
-    }
-
-    return parsed;
-  } catch {
-    throw new Error(
-      "Não foi possível carregar as transações."
-    );
+  if (!response.ok) {
+    throw new Error("Não foi possível realizar a operação.");
   }
+
+  return response.json();
 }
 
-async function writeTransactions(
-  transactions: Transaction[]
-) {
-  try {
-    await fs.writeFile(
-      filePath,
-      JSON.stringify(transactions, null, 2),
-      "utf-8"
-    );
-  } catch {
-    throw new Error(
-      "Não foi possível salvar os dados das transações."
-    );
-  }
+export async function getTransactions(): Promise<Transaction[]> {
+  return request<Transaction[]>(API_URL, {
+    cache: "no-store",
+  });
 }
 
-export async function getTransactions() {
-  return await readTransactions();
-}
-
-export async function getTransactionById(id: string) {
-  const transactions = await readTransactions();
+export async function getTransactionById(
+  id: string
+): Promise<Transaction | undefined> {
+  const transactions = await getTransactions();
 
   return transactions.find(
-    (transaction) => transaction.id === id
+    (transaction) => String(transaction.id) === String(id)
   );
 }
 
 export async function createTransaction(
   transaction: Transaction
-) {
-  const transactions = await readTransactions();
-
-  const updatedTransactions = [
-    transaction,
-    ...transactions,
-  ];
-
-  await writeTransactions(updatedTransactions);
-
-  return transaction;
+): Promise<Transaction> {
+  return request<Transaction>(API_URL, {
+    method: "POST",
+    body: JSON.stringify(transaction),
+  });
 }
 
 export async function updateTransaction(
   transaction: Transaction
-) {
-  const transactions = await readTransactions();
-
-  const exists = transactions.some(
-    (item) => item.id === transaction.id
+): Promise<Transaction> {
+  return request<Transaction>(
+    `${API_URL}/${transaction.id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(transaction),
+    }
   );
-
-  if (!exists) {
-    throw new Error("Transação não encontrada.");
-  }
-
-  const updatedTransactions = transactions.map(
-    (item) =>
-      item.id === transaction.id
-        ? transaction
-        : item
-  );
-
-  await writeTransactions(updatedTransactions);
-
-  return transaction;
 }
 
 export async function deleteTransaction(
   id: string
-) {
-  const transactions = await readTransactions();
-
-  const exists = transactions.some(
-    (item) => item.id === id
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/${id}`,
+    {
+      method: "DELETE",
+    }
   );
 
-  if (!exists) {
-    throw new Error("Transação não encontrada.");
+  if (!response.ok) {
+    throw new Error(
+      "Não foi possível excluir a transação."
+    );
   }
-
-  const updatedTransactions = transactions.filter(
-    (item) => item.id !== id
-  );
-
-  await writeTransactions(updatedTransactions);
 }

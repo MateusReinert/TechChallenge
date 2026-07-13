@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
 const transactionsZoneUrl =
-  process.env.TRANSACTIONS_ZONE_URL ?? "http://localhost:3001";
+  process.env.TRANSACTIONS_ZONE_URL ?? "http://localhost:3002";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
   async rewrites() {
     return [
       {

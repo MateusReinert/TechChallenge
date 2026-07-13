@@ -1,5 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
-import { colors, sizes } from "@/styles/tokens";
+import { colors, sizes } from "./tokens";
 
 export const buttonStyles = {
   base: {

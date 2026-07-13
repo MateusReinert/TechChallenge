@@ -3,12 +3,15 @@
 import { useState, type MouseEvent } from "react";
 import { Box, Typography } from "@mui/material";
 
-import AttachmentPreviewModal from "@/components/AttachmentPreviewModal";
-import Button from "@/components/Button";
-import ConfirmationModal from "@/components/ConfirmationModal";
-import StatusTag from "@/components/StatusTag";
+import {
+  Button,
+  ConfirmationModal,
+  AttachmentPreviewModal,
+} from "@finance/ui";
+import { StatusTag } from "@finance/ui";
 import TransactionAttachmentCard from "@/components/TransactionAttachmentCard";
 import TransactionDetailItem from "@/components/TransactionDetailItem";
+import { TRANSACTION_STATUS_LABEL } from "@/constants/transaction";
 
 import {
   TRANSACTION_OPERATION_LABEL,
@@ -114,68 +117,73 @@ export default function TransactionDetails({
               {formattedAmount}
             </Typography>
 
-            <StatusTag status={transaction.status || "pending"} />
+            <StatusTag
+              status={transaction.status ?? "pending"}
+              label={TRANSACTION_STATUS_LABEL[transaction.status ?? "pending"]}
+            />
           </Box>
         </Box>
 
-        <Box sx={transactionDetailsStyles.detailsList}>
-          <TransactionDetailItem
-            label="ID"
-            value={transaction.id}
-            copyable
-          />
+        <Box sx={transactionDetailsStyles.scrollContent}>
+          <Box sx={transactionDetailsStyles.detailsList}>
+            <TransactionDetailItem
+              label="ID"
+              value={transaction.id}
+              copyable
+            />
 
-          <TransactionDetailItem
-            label="Descrição"
-            value={transaction.description}
-          />
+            <TransactionDetailItem
+              label="Descrição"
+              value={transaction.description}
+            />
 
-          <TransactionDetailItem
-            label="Data"
-            value={transaction.date}
-          />
+            <TransactionDetailItem
+              label="Data"
+              value={transaction.date}
+            />
 
-          <TransactionDetailItem
-            label="Natureza da transação"
-            value={transactionTypeLabel}
-          />
+            <TransactionDetailItem
+              label="Natureza da transação"
+              value={transactionTypeLabel}
+            />
 
-          <TransactionDetailItem
-            label="Tipo de transação"
-            value={transactionOperationLabel}
-          />
+            <TransactionDetailItem
+              label="Tipo de transação"
+              value={transactionOperationLabel}
+            />
 
-          <TransactionDetailItem
-            label="Categoria"
-            value={transaction.category}
-          />
+            <TransactionDetailItem
+              label="Categoria"
+              value={transaction.category}
+            />
 
-          <TransactionDetailItem
-            label="Conta"
-            value={transaction.account}
-          />
+            <TransactionDetailItem
+              label="Conta"
+              value={transaction.account}
+            />
 
-          <TransactionDetailItem
-            label="Observação"
-            value={transaction.note}
-          />
-        </Box>
-
-        {attachments.length > 0 && (
-          <Box sx={transactionDetailsStyles.attachmentsSection}>
-            <Typography sx={transactionDetailsStyles.attachmentTitle}>
-              Comprovantes
-            </Typography>
-
-            {attachments.map((attachment) => (
-              <TransactionAttachmentCard
-                key={attachment.id}
-                attachment={attachment}
-                onView={setSelectedAttachment}
-              />
-            ))}
+            <TransactionDetailItem
+              label="Observação"
+              value={transaction.note}
+            />
           </Box>
-        )}
+
+          {attachments.length > 0 && (
+            <Box sx={transactionDetailsStyles.attachmentsSection}>
+              <Typography sx={transactionDetailsStyles.attachmentTitle}>
+                Comprovantes
+              </Typography>
+
+              {attachments.map((attachment) => (
+                <TransactionAttachmentCard
+                  key={attachment.id}
+                  attachment={attachment}
+                  onView={setSelectedAttachment}
+                />
+              ))}
+            </Box>
+          )}
+        </Box>
 
         <Box sx={transactionDetailsStyles.actions}>
           <Button

@@ -1439,7 +1439,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styl
 ;
 const dashboardClientStyles = {
     layout: {
-        minHeight: "100vh",
+        height: "100%",
+        minHeight: 0,
         display: "grid",
         overflow: "hidden"
     },
@@ -1452,7 +1453,13 @@ const dashboardClientStyles = {
         display: "flex",
         flexDirection: "column",
         gap: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].xl,
-        overflow: "auto"
+        minHeight: 0,
+        overflowY: "auto",
+        overflowX: "hidden",
+        scrollbarWidth: "none",
+        "&::-webkit-scrollbar": {
+            display: "none"
+        }
     },
     pageTop: {
         display: "flex",

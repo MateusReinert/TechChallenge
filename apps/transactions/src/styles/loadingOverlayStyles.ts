@@ -1,5 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
-import { colors, radius, spacing, shadow, typography, zIndex } from "@/styles/tokens";
+import { colors, radius, spacing, shadow, typography, zIndex } from "./tokens";
 
 export const loadingOverlayStyles = {
   backdrop: {

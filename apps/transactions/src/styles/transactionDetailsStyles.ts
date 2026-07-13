@@ -11,9 +11,9 @@ export const transactionDetailsStyles = {
       xs: "100%",
       lg: 320,
     },
-    minHeight: {
+    height: {
       xs: "auto",
-      lg: "100vh",
+      lg: "100%",
     },
     p: {
       xs: spacing.lg,
@@ -31,12 +31,22 @@ export const transactionDetailsStyles = {
     display: "flex",
     flexDirection: "column",
     gap: spacing.xl,
+    minHeight: 0,
   } as SxProps<Theme>,
 
   summary: {
     display: "flex",
     flexDirection: "column",
     gap: spacing.lg,
+  } as SxProps<Theme>,
+
+  scrollContent: {
+    flex: 1,
+    minHeight: 0,
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.xl,
   } as SxProps<Theme>,
 
   title: {

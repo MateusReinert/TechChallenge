@@ -7,8 +7,8 @@ import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import SouthEastRoundedIcon from "@mui/icons-material/SouthEastRounded";
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 
-import StatusTag from "@/components/StatusTag";
-import EmptyState from "@/components/EmptyState";
+import { StatusTag } from "@finance/ui";
+import { EmptyState } from "@finance/ui";
 
 import { transactionTableStyles } from "@/styles/transactionTableStyles";
 import { Transaction } from "@/types/transaction";

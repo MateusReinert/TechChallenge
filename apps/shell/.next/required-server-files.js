@@ -220,6 +220,9 @@ self.__SERVER_FILES_MANIFEST={
       "turbopackFileSystemCacheForBuild": false,
       "turbopackInferModuleSideEffects": true,
       "turbopackPluginRuntimeStrategy": "childProcesses",
+      "serverActions": {
+        "bodySizeLimit": "20mb"
+      },
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -312,11 +315,11 @@ self.__SERVER_FILES_MANIFEST={
       "afterFiles": [
         {
           "source": "/transactions",
-          "destination": "http://localhost:3001/transactions"
+          "destination": "http://localhost:3002/transactions"
         },
         {
           "source": "/transactions/:path*",
-          "destination": "http://localhost:3001/transactions/:path*"
+          "destination": "http://localhost:3002/transactions/:path*"
         }
       ],
       "fallback": []

@@ -9,9 +9,14 @@
   "scripts": {
     "dev:shell": "npm run dev --workspace @finance/shell",
     "dev:transactions": "npm run dev --workspace @finance/transactions",
+    "dev:api": "json-server --watch db.json --port 3001",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "storybook": "npm run storybook --workspace @finance/shell",
     "build-storybook": "npm run build-storybook --workspace @finance/shell"
+  },
+  "devDependencies": {
+    "express": "^5.2.1",
+    "json-server": "^0.17.4"
   }
 }

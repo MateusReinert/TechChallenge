@@ -2,8 +2,10 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Box } from "@mui/material";
 
-import ConfirmationModal from "./ConfirmationModal";
-import Button from "./Button";
+import {
+  Button,
+  ConfirmationModal,
+} from "@finance/ui";
 
 const meta = {
   title: "Components/ConfirmationModal",

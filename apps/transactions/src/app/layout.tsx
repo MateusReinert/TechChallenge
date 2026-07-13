@@ -3,9 +3,9 @@ import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 import Providers from "@/components/Providers";
-import Sidebar from "@/components/Sidebar";
+import { Sidebar } from "@finance/ui";
 import StoreProvider from "@/store/StoreProvider";
-import { colors } from "@/styles/tokens";
+import { colors } from "@finance/ui";
 
 import "./globals.css";
 
@@ -27,16 +27,17 @@ export default function RootLayout({
             <Providers>
               <Box
                 sx={{
-                  minHeight: "100vh",
+                  height: "100dvh",
                   bgcolor: colors.background.default,
                   display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    md: "row",
-                  },
+                  overflow: "hidden",
                 }}
               >
-                <Sidebar currentZone="transactions" />
+                <Sidebar
+                  currentZone="transactions"
+                  currentPath="/transactions"
+                  basePath="/"
+                />
 
                 <Box
                   component="main"
@@ -44,6 +45,9 @@ export default function RootLayout({
                     flex: 1,
                     minWidth: 0,
                     width: "100%",
+                    height: "100dvh",
+                    overflowY: "auto",
+                    overflowX: "hidden",
                   }}
                 >
                   {children}

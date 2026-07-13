@@ -169,8 +169,13 @@ const sidebarStyles = {
         },
         height: {
             xs: "auto",
-            md: "100vh"
+            md: "100dvh"
         },
+        maxHeight: {
+            xs: "none",
+            md: "100dvh"
+        },
+        flexShrink: 0,
         p: {
             xs: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].lg,
             md: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].xl
@@ -192,6 +197,10 @@ const sidebarStyles = {
             md: "relative"
         },
         top: 0,
+        overflow: {
+            xs: "visible",
+            md: "hidden"
+        },
         zIndex: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["zIndex"].sidebar
     },
     topContent: {
@@ -200,7 +209,8 @@ const sidebarStyles = {
         gap: {
             xs: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].lg,
             md: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].xl
-        }
+        },
+        minHeight: 0
     },
     logo: {
         display: "flex",
@@ -240,6 +250,10 @@ const sidebarStyles = {
         overflowX: {
             xs: "auto",
             md: "visible"
+        },
+        overflowY: {
+            xs: "visible",
+            md: "auto"
         },
         pb: {
             xs: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["spacing"].xs,
@@ -302,7 +316,8 @@ const sidebarStyles = {
             md: "flex"
         },
         flexDirection: "column",
-        gap: "2px"
+        gap: "2px",
+        flexShrink: 0
     },
     profileName: {
         ...__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$tokens$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["typography"].body,
@@ -362,6 +377,7 @@ function getCurrentDate() {
 function Sidebar({ currentZone, currentPath, onNavigate }) {
     const pathnameFromRouter = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
     const pathname = currentPath ?? pathnameFromRouter;
+    console.log("SIDEBAR PATH", pathname);
     const greeting = getGreeting();
     const currentDate = getCurrentDate();
     function handleNavigation(event, path) {
@@ -438,7 +454,7 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                         "aria-label": "Navegação principal",
                         sx: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$styles$2f$sidebarStyles$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["sidebarStyles"].nav,
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SIDEBAR_MENU_ITEMS"].map((item)=>{
-                            const isActive = pathname === item.href;
+                            const isActive = pathname.startsWith(item.href);
                             const isSameZone = item.zone === currentZone;
                             const Icon = item.icon;
                             const itemSx = [
@@ -464,7 +480,6 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                                         href: item.href,
                                         "aria-current": isActive ? "page" : undefined,
                                         "aria-label": ariaLabel,
-                                        onClick: (event)=>handleNavigation(event, item.href),
                                         sx: itemSx,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
@@ -472,7 +487,7 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                                                 "aria-hidden": "true"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                                lineNumber: 128,
+                                                lineNumber: 125,
                                                 columnNumber: 21
                                             }, this),
                                             item.label
@@ -494,14 +509,14 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                                                 "aria-hidden": "true"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 143,
                                                 columnNumber: 21
                                             }, this),
                                             item.label
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 133,
                                         columnNumber: 19
                                     }, this)
                                 ]
@@ -531,7 +546,7 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SIDEBAR_USER"].fullName
                     }, void 0, false, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 164,
+                        lineNumber: 161,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$Typography$2f$Typography$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -539,13 +554,13 @@ function Sidebar({ currentZone, currentPath, onNavigate }) {
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$shell$2f$src$2f$constants$2f$sidebar$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SIDEBAR_USER"].email
                     }, void 0, false, {
                         fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                        lineNumber: 168,
+                        lineNumber: 165,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/shell/src/components/Sidebar.tsx",
-                lineNumber: 160,
+                lineNumber: 157,
                 columnNumber: 7
             }, this)
         ]

@@ -21,12 +21,12 @@
     "afterFiles": [
       {
         "source": "/transactions",
-        "destination": "http://localhost:3001/transactions",
+        "destination": "http://localhost:3002/transactions",
         "regex": "^/transactions(?:/)?$"
       },
       {
         "source": "/transactions/:path*",
-        "destination": "http://localhost:3001/transactions/:path*",
+        "destination": "http://localhost:3002/transactions/:path*",
         "regex": "^/transactions(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
       }
     ],

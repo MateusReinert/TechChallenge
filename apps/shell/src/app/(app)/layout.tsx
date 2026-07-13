@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
-import Sidebar from "@/components/Sidebar";
-import { colors } from "@/styles/tokens";
+import { Sidebar } from "@finance/ui";
+import { colors } from "@finance/ui";
 
 export default function AppLayout({
   children,
@@ -11,16 +11,17 @@ export default function AppLayout({
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        height: "100dvh",
         bgcolor: colors.background.default,
         display: "flex",
-        flexDirection: {
-          xs: "column",
-          md: "row",
-        },
+        overflow: "hidden",
       }}
     >
-      <Sidebar currentZone="shell" />
+      <Sidebar
+        currentZone="shell"
+        currentPath="/dashboard"
+        basePath="/dashboard"
+      />
 
       <Box
         component="main"
@@ -28,6 +29,9 @@ export default function AppLayout({
           flex: 1,
           minWidth: 0,
           width: "100%",
+          height: "100dvh",
+          overflowY: "auto",
+          overflowX: "hidden",
         }}
       >
         {children}
