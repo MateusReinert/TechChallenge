@@ -11,17 +11,17 @@ import { useRouter } from "next/navigation";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-
-import Button from "@/components/Button";
 import DashboardCharts from "@/components/DashboardCharts";
 import DashboardInsights from "@/components/DashboardInsights";
 import DashboardSummaryCards from "@/components/DashboardSummaryCards";
-import FeedbackSnackbar from "@/components/FeedbackSnackbar";
-import FilterBar, {
+import {
+  Button,
+  FeedbackSnackbar,
+  FilterBar,
+  LoadingOverlay,
+  PageHeader,
   type FilterBarValue,
-} from "@/components/FilterBar";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import PageHeader from "@/components/PageHeader";
+} from "@finance/ui";
 import TransactionDetails from "@/components/TransactionDetails";
 import { TransactionModal } from "@/components/TransactionModal";
 import TransactionTable from "@/components/TransactionTable";

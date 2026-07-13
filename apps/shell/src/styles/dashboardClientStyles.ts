@@ -11,7 +11,8 @@ import {
 
 export const dashboardClientStyles = {
   layout: {
-    minHeight: "100vh",
+    height: "100%",
+    minHeight: 0,
     display: "grid",
     overflow: "hidden",
   } as SxProps<Theme>,
@@ -25,8 +26,14 @@ export const dashboardClientStyles = {
     display: "flex",
     flexDirection: "column",
     gap: spacing.xl,
-    overflow: "auto",
-  } as SxProps<Theme>,
+    minHeight: 0,
+    overflowY: "auto",
+    overflowX: "hidden",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+} as SxProps<Theme>,
 
   pageTop: {
     display: "flex",

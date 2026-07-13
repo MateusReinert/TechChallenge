@@ -3,13 +3,13 @@
 import { Box, Typography } from "@mui/material";
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 
-import Button from "@/components/Button";
+import { Button } from "@finance/ui";
 
 import { transactionDetailsStyles } from "@/styles/transactionDetailsStyles";
 
 import type { TransactionAttachment } from "@/types/transaction";
 
-import { createObjectUrlFromBase64 } from "@/utils/fileUtils";
+import { createObjectUrlFromBase64 } from "@finance/ui";
 
 type TransactionAttachmentCardProps = {
   attachment: TransactionAttachment;

@@ -15,7 +15,7 @@ import {
 
 import { Box, Typography } from "@mui/material";
 
-import { colors } from "@/styles/tokens";
+import { colors } from "@finance/ui";
 import { dashboardChartsStyles } from "@/styles/dashboardChartsStyles";
 
 type MonthlyChartItem = {

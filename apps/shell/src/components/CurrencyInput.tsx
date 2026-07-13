@@ -3,7 +3,7 @@
 import type { ClipboardEvent } from "react";
 import { TextFieldProps } from "@mui/material";
 
-import Input from "@/components/Input";
+import { Input } from "@finance/ui";
 
 type CurrencyInputProps = Omit<TextFieldProps, "type" | "onChange" | "value"> & {
   value?: string;

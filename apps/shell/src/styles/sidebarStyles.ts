@@ -1,5 +1,13 @@
 import { SxProps, Theme } from "@mui/material";
-import { colors, spacing, radius, typography, sizes, zIndex } from "@/styles/tokens";
+
+import {
+  colors,
+  spacing,
+  radius,
+  typography,
+  sizes,
+  zIndex,
+} from "@/styles/tokens";
 
 export const sidebarStyles = {
   root: {
@@ -13,8 +21,13 @@ export const sidebarStyles = {
     },
     height: {
       xs: "auto",
-      md: "100vh",
+      md: "100dvh",
     },
+    maxHeight: {
+      xs: "none",
+      md: "100dvh",
+    },
+    flexShrink: 0,
     p: {
       xs: spacing.lg,
       md: spacing.xl,
@@ -36,6 +49,10 @@ export const sidebarStyles = {
       md: "relative",
     },
     top: 0,
+    overflow: {
+      xs: "visible",
+      md: "hidden",
+    },
     zIndex: zIndex.sidebar,
   },
 
@@ -46,6 +63,7 @@ export const sidebarStyles = {
       xs: spacing.lg,
       md: spacing.xl,
     },
+    minHeight: 0,
   },
 
   logo: {
@@ -92,6 +110,10 @@ export const sidebarStyles = {
       xs: "auto",
       md: "visible",
     },
+    overflowY: {
+      xs: "visible",
+      md: "auto",
+    },
     pb: {
       xs: spacing.xs,
       md: 0,
@@ -129,10 +151,12 @@ export const sidebarStyles = {
     color: colors.gray[600],
     textDecoration: "none",
     whiteSpace: "nowrap",
+
     "&:hover": {
       bgcolor: colors.primary[100],
       color: colors.primary[500],
     },
+
     "&:focus-visible": {
       outline: `2px solid ${colors.primary[500]}`,
       outlineOffset: "2px",
@@ -142,10 +166,12 @@ export const sidebarStyles = {
   itemActive: {
     bgcolor: colors.primary[500],
     color: colors.background.default,
+
     "&:hover": {
       bgcolor: colors.primary[600],
       color: colors.background.default,
     },
+
     "&:focus-visible": {
       outline: `2px solid ${colors.gray[900]}`,
       outlineOffset: "2px",
@@ -159,6 +185,7 @@ export const sidebarStyles = {
     },
     flexDirection: "column",
     gap: "2px",
+    flexShrink: 0,
   },
 
   profileName: {

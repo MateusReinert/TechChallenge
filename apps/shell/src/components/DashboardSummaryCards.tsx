@@ -7,7 +7,7 @@ import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import SouthEastRoundedIcon from "@mui/icons-material/SouthEastRounded";
 
-import SummaryCard from "@/components/SummaryCard";
+import { SummaryCard } from "@finance/ui";
 import SummarySparkline from "@/components/SummarySparkline";
 import { dashboardClientStyles } from "@/styles/dashboardClientStyles";
 import { SummaryHistoryItem } from "@/utils/getDashboardSummary";

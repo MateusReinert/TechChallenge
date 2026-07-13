@@ -4,15 +4,21 @@ import { useState } from "react";
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import Button from "@/components/Button";
-import ConfirmationModal from "@/components/ConfirmationModal";
-import CurrencyInput from "@/components/CurrencyInput";
-import DateInput from "@/components/DateInput";
-import FileDropzone from "@/components/FileDropzone";
-import Input from "@/components/Input";
-import Lookup from "@/components/Lookup";
+import {
+  Button,
+  ConfirmationModal,
+  CurrencyInput,
+  DateInput,
+  Input,
+  Lookup,
+  readFileAsBase64,
+  FileDropzone,
+} from "@finance/ui";
 
 import {
+  TRANSACTION_ATTACHMENT_ACCEPT,
+  TRANSACTION_ATTACHMENT_MAX_SIZE,
+  TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL,
   TRANSACTION_MODAL_ACCOUNT_OPTIONS,
   TRANSACTION_MODAL_CATEGORY_OPTIONS,
   TRANSACTION_MODAL_OPERATION_OPTIONS,
@@ -35,7 +41,6 @@ import {
 
 import type { Transaction } from "@/types/transaction";
 
-import { readFileAsBase64 } from "@/utils/fileUtils";
 import {
   getInitialTransactionForm,
   parseTransactionCurrency,
@@ -286,6 +291,10 @@ function TransactionModalContent({
           <FileDropzone
             files={form.files}
             attachments={form.existingAttachments}
+            accept={TRANSACTION_ATTACHMENT_ACCEPT}
+            maxSize={TRANSACTION_ATTACHMENT_MAX_SIZE}
+            maxSizeLabel={TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL}
+            acceptedFormatsLabel="PDF, PNG ou JPG"
             onAddFiles={addFiles}
             onRemoveFile={removeFile}
             onRemoveAttachment={removeExistingAttachment}

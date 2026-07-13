@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Box } from "@mui/material";
 
 import { TransactionModal } from "./TransactionModal";
-import Button from "./Button";
+import { Button } from "@finance/ui";
 
 import { Transaction } from "@/types/transaction";
 

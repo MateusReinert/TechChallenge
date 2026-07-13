@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { FilterBarItem } from "@/components/FilterBar";
+import type { FilterBarItem } from "@finance/ui";
 import {
   DASHBOARD_AMOUNT_RANGE_OPTIONS,
   DASHBOARD_DATE_RANGE_OPTIONS,

@@ -3,7 +3,7 @@ import type {
   TransactionAttachment,
 } from "@/types/transaction";
 
-import { isValidDateBR } from "@/utils/dateUtils";
+import { isValidDateBR } from "@finance/ui";
 
 export type TransactionForm = {
   description: string;

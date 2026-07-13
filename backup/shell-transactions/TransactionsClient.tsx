@@ -19,13 +19,15 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import Button from "@/components/Button";
-import FeedbackSnackbar from "@/components/FeedbackSnackbar";
-import FilterBar, {
+import {
+  Button,
+  FeedbackSnackbar,
+  FilterBar,
+  LoadingOverlay,
+  PageHeader,
   type FilterBarValue,
-} from "@/components/FilterBar";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import PageHeader from "@/components/PageHeader";
+} from "@finance/ui";
+
 import TransactionDetails from "@/components/TransactionDetails";
 import { TransactionModal } from "@/components/TransactionModal";
 import TransactionTable from "@/components/TransactionTable";

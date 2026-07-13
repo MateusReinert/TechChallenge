@@ -3,7 +3,8 @@ import { colors, spacing, radius, typography, sizes } from "@/styles/tokens";
 
 export const transactionsClientStyles = {
   layout: {
-    minHeight: "100vh",
+    height: "100%",
+    minHeight: 0,
     display: "grid",
     overflow: "hidden",
   } as SxProps<Theme>,
@@ -17,6 +18,7 @@ export const transactionsClientStyles = {
     display: "flex",
     flexDirection: "column",
     gap: spacing.xl,
+    minHeight: 0,
     overflow: "auto",
   } as SxProps<Theme>,
 
@@ -42,6 +44,7 @@ export const transactionsClientStyles = {
   } as SxProps<Theme>,
 
   tableWrapper: {
+    minHeight: 0,
     overflowX: "auto",
   } as SxProps<Theme>,
 
