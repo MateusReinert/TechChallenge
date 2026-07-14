@@ -40,7 +40,11 @@ import { useTransactionModal } from "@/hooks/useTransactionModal";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import { initializeTransactions } from "@/store/features/transactions/transactionsSlice";
+import {
+  initializeTransactions,
+  selectTransactions,
+  selectTransactionsInitialized,
+} from "@/store/features/transactions/transactionsSlice";
 
 import {
   TRANSACTION_BREADCRUMB,
@@ -95,11 +99,11 @@ export default function TransactionsClient({
   const dispatch = useAppDispatch();
 
   const storedTransactions = useAppSelector(
-    (state) => state.transactions.items
+    selectTransactions
   );
 
   const transactionsInitialized = useAppSelector(
-    (state) => state.transactions.initialized
+    selectTransactionsInitialized
   );
 
   const transactions = transactionsInitialized

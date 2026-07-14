@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { suggestTransactionCategory } from "@finance/shared";
 
 import {
   Button,
@@ -79,6 +80,9 @@ function TransactionModalContent({
   const [errors, setErrors] = useState<TransactionFormErrors>({});
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const [isCategoryManuallySelected, setIsCategoryManuallySelected] =
+  useState(isEditing);
+
   function updateForm(field: TransactionFormField, value: string) {
     setForm((currentForm) => ({
       ...currentForm,
@@ -89,6 +93,34 @@ function TransactionModalContent({
       ...currentErrors,
       [field]: undefined,
     }));
+  }
+
+  function updateDescription(description: string) {
+    setForm((currentForm) => {
+      if (isCategoryManuallySelected) {
+        return {
+          ...currentForm,
+          description,
+        };
+      }
+
+      return {
+        ...currentForm,
+        description,
+        category: suggestTransactionCategory(description) ?? "",
+      };
+    });
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      description: undefined,
+      category: undefined,
+    }));
+  }
+
+  function updateCategory(category: string) {
+    setIsCategoryManuallySelected(true);
+    updateForm("category", category);
   }
 
   function addFiles(files: File[]) {
@@ -217,9 +249,7 @@ function TransactionModalContent({
             value={form.description}
             error={Boolean(errors.description)}
             helperText={errors.description}
-            onChange={(event) =>
-              updateForm("description", event.target.value)
-            }
+            onChange={(event) => updateDescription(event.target.value)}
           />
 
           <Box sx={modalFormGridStyle}>
@@ -264,7 +294,7 @@ function TransactionModalContent({
             <Lookup
               label="Categoria"
               value={form.category}
-              onChange={(value) => updateForm("category", value)}
+              onChange={updateCategory}
               error={Boolean(errors.category)}
               helperText={errors.category}
               options={TRANSACTION_MODAL_CATEGORY_OPTIONS}

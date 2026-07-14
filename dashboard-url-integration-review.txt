@@ -1,0 +1,550 @@
+============================================================
+ARQUIVO: apps\shell\src\app\(app)\dashboard\DashboardClient.tsx
+============================================================
+"use client";
+
+import {
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
+import { Box, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import DashboardCharts from "@/components/DashboardCharts";
+import DashboardInsights from "@/components/DashboardInsights";
+import DashboardSummaryCards from "@/components/DashboardSummaryCards";
+import {
+  Button,
+  FeedbackSnackbar,
+  FilterBar,
+  LoadingOverlay,
+  PageHeader,
+  type FilterBarValue,
+} from "@finance/ui";
+import TransactionDetails from "@/components/TransactionDetails";
+import { TransactionModal } from "@/components/TransactionModal";
+import TransactionTable from "@/components/TransactionTable";
+
+import { useFeedback } from "@/hooks/useFeedback";
+import { useLoadingAction } from "@/hooks/useLoadingAction";
+import { useTransactionCrud } from "@/hooks/useTransactionCrud";
+import { useTransactionFilterItems } from "@/hooks/useTransactionFilterItems";
+import { useTransactionModal } from "@/hooks/useTransactionModal";
+
+import {
+  DASHBOARD_BREADCRUMB,
+  DASHBOARD_LATEST_LIMIT,
+} from "@/constants/dashboard";
+
+import { dashboardClientStyles } from "@/styles/dashboardClientStyles";
+
+import {
+  initializeTransactions,
+  selectTransactions,
+  selectTransactionsInitialized,
+} from "@/store/features/transactions/transactionsSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
+
+import type { Transaction } from "@/types/transaction";
+
+import { filterDashboardTransactions } from "@/utils/dashboardFiltersUtils";
+import { getDashboardChartsData } from "@/utils/getDashboardChartsData";
+import { getDashboardSummary } from "@/utils/getDashboardSummary";
+import { getLatestTransactions } from "@/utils/getLatestTransactions";
+
+type DashboardClientProps = {
+  initialTransactions: Transaction[];
+};
+
+const INITIAL_FILTERS: FilterBarValue = {
+  search: "",
+  category: "",
+  type: "",
+  account: "",
+  status: "",
+  dateRange: "",
+  amountRange: "",
+};
+
+export default function DashboardClient({
+  initialTransactions,
+}: DashboardClientProps) {
+  const [filters, setFilters] =
+    useState<FilterBarValue>(INITIAL_FILTERS);
+
+  const [showValues, setShowValues] = useState(true);
+  const [isPending, startTransition] = useTransition();
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const storedTransactions = useAppSelector(
+    selectTransactions
+  );
+
+  const transactionsInitialized = useAppSelector(
+    selectTransactionsInitialized
+  );
+
+  const transactions = transactionsInitialized
+    ? storedTransactions
+    : initialTransactions;
+
+  useEffect(() => {
+    dispatch(
+      initializeTransactions(initialTransactions)
+    );
+  }, [dispatch, initialTransactions]);
+
+  const {
+    loadingMessage,
+    isLoading: isLoadingAction,
+    runWithLoading,
+  } = useLoadingAction();
+
+  const {
+    feedback,
+    showFeedback,
+    closeFeedback,
+  } = useFeedback();
+
+  const isLoading = isLoadingAction || isPending;
+
+  const {
+    selectedTransaction,
+    setSelectedTransaction,
+    isTransactionModalOpen,
+    selectTransaction,
+    clearSelectedTransaction,
+    openNewTransactionModal,
+    openEditTransactionModal,
+    closeTransactionModal,
+    closeTransactionModalImmediately,
+    clearSelectedTransactionImmediately,
+  } = useTransactionModal(isLoading);
+
+  const {
+    handleSaveTransaction,
+    handleDeleteTransaction,
+  } = useTransactionCrud({
+    transactions,
+    isLoading,
+    startTransition,
+    runWithLoading,
+    showFeedback,
+    setSelectedTransaction,
+    clearSelectedTransactionImmediately,
+    closeTransactionModalImmediately,
+    refresh: router.refresh,
+  });
+
+  const filteredTransactions = useMemo(
+    () =>
+      filterDashboardTransactions(
+        transactions,
+        filters
+      ),
+    [transactions, filters]
+  );
+
+  const filterItems =
+    useTransactionFilterItems(transactions);
+
+  const summary =
+    getDashboardSummary(filteredTransactions);
+
+  const { monthlyData, categoryData } =
+    getDashboardChartsData(filteredTransactions);
+
+  const latestTransactions =
+    getLatestTransactions(
+      filteredTransactions,
+      DASHBOARD_LATEST_LIMIT
+    );
+
+  function handleToggleValues(
+    event?: React.MouseEvent<HTMLElement>
+  ) {
+    event?.stopPropagation();
+
+    setShowValues(
+      (currentValue) => !currentValue
+    );
+  }
+
+  function handleGoToTransactions() {
+    if (isLoading) return;
+
+    router.push("/transactions");
+  }
+
+  function handleClearFilters() {
+    setFilters(INITIAL_FILTERS);
+    clearSelectedTransaction();
+  }
+
+  return (
+    <>
+      <Box
+        onClick={() => {
+          if (!isLoading) {
+            clearSelectedTransaction();
+          }
+        }}
+        sx={{
+          ...dashboardClientStyles.layout,
+          gridTemplateColumns: {
+            xs: "1fr",
+            lg: selectedTransaction
+              ? "1fr 320px"
+              : "1fr",
+          },
+        }}
+      >
+        <Box sx={dashboardClientStyles.content}>
+          <Box sx={dashboardClientStyles.pageTop}>
+            <PageHeader
+              title="Dashboard"
+              breadcrumb={DASHBOARD_BREADCRUMB}
+            />
+
+            <Box
+              sx={dashboardClientStyles.topControls}
+            >
+              <FilterBar
+                value={filters}
+                filters={filterItems}
+                searchPlaceholder="Buscar transações..."
+                onChange={setFilters}
+                onClear={handleClearFilters}
+              />
+
+              <Box
+                sx={
+                  dashboardClientStyles.headerActions
+                }
+              >
+                <Button
+                  variantType="outlined"
+                  onClick={handleToggleValues}
+                  disabled={isLoading}
+                >
+                  <Box
+                    sx={
+                      dashboardClientStyles.buttonContent
+                    }
+                  >
+                    {showValues ? (
+                      <VisibilityOutlinedIcon fontSize="small" />
+                    ) : (
+                      <VisibilityOffOutlinedIcon fontSize="small" />
+                    )}
+
+                    {showValues
+                      ? "Ocultar valores"
+                      : "Mostrar valores"}
+                  </Box>
+                </Button>
+
+                <Button
+                  variantType="primary"
+                  onClick={openNewTransactionModal}
+                  disabled={isLoading}
+                >
+                  <Box
+                    sx={
+                      dashboardClientStyles.buttonContent
+                    }
+                  >
+                    Nova transação
+                    <AddRoundedIcon fontSize="small" />
+                  </Box>
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+
+          <DashboardSummaryCards
+            summary={summary}
+            showValues={showValues}
+          />
+
+          <DashboardCharts
+            monthlyData={monthlyData}
+            categoryData={categoryData}
+          />
+
+          <Box
+            sx={dashboardClientStyles.dashboardGrid}
+          >
+            <DashboardInsights
+              transactions={filteredTransactions}
+            />
+
+            <Box
+              sx={
+                dashboardClientStyles.transactionsCard
+              }
+            >
+              <Box
+                sx={
+                  dashboardClientStyles.sectionHeader
+                }
+              >
+                <Typography
+                  sx={
+                    dashboardClientStyles.sectionTitle
+                  }
+                >
+                  Últimas transações
+                </Typography>
+
+                <Box
+                  sx={dashboardClientStyles.actions}
+                >
+                  <Button
+                    variantType="ghost"
+                    onClick={handleGoToTransactions}
+                    disabled={isLoading}
+                  >
+                    Ver todas
+                  </Button>
+                </Box>
+              </Box>
+
+              <Box
+                sx={
+                  dashboardClientStyles.tableWrapper
+                }
+              >
+                <TransactionTable
+                  transactions={latestTransactions}
+                  selectedTransactionId={
+                    selectedTransaction?.id
+                  }
+                  onSelectTransaction={
+                    isLoading
+                      ? undefined
+                      : selectTransaction
+                  }
+                  emptyTitle="Nenhuma movimentação encontrada"
+                  emptyDescription="Ajuste os filtros ou cadastre uma nova transação."
+                  emptyActionLabel="Nova transação"
+                  onEmptyAction={
+                    isLoading
+                      ? undefined
+                      : openNewTransactionModal
+                  }
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        {selectedTransaction && (
+          <TransactionDetails
+            transaction={selectedTransaction}
+            onEdit={openEditTransactionModal}
+            onDelete={handleDeleteTransaction}
+          />
+        )}
+      </Box>
+
+      <TransactionModal
+        open={isTransactionModalOpen}
+        onClose={closeTransactionModal}
+        transaction={selectedTransaction}
+        onSave={handleSaveTransaction}
+        onDelete={handleDeleteTransaction}
+      />
+
+      <LoadingOverlay
+        open={Boolean(loadingMessage)}
+        message={loadingMessage}
+      />
+
+      <FeedbackSnackbar
+        open={feedback.open}
+        message={feedback.message}
+        type={feedback.type}
+        onClose={closeFeedback}
+      />
+    </>
+  );
+}
+
+============================================================
+ARQUIVO: apps\shell\src\hooks\useTransactionFilterItems.ts
+============================================================
+import { useMemo } from "react";
+
+import type { FilterBarItem } from "@finance/ui";
+import {
+  DASHBOARD_AMOUNT_RANGE_OPTIONS,
+  DASHBOARD_DATE_RANGE_OPTIONS,
+  DASHBOARD_STATUS_OPTIONS,
+  DASHBOARD_TYPE_OPTIONS,
+} from "@/constants/dashboardFilterOptions";
+import { Transaction } from "@/types/transaction";
+import { getUniqueOptions } from "@/utils/dashboardFiltersUtils";
+
+export function useTransactionFilterItems(transactions: Transaction[]) {
+  return useMemo<FilterBarItem[]>(() => {
+    const categoryOptions = getUniqueOptions(
+      transactions.map((transaction) => transaction.category)
+    );
+
+    const accountOptions = getUniqueOptions(
+      transactions.map((transaction) => transaction.account)
+    );
+
+    return [
+      {
+        key: "category",
+        label: "Categoria",
+        ariaLabel: "Filtrar por categoria",
+        options: [{ label: "Todas", value: "" }, ...categoryOptions],
+      },
+      {
+        key: "type",
+        label: "Natureza",
+        ariaLabel: "Filtrar por natureza",
+        options: DASHBOARD_TYPE_OPTIONS,
+      },
+      {
+        key: "account",
+        label: "Conta",
+        ariaLabel: "Filtrar por conta",
+        options: [{ label: "Todas", value: "" }, ...accountOptions],
+      },
+      {
+        key: "status",
+        label: "Status",
+        ariaLabel: "Filtrar por status",
+        options: DASHBOARD_STATUS_OPTIONS,
+      },
+      {
+        key: "dateRange",
+        label: "Período",
+        ariaLabel: "Filtrar por período",
+        options: DASHBOARD_DATE_RANGE_OPTIONS,
+      },
+      {
+        key: "amountRange",
+        label: "Valor",
+        ariaLabel: "Filtrar por valor",
+        options: DASHBOARD_AMOUNT_RANGE_OPTIONS,
+      },
+    ];
+  }, [transactions]);
+}
+
+============================================================
+ARQUIVO: apps\shell\src\utils\dashboardFiltersUtils.ts
+============================================================
+import type {
+  FilterBarOption,
+  FilterBarValue,
+} from "@finance/ui";
+import { Transaction } from "@/types/transaction";
+
+export function getUniqueOptions(values: string[]): FilterBarOption[] {
+  return Array.from(new Set(values.filter(Boolean)))
+    .sort((firstValue, secondValue) => firstValue.localeCompare(secondValue))
+    .map((value) => ({
+      label: value,
+      value,
+    }));
+}
+
+function normalizeText(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function isSameDay(firstDate: Date, secondDate: Date) {
+  return (
+    firstDate.getDate() === secondDate.getDate() &&
+    firstDate.getMonth() === secondDate.getMonth() &&
+    firstDate.getFullYear() === secondDate.getFullYear()
+  );
+}
+
+function parseTransactionDate(date: string) {
+  const [day, month, year] = date.split("/").map(Number);
+
+  return new Date(year, month - 1, day);
+}
+
+export function filterDashboardTransactions(
+  transactions: Transaction[],
+  filters: FilterBarValue
+) {
+  const search = normalizeText(filters.search.trim());
+
+  return transactions.filter((transaction) => {
+    const transactionStatus = transaction.status || "pending";
+    const transactionDate = parseTransactionDate(transaction.date);
+    const today = new Date();
+
+    const matchesSearch =
+      !search ||
+      normalizeText(
+        [
+          transaction.description,
+          transaction.category,
+          transaction.account,
+          transaction.date,
+        ].join(" ")
+      ).includes(search);
+
+    const matchesCategory =
+      !filters.category || transaction.category === filters.category;
+
+    const matchesType = !filters.type || transaction.type === filters.type;
+
+    const matchesAccount =
+      !filters.account || transaction.account === filters.account;
+
+    const matchesStatus =
+      !filters.status || transactionStatus === filters.status;
+
+    const matchesDateRange =
+      !filters.dateRange ||
+      (filters.dateRange === "today" && isSameDay(transactionDate, today)) ||
+      (filters.dateRange === "currentMonth" &&
+        transactionDate.getMonth() === today.getMonth() &&
+        transactionDate.getFullYear() === today.getFullYear()) ||
+      (filters.dateRange === "last30Days" &&
+        transactionDate >=
+          new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000));
+
+    const matchesAmountRange =
+      !filters.amountRange ||
+      (filters.amountRange === "upTo100" && transaction.amount <= 100) ||
+      (filters.amountRange === "between100And500" &&
+        transaction.amount >= 100 &&
+        transaction.amount <= 500) ||
+      (filters.amountRange === "above500" && transaction.amount > 500);
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesType &&
+      matchesAccount &&
+      matchesStatus &&
+      matchesDateRange &&
+      matchesAmountRange
+    );
+  });
+}
+

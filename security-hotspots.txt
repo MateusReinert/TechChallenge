@@ -1,0 +1,72 @@
+﻿@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\actions\transactionActions.ts; LineNumber=50; Line=      id: transaction.id || crypto.randomUUID(),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\actions\transactionActions.ts; LineNumber=63; Line=      throw new Error(error.message);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\actions\transactionActions.ts; LineNumber=84; Line=      throw new Error(error.message);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=186; Line=    window.location.assign(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=12; Line=import { createObjectUrlFromBase64 } from "@finance/ui";}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=36; Line=    const objectUrl = createObjectUrlFromBase64(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=37; Line=      attachment.base64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=41; Line=    const link = document.createElement("a");}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=48; Line=      URL.revokeObjectURL(objectUrl);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=15; Line=  readFileAsBase64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=154; Line=        id: crypto.randomUUID(),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=158; Line=        base64: await readFileAsBase64(file),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=324; Line=            accept={TRANSACTION_ATTACHMENT_ACCEPT}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=325; Line=            maxSize={TRANSACTION_ATTACHMENT_MAX_SIZE}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=326; Line=            maxSizeLabel={TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\hooks\useTransactionCrud.ts; LineNumber=46; Line=  if (error instanceof Error && error.message) {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\hooks\useTransactionCrud.ts; LineNumber=47; Line=    return error.message;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\services\transactionService.ts; LineNumber=9; Line=  const response = await fetch(input, {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\services\transactionService.ts; LineNumber=64; Line=  const response = await fetch(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Page.tsx; LineNumber=26; Line=          <a href="https://componentdriven.org" target="_blank" rel="noopener noreferrer">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Page.tsx; LineNumber=48; Line=          <a href="https://storybook.js.org/tutorials/" target="_blank" rel="noopener noreferrer">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Page.tsx; LineNumber=52; Line=          <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\types\transaction.ts; LineNumber=17; Line=  base64: string;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\actions\transactionActions.ts; LineNumber=50; Line=      id: transaction.id || crypto.randomUUID(),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\actions\transactionActions.ts; LineNumber=63; Line=      throw new Error(error.message);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\actions\transactionActions.ts; LineNumber=84; Line=      throw new Error(error.message);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=121; Line=        ? `${window.location.pathname}?${queryString}`}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=122; Line=        : window.location.pathname;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=12; Line=import { createObjectUrlFromBase64 } from "@finance/ui";}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=36; Line=    const objectUrl = createObjectUrlFromBase64(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=37; Line=      attachment.base64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=41; Line=    const link = document.createElement("a");}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=48; Line=      URL.revokeObjectURL(objectUrl);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=15; Line=  readFileAsBase64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=154; Line=        id: crypto.randomUUID(),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=158; Line=        base64: await readFileAsBase64(file),}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=324; Line=            accept={TRANSACTION_ATTACHMENT_ACCEPT}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=325; Line=            maxSize={TRANSACTION_ATTACHMENT_MAX_SIZE}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=326; Line=            maxSizeLabel={TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\hooks\useTransactionCrud.ts; LineNumber=46; Line=  if (error instanceof Error && error.message) {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\hooks\useTransactionCrud.ts; LineNumber=47; Line=    return error.message;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\services\transactionService.ts; LineNumber=9; Line=  const response = await fetch(input, {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\services\transactionService.ts; LineNumber=69; Line=  const response = await fetch(`${API_URL}/${id}`, {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\types\transaction.ts; LineNumber=17; Line=  base64: string;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=15; Line=import { createObjectUrlFromBase64 } from "../utils/fileUtils";}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=21; Line=  base64: string;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=38; Line=    return createObjectUrlFromBase64(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=39; Line=      attachment.base64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=47; Line=        URL.revokeObjectURL(objectUrl);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=60; Line=      const link = document.createElement("a");}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=30; Line=  maxSize: number;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=31; Line=  maxSizeLabel: string;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=54; Line=  maxSize,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=55; Line=  maxSizeLabel,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=88; Line=    if (file.size > maxSize) {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=90; Line=        `Cada arquivo deve possuir no máximo ${maxSizeLabel}.`}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=155; Line=        accept={accept}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=234; Line=        aria-label={`Adicionar comprovantes. Formatos aceitos: ${acceptedFormatsLabel}. Tamanho máximo: ${maxSizeLabel} por arquivo.`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=262; Line=            {maxSizeLabel} por arquivo}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=107; Line=        anchorEl={anchorElement}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=122; Line=                    href={item.href}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=137; Line=                    href={item.href}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=1; Line=export function readFileAsBase64(file: File): Promise<string> {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=17; Line=export function base64ToBlob(base64: string, type: string) {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=18; Line=  const byteCharacters = atob(base64.split(",")[1]);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=27; Line=export function createObjectUrlFromBase64(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=28; Line=  base64: string,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=31; Line=  const blob = base64ToBlob(base64, type);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\utils\fileUtils.ts; LineNumber=33; Line=  return URL.createObjectURL(blob);}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\index.ts; LineNumber=93; Line=  base64ToBlob,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\index.ts; LineNumber=94; Line=  createObjectUrlFromBase64,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\index.ts; LineNumber=95; Line=  readFileAsBase64,}

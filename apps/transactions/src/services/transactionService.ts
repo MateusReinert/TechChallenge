@@ -15,12 +15,9 @@ async function request<T>(
   });
 
   if (!response.ok) {
-    const responseText = await response.text();
-
-    throw new Error(
-      responseText ||
-        `Não foi possível realizar a operação. Código: ${response.status}.`
-    );
+   throw new Error(
+     "Não foi possível realizar a operação."
+   );
   }
 
   return response.json();
@@ -71,11 +68,8 @@ export async function deleteTransaction(
   });
 
   if (!response.ok) {
-    const responseText = await response.text();
-
     throw new Error(
-      responseText ||
-        `Não foi possível excluir a transação. Código: ${response.status}.`
+      "Não foi possível excluir a transação."
     );
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -13,7 +14,16 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+
+import {
+  createTransactionSearchParams,
+  getTransactionUrlState,
+  INITIAL_TRANSACTION_FILTERS,
+} from "@finance/shared";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -40,7 +50,11 @@ import { useTransactionModal } from "@/hooks/useTransactionModal";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import { initializeTransactions } from "@/store/features/transactions/transactionsSlice";
+import {
+  initializeTransactions,
+  selectTransactions,
+  selectTransactionsInitialized,
+} from "@/store/features/transactions/transactionsSlice";
 
 import {
   TRANSACTION_BREADCRUMB,
@@ -64,23 +78,18 @@ type TransactionsClientProps = {
   initialTransactions: Transaction[];
 };
 
-const INITIAL_FILTERS: FilterBarValue = {
-  search: "",
-  category: "",
-  type: "",
-  account: "",
-  status: "",
-  dateRange: "",
-  amountRange: "",
-};
-
 export default function TransactionsClient({
   initialTransactions,
 }: TransactionsClientProps) {
-  const [filters, setFilters] =
-    useState<FilterBarValue>(INITIAL_FILTERS);
+  const searchParams = useSearchParams();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    filters,
+    page: currentPage,
+  } = useMemo(
+    () => getTransactionUrlState(searchParams),
+    [searchParams]
+  );
 
   const [sortField, setSortField] =
     useState<TransactionSortField | null>(null);
@@ -94,12 +103,39 @@ export default function TransactionsClient({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const updateTransactionUrl = useCallback(
+    (
+      nextFilters: FilterBarValue,
+      nextPage: number
+    ) => {
+      const nextSearchParams =
+        createTransactionSearchParams(
+          nextFilters,
+          nextPage
+        );
+      
+      const queryString =
+        nextSearchParams.toString();
+      
+      const nextUrl = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+      
+      window.history.replaceState(
+        null,
+        "",
+        nextUrl
+      );
+    },
+    []
+  );
+
   const storedTransactions = useAppSelector(
-    (state) => state.transactions.items
+    selectTransactions
   );
 
   const transactionsInitialized = useAppSelector(
-    (state) => state.transactions.initialized
+    selectTransactionsInitialized
   );
 
   const transactions = transactionsInitialized
@@ -152,21 +188,50 @@ export default function TransactionsClient({
   const filterItems =
     useTransactionFilterItems(transactions);
 
-  const sortedTransactions = sortTransactions(
+ const sortedTransactions = useMemo(
+  () =>
+    sortTransactions(
+      filteredTransactions,
+      sortField,
+      sortDirection
+    ),
+  [
     filteredTransactions,
     sortField,
-    sortDirection
-  );
+    sortDirection,
+  ]
+);
 
-  const {
-    totalPages,
-    paginatedTransactions,
-  } = getPaginatedTransactions({
-    transactions: sortedTransactions,
+const {
+  totalPages,
+  paginatedTransactions,
+} = useMemo(
+  () =>
+    getPaginatedTransactions({
+      transactions: sortedTransactions,
+      currentPage,
+      itemsPerPage: TRANSACTION_ITEMS_PER_PAGE,
+    }),
+  [sortedTransactions, currentPage]
+);
+
+  useEffect(() => {
+    if (
+      totalPages > 0 &&
+      currentPage > totalPages
+    ) {
+      updateTransactionUrl(
+        filters,
+        totalPages
+      );
+    }
+  }, [
     currentPage,
-    itemsPerPage: TRANSACTION_ITEMS_PER_PAGE,
-  });
-
+    filters,
+    totalPages,
+    updateTransactionUrl,
+  ]);
+  
   const {
     handleSaveTransaction,
     handleDeleteTransaction,
@@ -181,7 +246,7 @@ export default function TransactionsClient({
     closeTransactionModalImmediately,
     refresh: router.refresh,
     onTransactionCreated: () => {
-      setCurrentPage(1);
+      updateTransactionUrl(filters, 1);
     },
     onTransactionDeleted: () => {
       const remainingTransactions =
@@ -196,8 +261,9 @@ export default function TransactionsClient({
         currentPage > newTotalPages &&
         currentPage > 1
       ) {
-        setCurrentPage(
-          (currentValue) => currentValue - 1
+        updateTransactionUrl(
+          filters,
+          currentPage - 1
         );
       }
     },
@@ -206,14 +272,16 @@ export default function TransactionsClient({
   function handleFiltersChange(
     nextFilters: FilterBarValue
   ) {
-    setFilters(nextFilters);
-    setCurrentPage(1);
+    updateTransactionUrl(nextFilters, 1);
     clearSelectedTransaction();
   }
 
   function handleClearFilters() {
-    setFilters(INITIAL_FILTERS);
-    setCurrentPage(1);
+    updateTransactionUrl(
+      INITIAL_TRANSACTION_FILTERS,
+      1
+    );
+
     clearSelectedTransaction();
   }
 
@@ -232,15 +300,16 @@ export default function TransactionsClient({
       setSortDirection(null);
     }
 
-    setCurrentPage(1);
+    updateTransactionUrl(filters, 1);
     clearSelectedTransaction();
   }
 
   function handlePreviousPage() {
     if (isLoading || currentPage <= 1) return;
 
-    setCurrentPage(
-      (currentValue) => currentValue - 1
+    updateTransactionUrl(
+      filters,
+      currentPage - 1
     );
 
     clearSelectedTransaction();
@@ -253,11 +322,12 @@ export default function TransactionsClient({
     ) {
       return;
     }
-
-    setCurrentPage(
-      (currentValue) => currentValue + 1
+  
+    updateTransactionUrl(
+      filters,
+      currentPage + 1
     );
-
+  
     clearSelectedTransaction();
   }
 

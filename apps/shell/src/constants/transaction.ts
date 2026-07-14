@@ -1,3 +1,9 @@
+export {
+  TRANSACTION_ATTACHMENT_ACCEPT,
+  TRANSACTION_ATTACHMENT_MAX_SIZE,
+  TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL,
+} from "@finance/shared";
+
 export const TRANSACTION_STATUS_LABEL = {
   success: "Sucesso",
   error: "Falha",
@@ -82,12 +88,3 @@ export const TRANSACTION_BREADCRUMB = [
 
 export const TRANSACTION_SEARCH_PLACEHOLDER =
   "Buscar transação";
-
-export const TRANSACTION_ATTACHMENT_ACCEPT =
-  ".pdf,.png,.jpg,.jpeg";
-
-export const TRANSACTION_ATTACHMENT_MAX_SIZE =
-  5 * 1024 * 1024;
-
-export const TRANSACTION_ATTACHMENT_MAX_SIZE_LABEL =
-  "5 MB";

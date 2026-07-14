@@ -16,8 +16,6 @@ export default function StatusTag({
   return (
     <Box
       component="span"
-      role="status"
-      aria-label={`Status: ${label}`}
       sx={[
         statusTagStyles.base,
         statusTagStyles[status],

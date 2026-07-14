@@ -78,7 +78,25 @@ export default function FileDropzone({
       .pop()
       ?.toLowerCase()}`;
 
-    if (!acceptedTypes.includes(extension)) {
+    const allowedMimeTypesByExtension: Record<
+      string,
+      string[]
+    > = {
+      ".pdf": ["application/pdf"],
+      ".png": ["image/png"],
+      ".jpg": ["image/jpeg"],
+      ".jpeg": ["image/jpeg"],
+    };
+
+    const allowedMimeTypes =
+      allowedMimeTypesByExtension[extension];
+
+    if (
+      !acceptedTypes.includes(extension) ||
+      !allowedMimeTypes?.includes(
+        file.type.toLowerCase()
+      )
+    ) {
       setLocalError(
         "Um ou mais arquivos possuem formato não permitido."
       );
@@ -88,6 +106,13 @@ export default function FileDropzone({
     if (file.size > maxSize) {
       setLocalError(
         `Cada arquivo deve possuir no máximo ${maxSizeLabel}.`
+      );
+      return false;
+    }
+
+    if (file.size <= 0) {
+      setLocalError(
+        "Não é possível adicionar arquivos vazios."
       );
       return false;
     }
@@ -231,6 +256,7 @@ export default function FileDropzone({
       <Box
         role="button"
         tabIndex={0}
+        aria-label={`Adicionar comprovantes. Formatos aceitos: ${acceptedFormatsLabel}. Tamanho máximo: ${maxSizeLabel} por arquivo.`}
         onClick={openPicker}
         onKeyDown={handleKeyDown}
         onDragOver={handleDragOver}
