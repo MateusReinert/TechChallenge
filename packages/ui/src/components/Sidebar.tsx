@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
@@ -156,7 +156,9 @@ export default function Sidebar({
             <IconButton
               type="button"
               size="small"
-              aria-label={collapsed ? "Expandir menu lateral" : "Recolher menu lateral"}
+              aria-label={
+                collapsed ? "Expandir menu lateral" : "Recolher menu lateral"
+              }
               aria-expanded={!collapsed}
               onClick={handleToggleCollapsed}
               sx={{
@@ -229,9 +231,7 @@ export default function Sidebar({
                 : []),
             ];
 
-            const ariaLabel = `${item.label}${
-              isActive ? " página atual" : ""
-            }`;
+            const ariaLabel = `${item.label}${isActive ? " página atual" : ""}`;
 
             const navigationItem = isInternalNavigation ? (
               <Box

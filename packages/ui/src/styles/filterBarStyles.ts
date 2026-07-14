@@ -91,9 +91,9 @@ export const filterBarStyles = {
   } satisfies SystemStyleObject<Theme>,
 
   filterButtonTextActive: {
-  fontWeight: 700,
-  color: colors.primary[600],
-} satisfies SystemStyleObject<Theme>,
+    fontWeight: 700,
+    color: colors.primary[600],
+  } satisfies SystemStyleObject<Theme>,
 
   filterIcon: {
     fontSize: 18,

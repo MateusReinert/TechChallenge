@@ -52,6 +52,10 @@ function getPercentageTrend(data: SummaryHistoryItem[]) {
   }
 
   const percentage = ((currentValue - previousValue) / previousValue) * 100;
+
+  if (percentage === 0) {
+    return "Sem variação este mês";
+  }
   const sign = percentage >= 0 ? "+" : "";
 
   return `${sign}${percentage.toFixed(0)}% este mês`;
