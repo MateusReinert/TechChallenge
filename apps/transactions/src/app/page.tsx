@@ -1,15 +1,5 @@
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-import TransactionsClient from "./TransactionsClient";
-
-import { getTransactions } from "@/services/transactionService";
-
-export default async function TransactionsPage() {
-  const transactions = await getTransactions();
-
-  return (
-    <Suspense>
-      <TransactionsClient initialTransactions={transactions} />
-    </Suspense>
-  );
+export default function Home() {
+  redirect("/transactions");
 }
