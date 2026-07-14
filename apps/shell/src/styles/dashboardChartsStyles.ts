@@ -16,6 +16,7 @@ export const dashboardChartsStyles = {
 
   balanceCard: {
     display: "flex",
+    height: "100%",
     flexDirection: "column",
     gap: spacing.lg,
     p: {
@@ -35,6 +36,7 @@ export const dashboardChartsStyles = {
 
   categoryCard: {
     display: "flex",
+    height: "100%",
     flexDirection: "column",
     gap: spacing.lg,
     p: {
@@ -125,10 +127,11 @@ export const dashboardChartsStyles = {
 
   chartWrapper: {
     width: "100%",
-    height: {
+    minHeight: {
       xs: 185,
       xl: 245,
     },
+    flex: 1,
   } as SxProps<Theme>,
 
   pieContent: {

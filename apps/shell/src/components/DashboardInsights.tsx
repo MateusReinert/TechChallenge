@@ -5,10 +5,11 @@ import { Box, Typography } from "@mui/material";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
+import TrendingDownOutlinedIcon from "@mui/icons-material/TrendingDownOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 
-import { Transaction } from "@/types/transaction";
 import { dashboardInsightsStyles } from "@/styles/dashboardInsightsStyles";
+import type { Transaction } from "@/types/transaction";
 
 type DashboardInsightsProps = {
   transactions: Transaction[];
@@ -70,6 +71,14 @@ function getTopIncome(transactions: Transaction[]) {
   return topIncome?.description || "Sem entradas";
 }
 
+function getTopExpense(transactions: Transaction[]) {
+  const topExpense = transactions
+    .filter((transaction) => transaction.type === "expense")
+    .sort((firstItem, secondItem) => secondItem.amount - firstItem.amount)[0];
+
+  return topExpense?.description || "Sem saídas";
+}
+
 export default function DashboardInsights({
   transactions,
 }: DashboardInsightsProps) {
@@ -77,6 +86,7 @@ export default function DashboardInsights({
   const topExpenseCategory = getTopExpenseCategory(transactions);
   const averageTransactionValue = getAverageTransactionValue(transactions);
   const topIncome = getTopIncome(transactions);
+  const topExpense = getTopExpense(transactions);
 
   const insights = [
     {
@@ -106,6 +116,13 @@ export default function DashboardInsights({
       description: "Principal receita cadastrada",
       icon: <TrendingUpOutlinedIcon />,
       variant: "positive",
+    },
+    {
+      label: "Maior saída",
+      value: topExpense,
+      description: "Principal despesa cadastrada",
+      icon: <TrendingDownOutlinedIcon />,
+      variant: "negative",
     },
   ] as const;
 
