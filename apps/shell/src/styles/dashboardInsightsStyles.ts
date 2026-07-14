@@ -1,13 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  radius,
-  shadow,
-  spacing,
-  typography,
-  sizes,
-} from "@/styles/tokens";
+import { colors, radius, shadow, spacing, typography } from "@/styles/tokens";
 
 type InsightVariant = "positive" | "negative" | "neutral";
 
@@ -46,29 +39,34 @@ export const dashboardInsightsStyles = {
   title: {
     ...typography.subtitle,
     color: colors.gray[900],
+    fontWeight: 700,
   },
 
   list: {
     display: "flex",
     flexDirection: "column",
-    gap: spacing.md,
+    gap: spacing.sm,
     flex: 1,
   },
 
   item: {
     display: "flex",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: spacing.md,
-    p: spacing.lg,
-    borderRadius: radius.md,
-    bgcolor: colors.gray[50],
-    border: `1px solid ${colors.gray[100]}`,
+    py: spacing.md,
+    px: 0,
+    borderBottom: `1px solid ${colors.gray[100]}`,
     minWidth: 0,
+
+    "&:last-child": {
+      borderBottom: "none",
+      pb: 0,
+    },
   },
 
   icon: {
-    width: sizes.summaryIcon,
-    height: sizes.summaryIcon,
+    width: 34,
+    height: 34,
     borderRadius: radius.md,
     display: "flex",
     alignItems: "center",
@@ -76,7 +74,7 @@ export const dashboardInsightsStyles = {
     flexShrink: 0,
 
     "& svg": {
-      fontSize: sizes.icon,
+      fontSize: 18,
     },
   },
 
@@ -113,7 +111,7 @@ export const dashboardInsightsStyles = {
   value: {
     ...typography.body,
     color: colors.gray[900],
-    fontWeight: 800,
+    fontWeight: 700,
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
@@ -121,6 +119,6 @@ export const dashboardInsightsStyles = {
 
   description: {
     ...typography.label,
-    color: colors.gray[500],
+    color: colors.gray[400],
   },
 } satisfies DashboardInsightsStyles;

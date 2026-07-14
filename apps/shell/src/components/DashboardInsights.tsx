@@ -112,10 +112,6 @@ export default function DashboardInsights({
   return (
     <Box sx={dashboardInsightsStyles.root}>
       <Box sx={dashboardInsightsStyles.header}>
-        <Typography sx={dashboardInsightsStyles.eyebrow}>
-          Inteligência financeira
-        </Typography>
-
         <Typography sx={dashboardInsightsStyles.title}>
           Insights rápidos
         </Typography>
