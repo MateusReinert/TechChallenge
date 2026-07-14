@@ -46,10 +46,10 @@ export const dashboardClientStyles = {
 
   topControls: {
     display: "flex",
-    alignItems: {
-      xs: "stretch",
-      lg: "center",
-    },
+   alignItems: {
+  xs: "stretch",
+  lg: "flex-start",
+},
     justifyContent: "space-between",
     flexDirection: {
       xs: "column",
@@ -66,6 +66,10 @@ export const dashboardClientStyles = {
       xs: "stretch",
       sm: "flex-end",
     },
+    alignSelf: {
+  xs: "stretch",
+  lg: "flex-start",
+},
     flexWrap: "wrap",
     gap: spacing.md,
     flexShrink: 0,

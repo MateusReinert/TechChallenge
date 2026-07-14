@@ -4,22 +4,22 @@ import { colors, radius, shadow, sizes, spacing, typography } from "./tokens";
 
 export const filterBarStyles = {
   root: {
-    display: "grid",
-    gridTemplateColumns: {
-  xs: "1fr",
-  sm: "repeat(2, minmax(0, 1fr))",
-  lg: "minmax(180px, 1.3fr) repeat(6, minmax(88px, auto)) auto",
-},
-    alignItems: "center",
-    gap: spacing.sm,
-    width: "100%",
-    minWidth: 0,
-  } satisfies SystemStyleObject<Theme>,
+  display: "flex",
+  alignItems: "center",
+  gap: spacing.sm,
+  flexWrap: "wrap",
+  width: "100%",
+  minWidth: 0,
+} satisfies SystemStyleObject<Theme>,
 
   search: {
-    width: "100%",
-    minWidth: 0,
-  } satisfies SystemStyleObject<Theme>,
+  width: {
+    xs: "100%",
+    lg: 240,
+    xl: 280,
+  },
+  flexShrink: 0,
+} satisfies SystemStyleObject<Theme>,
 
   input: {
     "& .MuiOutlinedInput-root": {
@@ -55,19 +55,17 @@ export const filterBarStyles = {
   filterButton: {
   height: sizes.buttonHeight,
   px: spacing.md,
-  minWidth: 88,
-  maxWidth: "100%",
-  width: "100%",
-  justifyContent: "space-between",
-    borderRadius: radius.full,
-    border: `1px solid ${colors.gray[200]}`,
-    bgcolor: colors.background.default,
-    display: "inline-flex",
-    alignItems: "center",
-    gap: spacing.sm,
-    transition:
-      "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease",
-    whiteSpace: "nowrap",
+  minWidth: "fit-content",
+  borderRadius: radius.full,
+  border: `1px solid ${colors.gray[200]}`,
+  bgcolor: colors.background.default,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: spacing.sm,
+  transition:
+    "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease",
+  whiteSpace: "nowrap",
 
     "&:hover": {
       borderColor: colors.primary[500],
@@ -89,12 +87,7 @@ export const filterBarStyles = {
   ...typography.body,
   color: colors.gray[900],
   fontWeight: 600,
-  minWidth: 0,
-  flex: 1,
-  overflow: "hidden",
-  textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  textAlign: "left",
 } satisfies SystemStyleObject<Theme>,
 
   filterIcon: {
