@@ -39,13 +39,22 @@ import {
 
 import { dashboardClientStyles } from "@/styles/dashboardClientStyles";
 
-import { initializeTransactions } from "@/store/features/transactions/transactionsSlice";
+import {
+  initializeTransactions,
+  selectTransactions,
+  selectTransactionsInitialized,
+} from "@/store/features/transactions/transactionsSlice";
 import {
   useAppDispatch,
   useAppSelector,
 } from "@/store/hooks";
 
 import type { Transaction } from "@/types/transaction";
+
+import {
+  createTransactionsUrl,
+  INITIAL_TRANSACTION_FILTERS,
+} from "@finance/shared";
 
 import { filterDashboardTransactions } from "@/utils/dashboardFiltersUtils";
 import { getDashboardChartsData } from "@/utils/getDashboardChartsData";
@@ -56,21 +65,13 @@ type DashboardClientProps = {
   initialTransactions: Transaction[];
 };
 
-const INITIAL_FILTERS: FilterBarValue = {
-  search: "",
-  category: "",
-  type: "",
-  account: "",
-  status: "",
-  dateRange: "",
-  amountRange: "",
-};
-
 export default function DashboardClient({
   initialTransactions,
 }: DashboardClientProps) {
   const [filters, setFilters] =
-    useState<FilterBarValue>(INITIAL_FILTERS);
+    useState<FilterBarValue>(
+      INITIAL_TRANSACTION_FILTERS
+    );
 
   const [showValues, setShowValues] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -79,11 +80,11 @@ export default function DashboardClient({
   const dispatch = useAppDispatch();
 
   const storedTransactions = useAppSelector(
-    (state) => state.transactions.items
+    selectTransactions
   );
 
   const transactionsInitialized = useAppSelector(
-    (state) => state.transactions.initialized
+    selectTransactionsInitialized
   );
 
   const transactions = transactionsInitialized
@@ -150,17 +151,24 @@ export default function DashboardClient({
   const filterItems =
     useTransactionFilterItems(transactions);
 
-  const summary =
-    getDashboardSummary(filteredTransactions);
-
-  const { monthlyData, categoryData } =
-    getDashboardChartsData(filteredTransactions);
-
-  const latestTransactions =
-    getLatestTransactions(
-      filteredTransactions,
-      DASHBOARD_LATEST_LIMIT
-    );
+  const summary = useMemo(
+    () => getDashboardSummary(filteredTransactions),
+    [filteredTransactions]
+  );
+  
+  const { monthlyData, categoryData } = useMemo(
+    () => getDashboardChartsData(filteredTransactions),
+    [filteredTransactions]
+  );
+  
+  const latestTransactions = useMemo(
+    () =>
+      getLatestTransactions(
+        filteredTransactions,
+        DASHBOARD_LATEST_LIMIT
+      ),
+    [filteredTransactions]
+  );
 
   function handleToggleValues(
     event?: React.MouseEvent<HTMLElement>
@@ -175,11 +183,16 @@ export default function DashboardClient({
   function handleGoToTransactions() {
     if (isLoading) return;
 
-    router.push("/transactions");
+    window.location.assign(
+      createTransactionsUrl(filters)
+    );
   }
 
   function handleClearFilters() {
-    setFilters(INITIAL_FILTERS);
+    setFilters(
+      INITIAL_TRANSACTION_FILTERS
+    );
+
     clearSelectedTransaction();
   }
 

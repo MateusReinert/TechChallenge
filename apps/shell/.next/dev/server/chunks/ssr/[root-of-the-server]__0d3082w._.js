@@ -138,8 +138,10 @@ __turbopack_context__.s([
     ()=>initializeTransactions,
     "removeTransaction",
     ()=>removeTransaction,
-    "setTransactions",
-    ()=>setTransactions,
+    "selectTransactions",
+    ()=>selectTransactions,
+    "selectTransactionsInitialized",
+    ()=>selectTransactionsInitialized,
     "updateTransaction",
     ()=>updateTransaction
 ]);
@@ -158,10 +160,6 @@ const transactionsSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$no
             state.items = action.payload;
             state.initialized = true;
         },
-        setTransactions (state, action) {
-            state.items = action.payload;
-            state.initialized = true;
-        },
         addTransaction (state, action) {
             state.items.unshift(action.payload);
             state.initialized = true;
@@ -176,7 +174,9 @@ const transactionsSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$no
         }
     }
 });
-const { initializeTransactions, setTransactions, addTransaction, updateTransaction, removeTransaction } = transactionsSlice.actions;
+const selectTransactions = (state)=>state.transactions.items;
+const selectTransactionsInitialized = (state)=>state.transactions.initialized;
+const { initializeTransactions, addTransaction, updateTransaction, removeTransaction } = transactionsSlice.actions;
 const __TURBOPACK__default__export__ = transactionsSlice.reducer;
 }),
 "[project]/apps/shell/src/store/index.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {

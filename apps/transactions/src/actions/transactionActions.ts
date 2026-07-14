@@ -9,6 +9,10 @@ import {
   deleteTransaction,
 } from "@/services/transactionService";
 
+import {
+  validateTransactionAttachments,
+} from "@finance/shared";
+
 function validateTransaction(transaction: Transaction) {
   if (!transaction.description?.trim()) {
     throw new Error("Informe a descrição da transação.");
@@ -61,6 +65,15 @@ export async function saveTransactionAction(
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
+    }
+
+    const attachmentValidationError =
+      validateTransactionAttachments(
+        transaction.attachments
+      );
+    
+    if (attachmentValidationError) {
+      throw new Error(attachmentValidationError);
     }
 
     throw new Error("Não foi possível salvar a transação.");

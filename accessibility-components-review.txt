@@ -1,0 +1,1677 @@
+﻿============================================================
+ARQUIVO: packages\ui\src\components\Input.tsx
+============================================================
+"use client";
+
+import { TextField, TextFieldProps } from "@mui/material";
+import { inputStyles } from "../styles/inputStyles";
+
+type InputProps = Omit<TextFieldProps, "variant">;
+
+export default function Input({
+  sx,
+  error,
+  helperText,
+  id,
+  label,
+  ...props
+}: InputProps) {
+  const inputId =
+    id ||
+    (typeof label === "string"
+      ? label.toLowerCase().replace(/\s+/g, "-")
+      : undefined);
+
+  return (
+    <TextField
+      id={inputId}
+      variant="outlined"
+      fullWidth
+      error={error}
+      helperText={helperText}
+      label={label}
+      aria-invalid={error ? "true" : "false"}
+      {...props}
+      sx={[
+        inputStyles.root,
+        inputStyles.field,
+        inputStyles.helperText,
+        ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
+      ]}
+    />
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\Lookup.tsx
+============================================================
+"use client";
+
+import {
+  Box,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+
+import { lookupStyles } from "../styles/lookupStyles";
+
+export type LookupOption = {
+  label: string;
+  value: string;
+};
+
+export type LookupProps = {
+  label: string;
+  value?: string;
+  placeholder?: string;
+  options: LookupOption[];
+  onChange?: (value: string) => void;
+  error?: boolean;
+  helperText?: string;
+  id?: string;
+};
+
+function createIdFromLabel(label: string) {
+  return label
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-");
+}
+
+export default function Lookup({
+  label,
+  value = "",
+  placeholder = "Selecione",
+  options,
+  onChange,
+  error = false,
+  helperText,
+  id,
+}: LookupProps) {
+  const inputId = id || `lookup-${createIdFromLabel(label)}`;
+  const labelId = `${inputId}-label`;
+  const helperTextId = helperText
+    ? `${inputId}-helper-text`
+    : undefined;
+
+  return (
+    <Box sx={lookupStyles.root}>
+      <Typography
+        id={labelId}
+        component="label"
+        htmlFor={inputId}
+        sx={[
+          lookupStyles.label,
+          error && lookupStyles.labelError,
+        ]}
+      >
+        {label}
+      </Typography>
+
+      <TextField
+        id={inputId}
+        select
+        fullWidth
+        error={error}
+        helperText={helperText}
+        value={value}
+        onChange={(event) => onChange?.(event.target.value)}
+        aria-labelledby={labelId}
+        aria-describedby={helperTextId}
+        sx={[
+          lookupStyles.textField,
+          lookupStyles.helperText,
+        ]}
+        slotProps={{
+          formHelperText: {
+            id: helperTextId,
+          },
+          select: {
+            displayEmpty: true,
+            IconComponent: KeyboardArrowDownRoundedIcon,
+            renderValue: (selected) => {
+              const selectedOption = options.find(
+                (option) => option.value === selected
+              );
+
+              if (!selectedOption) {
+                return (
+                  <span style={lookupStyles.placeholderText}>
+                    {placeholder}
+                  </span>
+                );
+              }
+
+              return selectedOption.label;
+            },
+          },
+        }}
+      >
+        <MenuItem value="" disabled>
+          {placeholder}
+        </MenuItem>
+
+        {options.map((option) => (
+          <MenuItem
+            key={option.value}
+            value={option.value}
+          >
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\DateInput.tsx
+============================================================
+"use client";
+
+import { useRef } from "react";
+import type { ClipboardEvent } from "react";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+
+import Input from "./Input";
+import { sizes } from "../styles/tokens";
+import { formatDateInput } from "../utils/dateUtils";
+
+export type DateInputProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  error?: boolean;
+  helperText?: string;
+};
+
+function formatToISO(date: string) {
+  const [day, month, year] = date.split("/");
+
+  if (!day || !month || !year || year.length !== 4) {
+    return "";
+  }
+
+  return `${year}-${month}-${day}`;
+}
+
+function formatFromISO(date: string) {
+  const [year, month, day] = date.split("-");
+
+  if (!day || !month || !year) {
+    return "";
+  }
+
+  return `${day}/${month}/${year}`;
+}
+
+export default function DateInput({
+  label,
+  value,
+  onChange,
+  error = false,
+  helperText,
+}: DateInputProps) {
+  const calendarInputRef = useRef<HTMLInputElement | null>(null);
+
+  function handleChange(rawValue: string) {
+    onChange(formatDateInput(rawValue));
+  }
+
+  function handlePaste(event: ClipboardEvent<HTMLInputElement>) {
+    event.preventDefault();
+
+    const pastedValue = event.clipboardData.getData("text");
+    handleChange(pastedValue);
+  }
+
+  function openCalendar() {
+    const calendarInput = calendarInputRef.current;
+
+    if (!calendarInput) return;
+
+    if (typeof calendarInput.showPicker === "function") {
+      calendarInput.showPicker();
+    } else {
+      calendarInput.click();
+    }
+  }
+
+  return (
+    <Box sx={{ position: "relative", width: "100%" }}>
+      <Input
+        label={label}
+        value={value}
+        placeholder="dd/mm/aaaa"
+        inputMode="numeric"
+        onPaste={handlePaste}
+        onChange={(event) => handleChange(event.target.value)}
+        error={error}
+        helperText={helperText}
+        slotProps={{
+          htmlInput: {
+            maxLength: 10,
+            "aria-label": label,
+          },
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  type="button"
+                  edge="end"
+                  aria-label="Abrir calendÃ¡rio"
+                  onClick={openCalendar}
+                  sx={{
+                    width: sizes.icon,
+                    height: sizes.icon,
+                  }}
+                >
+                  <CalendarMonthOutlinedIcon fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
+
+      <input
+        ref={calendarInputRef}
+        type="date"
+        value={formatToISO(value)}
+        onChange={(event) => {
+          const formattedDate = formatFromISO(event.target.value);
+
+          if (formattedDate) {
+            onChange(formattedDate);
+          }
+        }}
+        tabIndex={-1}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          right: 8,
+          top: "50%",
+          transform: "translateY(-50%)",
+          width: sizes.icon,
+          height: sizes.icon,
+          opacity: 0,
+        }}
+      />
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\FileDropzone.tsx
+============================================================
+"use client";
+
+import { useRef, useState } from "react";
+import type {
+  ChangeEvent,
+  DragEvent,
+  KeyboardEvent,
+} from "react";
+import {
+  Box,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
+import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+
+import { fileDropzoneStyles } from "../styles/fileDropzoneStyles";
+
+export type FileDropzoneAttachment = {
+  id: string;
+  name: string;
+  size: number;
+};
+
+export type FileDropzoneProps = {
+  files?: File[];
+  attachments?: FileDropzoneAttachment[];
+  accept: string;
+  maxSize: number;
+  maxSizeLabel: string;
+  acceptedFormatsLabel: string;
+  onAddFiles?: (files: File[]) => void;
+  onRemoveFile?: (index: number) => void;
+  onRemoveAttachment?: (attachmentId: string) => void;
+  error?: boolean;
+  helperText?: string;
+};
+
+function formatFileSize(size: number) {
+  if (size < 1024) return `${size} B`;
+
+  if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(1)} KB`;
+  }
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+export default function FileDropzone({
+  files = [],
+  attachments = [],
+  accept,
+  maxSize,
+  maxSizeLabel,
+  acceptedFormatsLabel,
+  onAddFiles,
+  onRemoveFile,
+  onRemoveAttachment,
+  error = false,
+  helperText,
+}: FileDropzoneProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [localError, setLocalError] = useState("");
+
+  const hasFiles = files.length > 0 || attachments.length > 0;
+  const hasError = error || Boolean(localError);
+
+  function validateFile(file: File) {
+    const acceptedTypes = accept
+      .split(",")
+      .map((type) => type.trim().toLowerCase());
+
+    const extension = `.${file.name
+      .split(".")
+      .pop()
+      ?.toLowerCase()}`;
+
+    if (!acceptedTypes.includes(extension)) {
+      setLocalError(
+        "Um ou mais arquivos possuem formato nÃ£o permitido."
+      );
+      return false;
+    }
+
+    if (file.size > maxSize) {
+      setLocalError(
+        `Cada arquivo deve possuir no mÃ¡ximo ${maxSizeLabel}.`
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  function handleFiles(fileList?: FileList | null) {
+    if (!fileList) return;
+
+    const selectedFiles = Array.from(fileList);
+    const validFiles = selectedFiles.filter(validateFile);
+
+    if (validFiles.length === 0) return;
+
+    setLocalError("");
+    onAddFiles?.(validFiles);
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }
+
+  function handleInputChange(
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    handleFiles(event.target.files);
+  }
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setIsDragging(false);
+    handleFiles(event.dataTransfer.files);
+  }
+
+  function handleKeyDown(
+    event: KeyboardEvent<HTMLDivElement>
+  ) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    openPicker();
+  }
+
+  function handleDragOver(
+    event: DragEvent<HTMLDivElement>
+  ) {
+    event.preventDefault();
+    setIsDragging(true);
+  }
+
+  function openPicker() {
+    inputRef.current?.click();
+  }
+
+  return (
+    <Box sx={fileDropzoneStyles.root}>
+      <input
+        hidden
+        multiple
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        onChange={handleInputChange}
+      />
+
+      {hasFiles && (
+        <Box sx={fileDropzoneStyles.fileList}>
+          {attachments.map((attachment) => (
+            <Box
+              key={attachment.id}
+              sx={fileDropzoneStyles.fileItem}
+            >
+              <InsertDriveFileRoundedIcon
+                sx={fileDropzoneStyles.fileIcon}
+                aria-hidden="true"
+              />
+
+              <Box sx={fileDropzoneStyles.fileInfo}>
+                <Typography sx={fileDropzoneStyles.fileName}>
+                  {attachment.name}
+                </Typography>
+
+                <Typography sx={fileDropzoneStyles.fileSize}>
+                  {formatFileSize(attachment.size)}
+                </Typography>
+              </Box>
+
+              <IconButton
+                type="button"
+                onClick={() =>
+                  onRemoveAttachment?.(attachment.id)
+                }
+                aria-label={`Remover comprovante ${attachment.name}`}
+                sx={fileDropzoneStyles.removeButton}
+              >
+                <DeleteOutlineRoundedIcon
+                  sx={fileDropzoneStyles.removeIcon}
+                />
+              </IconButton>
+            </Box>
+          ))}
+
+          {files.map((file, index) => (
+            <Box
+              key={`${file.name}-${file.size}-${index}`}
+              sx={fileDropzoneStyles.fileItem}
+            >
+              <InsertDriveFileRoundedIcon
+                sx={fileDropzoneStyles.fileIcon}
+                aria-hidden="true"
+              />
+
+              <Box sx={fileDropzoneStyles.fileInfo}>
+                <Typography sx={fileDropzoneStyles.fileName}>
+                  {file.name}
+                </Typography>
+
+                <Typography sx={fileDropzoneStyles.fileSize}>
+                  {formatFileSize(file.size)}
+                </Typography>
+              </Box>
+
+              <IconButton
+                type="button"
+                onClick={() => onRemoveFile?.(index)}
+                aria-label={`Remover comprovante ${file.name}`}
+                sx={fileDropzoneStyles.removeButton}
+              >
+                <DeleteOutlineRoundedIcon
+                  sx={fileDropzoneStyles.removeIcon}
+                />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
+      )}
+
+      <Box
+        role="button"
+        tabIndex={0}
+        onClick={openPicker}
+        onKeyDown={handleKeyDown}
+        onDragOver={handleDragOver}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={handleDrop}
+        sx={{
+          ...fileDropzoneStyles.dropzone,
+          ...(isDragging
+            ? fileDropzoneStyles.dropzoneActive
+            : {}),
+          ...(hasError
+            ? fileDropzoneStyles.dropzoneError
+            : {}),
+        }}
+      >
+        <UploadFileRoundedIcon
+          sx={fileDropzoneStyles.uploadIcon}
+          aria-hidden="true"
+        />
+
+        <Box sx={fileDropzoneStyles.dropzoneText}>
+          <Typography sx={fileDropzoneStyles.title}>
+            Arraste comprovantes aqui
+          </Typography>
+
+          <Typography sx={fileDropzoneStyles.info}>
+            ou selecione arquivos â€¢ {acceptedFormatsLabel} â€¢ MÃ¡ximo{" "}
+            {maxSizeLabel} por arquivo
+          </Typography>
+        </Box>
+      </Box>
+
+      {(hasError || helperText) && (
+        <Typography sx={fileDropzoneStyles.helperText}>
+          {localError || helperText}
+        </Typography>
+      )}
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\FeedbackSnackbar.tsx
+============================================================
+"use client";
+
+import {
+  Alert,
+  Snackbar,
+} from "@mui/material";
+
+import { feedbackSnackbarStyles } from "../styles/feedbackSnackbarStyles";
+
+export type FeedbackSnackbarType = "success" | "error";
+
+export type FeedbackSnackbarProps = {
+  open: boolean;
+  message: string;
+  type?: FeedbackSnackbarType;
+  onClose: () => void;
+};
+
+export default function FeedbackSnackbar({
+  open,
+  message,
+  type = "success",
+  onClose,
+}: FeedbackSnackbarProps) {
+  const variantStyle =
+    type === "success"
+      ? feedbackSnackbarStyles.success
+      : feedbackSnackbarStyles.error;
+
+  return (
+    <Snackbar
+      open={open}
+      autoHideDuration={3000}
+      onClose={onClose}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+    >
+      <Alert
+        onClose={onClose}
+        severity={type}
+        variant="filled"
+        role="alert"
+        aria-live="assertive"
+        sx={[
+          feedbackSnackbarStyles.content,
+          variantStyle,
+          feedbackSnackbarStyles.alertParts,
+        ]}
+      >
+        {message}
+      </Alert>
+    </Snackbar>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\LoadingOverlay.tsx
+============================================================
+"use client";
+
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
+
+import { loadingOverlayStyles } from "../styles/loadingOverlayStyles";
+import { sizes } from "../styles/tokens";
+
+type LoadingOverlayProps = {
+  open: boolean;
+  message?: string;
+};
+
+export default function LoadingOverlay({
+  open,
+  message = "Processando...",
+}: LoadingOverlayProps) {
+  const descriptionId = "loading-overlay-description";
+
+  return (
+    <Backdrop
+      open={open}
+      sx={loadingOverlayStyles.backdrop}
+      role="status"
+      aria-live="polite"
+      aria-busy={open}
+      aria-describedby={descriptionId}
+    >
+      <Box sx={loadingOverlayStyles.container}>
+        <CircularProgress
+          size={sizes.spinner}
+          thickness={4}
+          sx={loadingOverlayStyles.spinner}
+          aria-hidden="true"
+        />
+
+        <Typography sx={loadingOverlayStyles.title}>
+          {message}
+        </Typography>
+
+        <Typography
+          id={descriptionId}
+          sx={loadingOverlayStyles.subtitle}
+        >
+          Aguarde sÃ³ um instante.
+        </Typography>
+      </Box>
+    </Backdrop>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\ConfirmationModal.tsx
+============================================================
+"use client";
+
+import {
+  Box,
+  Modal,
+  Typography,
+} from "@mui/material";
+
+import Button from "./Button";
+
+import {
+  confirmationModalContainerStyle,
+  confirmationModalDescriptionStyle,
+  confirmationModalFooterStyle,
+  confirmationModalHeaderStyle,
+  confirmationModalOverlayStyle,
+  confirmationModalTitleStyle,
+} from "../styles/confirmationModalStyles";
+
+export type ConfirmationModalProps = {
+  open: boolean;
+  title: string;
+  description: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  danger?: boolean;
+  loading?: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+};
+
+export default function ConfirmationModal({
+  open,
+  title,
+  description,
+  confirmLabel = "Confirmar",
+  cancelLabel = "Cancelar",
+  danger = false,
+  loading = false,
+  onClose,
+  onConfirm,
+}: ConfirmationModalProps) {
+  const titleId = "confirmation-modal-title";
+  const descriptionId = "confirmation-modal-description";
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      sx={confirmationModalOverlayStyle}
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
+    >
+      <Box
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        sx={confirmationModalContainerStyle}
+      >
+        <Box sx={confirmationModalHeaderStyle}>
+          <Typography
+            id={titleId}
+            sx={confirmationModalTitleStyle}
+          >
+            {title}
+          </Typography>
+
+          <Typography
+            id={descriptionId}
+            sx={confirmationModalDescriptionStyle}
+          >
+            {description}
+          </Typography>
+        </Box>
+
+        <Box sx={confirmationModalFooterStyle}>
+          <Button
+            variantType="ghost"
+            onClick={onClose}
+            disabled={loading}
+            aria-label={cancelLabel}
+          >
+            {cancelLabel}
+          </Button>
+
+          <Button
+            variantType={danger ? "danger" : "primary"}
+            onClick={onConfirm}
+            disabled={loading}
+            aria-label={confirmLabel}
+          >
+            {loading ? "Processando..." : confirmLabel}
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\AttachmentPreviewModal.tsx
+============================================================
+"use client";
+
+import { useEffect, useMemo } from "react";
+import {
+  Box,
+  IconButton,
+  Modal,
+  Typography,
+} from "@mui/material";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
+import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
+
+import Button from "./Button";
+import { createObjectUrlFromBase64 } from "../utils/fileUtils";
+import { attachmentPreviewModalStyles } from "../styles/attachmentPreviewModalStyles";
+
+export type AttachmentPreview = {
+  name: string;
+  type: string;
+  base64: string;
+};
+
+export type AttachmentPreviewModalProps = {
+  open: boolean;
+  attachment?: AttachmentPreview | null;
+  onClose: () => void;
+};
+
+export default function AttachmentPreviewModal({
+  open,
+  attachment,
+  onClose,
+}: AttachmentPreviewModalProps) {
+  const objectUrl = useMemo(() => {
+    if (!attachment) return "";
+
+    return createObjectUrlFromBase64(
+      attachment.base64,
+      attachment.type
+    );
+  }, [attachment]);
+
+  useEffect(() => {
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [objectUrl]);
+
+  if (!attachment) return null;
+
+    const currentAttachment = attachment;
+
+    const isImage = currentAttachment.type.startsWith("image/");
+    const isPdf = currentAttachment.type === "application/pdf";
+
+    function handleDownload() {
+      const link = document.createElement("a");
+
+      link.href = objectUrl;
+      link.download = currentAttachment.name;
+      link.click();
+    }
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="attachment-preview-title"
+    >
+      <Box sx={attachmentPreviewModalStyles.overlay}>
+        <Box
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="attachment-preview-title"
+          sx={attachmentPreviewModalStyles.container}
+        >
+          <Box sx={attachmentPreviewModalStyles.header}>
+            <Box sx={attachmentPreviewModalStyles.titleWrapper}>
+              {isPdf ? (
+                <PictureAsPdfRoundedIcon aria-hidden="true" />
+              ) : (
+                <InsertPhotoRoundedIcon aria-hidden="true" />
+              )}
+
+              <Typography
+                id="attachment-preview-title"
+                sx={attachmentPreviewModalStyles.title}
+              >
+                {currentAttachment.name}
+              </Typography>
+            </Box>
+
+            <IconButton
+              type="button"
+              onClick={onClose}
+              aria-label="Fechar visualizaÃ§Ã£o do comprovante"
+            >
+              <CloseRoundedIcon />
+            </IconButton>
+          </Box>
+
+          <Box sx={attachmentPreviewModalStyles.content}>
+            {isImage && (
+              <img
+                src={objectUrl}
+                alt={currentAttachment.name}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            )}
+
+            {isPdf && (
+              <iframe
+                src={objectUrl}
+                title={currentAttachment.name}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+              />
+            )}
+          </Box>
+
+          <Box sx={attachmentPreviewModalStyles.footer}>
+            <Button variantType="outlined" onClick={onClose}>
+              Fechar
+            </Button>
+
+            <Button variantType="primary" onClick={handleDownload}>
+              Baixar
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Modal>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\Sidebar.tsx
+============================================================
+"use client";
+
+import type { MouseEvent } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Box, Typography } from "@mui/material";
+
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+
+import {
+  SIDEBAR_APP_NAME,
+  SIDEBAR_MENU_ITEMS,
+  SIDEBAR_USER,
+  type ApplicationZone,
+} from "../constants/sidebar";
+
+import { sidebarStyles } from "../styles/sidebarStyles";
+
+type SidebarProps = {
+  currentZone: ApplicationZone;
+  currentPath?: string;
+  basePath?: string;
+  onNavigate?: (path: string) => void;
+};
+
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) return "Bom dia";
+  if (hour < 18) return "Boa tarde";
+
+  return "Boa noite";
+}
+
+function getCurrentDate() {
+  return new Date().toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export default function Sidebar({
+  currentZone,
+  currentPath,
+  basePath,
+  onNavigate,
+}: SidebarProps) {
+  const pathnameFromRouter = usePathname();
+  const pathname = currentPath ?? pathnameFromRouter;
+  const greeting = getGreeting();
+  const currentDate = getCurrentDate();
+
+  function handleNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    path: string
+  ) {
+    if (!onNavigate) return;
+
+    event.preventDefault();
+    onNavigate(path);
+  }
+
+  return (
+    <Box
+      component="aside"
+      aria-label="Menu lateral"
+      sx={sidebarStyles.root}
+    >
+      <Box sx={sidebarStyles.topContent}>
+        <Box sx={sidebarStyles.logo} aria-label={SIDEBAR_APP_NAME}>
+          <AccountBalanceWalletIcon
+            sx={sidebarStyles.logoIcon}
+            aria-hidden="true"
+          />
+
+          <Typography sx={sidebarStyles.logoText}>
+            {SIDEBAR_APP_NAME}
+          </Typography>
+        </Box>
+
+        <Box sx={sidebarStyles.greeting}>
+          <Typography sx={sidebarStyles.greetingTitle}>
+            {greeting}, {SIDEBAR_USER.shortName}!
+          </Typography>
+
+          <Typography sx={sidebarStyles.greetingDate}>
+            {currentDate}
+          </Typography>
+        </Box>
+
+        <Box
+          component="nav"
+          aria-label="NavegaÃ§Ã£o principal"
+          sx={sidebarStyles.nav}
+        >
+          {SIDEBAR_MENU_ITEMS.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+            const isInternalNavigation =
+              item.href === basePath;
+            const Icon = item.icon;
+
+            const itemSx = [
+              sidebarStyles.item,
+              ...(isActive ? [sidebarStyles.itemActive] : []),
+            ];
+
+            const ariaLabel = `${item.label}${
+              isActive ? " pÃ¡gina atual" : ""
+            }`;
+
+            return (
+              <Box key={item.href} sx={sidebarStyles.navGroup}>
+                <Typography sx={sidebarStyles.groupTitle}>
+                  {item.group}
+                </Typography>
+
+                {isInternalNavigation ? (
+                  <Box
+                    component={Link}
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    aria-label={ariaLabel}
+                    sx={itemSx}
+                  >
+                    <Icon
+                      sx={sidebarStyles.itemIcon}
+                      aria-hidden="true"
+                    />
+
+                    {item.label}
+                  </Box>
+                ) : (
+                  <Box
+                    component="a"
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    aria-label={ariaLabel}
+                    onClick={(event) =>
+                      handleNavigation(event, item.href)
+                    }
+                    sx={itemSx}
+                  >
+                    <Icon
+                      sx={sidebarStyles.itemIcon}
+                      aria-hidden="true"
+                    />
+
+                    {item.label}
+                  </Box>
+                )}
+              </Box>
+            );
+          })}
+        </Box>
+      </Box>
+
+      <Box
+        sx={sidebarStyles.profile}
+        aria-label="Perfil do usuÃ¡rio"
+      >
+        <Typography sx={sidebarStyles.profileName}>
+          {SIDEBAR_USER.fullName}
+        </Typography>
+
+        <Typography sx={sidebarStyles.profileEmail}>
+          {SIDEBAR_USER.email}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\components\StatusTag.tsx
+============================================================
+"use client";
+
+import { Box } from "@mui/material";
+
+import { statusTagStyles } from "../styles/statusTagStyles";
+
+type StatusTagProps = {
+  status: "success" | "error" | "pending";
+  label: string;
+};
+
+export default function StatusTag({
+  status,
+  label,
+}: StatusTagProps) {
+  return (
+    <Box
+      component="span"
+      role="status"
+      aria-label={`Status: ${label}`}
+      sx={[
+        statusTagStyles.base,
+        statusTagStyles[status],
+      ]}
+    >
+      {label}
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: apps\shell\src\components\TransactionTable.tsx
+============================================================
+"use client";
+
+import type { KeyboardEvent, MouseEvent } from "react";
+import { Box, Typography } from "@mui/material";
+
+import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
+import SouthEastRoundedIcon from "@mui/icons-material/SouthEastRounded";
+import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
+
+import { StatusTag } from "@finance/ui";
+import { EmptyState } from "@finance/ui";
+
+import { transactionTableStyles } from "@/styles/transactionTableStyles";
+import { Transaction } from "@/types/transaction";
+import {
+  TRANSACTION_OPERATION_LABEL,
+  TRANSACTION_STATUS_LABEL,
+  TRANSACTION_TYPE_LABEL,
+} from "@/constants/transaction";
+
+export type TransactionSortField =
+  | "description"
+  | "category"
+  | "type"
+  | "operation"
+  | "account"
+  | "amount"
+  | "date"
+  | "status";
+
+export type SortDirection = "asc" | "desc" | null;
+
+type TransactionTableProps = {
+  transactions?: Transaction[];
+  selectedTransactionId?: string;
+  onSelectTransaction?: (transaction: Transaction) => void;
+  sortField?: TransactionSortField | null;
+  sortDirection?: SortDirection;
+  onSort?: (field: TransactionSortField) => void;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  emptyActionLabel?: string;
+  onEmptyAction?: () => void;
+};
+
+export default function TransactionTable({
+  transactions = [],
+  selectedTransactionId,
+  onSelectTransaction,
+  sortField = null,
+  sortDirection = null,
+  onSort,
+  emptyTitle = "Nenhuma transaÃ§Ã£o encontrada",
+  emptyDescription = "Quando houver movimentaÃ§Ãµes, elas aparecerÃ£o aqui.",
+  emptyActionLabel,
+  onEmptyAction,
+}: TransactionTableProps) {
+  function getAriaSort(field: TransactionSortField) {
+    if (sortField !== field || !sortDirection) return "none";
+    return sortDirection === "asc" ? "ascending" : "descending";
+  }
+
+  function renderHeader(label: string, field: TransactionSortField) {
+    const isActive = sortField === field;
+
+    return (
+      <Box role="columnheader" aria-sort={getAriaSort(field)}>
+        <Typography
+          component="button"
+          type="button"
+          onClick={() => onSort?.(field)}
+          aria-label={`Ordenar por ${label}`}
+          sx={
+            isActive
+              ? [
+                  transactionTableStyles.sortableHeader,
+                  transactionTableStyles.sortableHeaderActive,
+                ]
+              : transactionTableStyles.sortableHeader
+          }
+        >
+          {label} {isActive ? (sortDirection === "asc" ? "â†‘" : "â†“") : ""}
+        </Typography>
+      </Box>
+    );
+  }
+
+  function handleSelectTransaction(
+    transaction: Transaction,
+    event?: MouseEvent<HTMLDivElement>
+  ) {
+    event?.stopPropagation();
+    onSelectTransaction?.(transaction);
+  }
+
+  function handleRowKeyDown(
+    event: KeyboardEvent<HTMLDivElement>,
+    transaction: Transaction
+  ) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelectTransaction?.(transaction);
+    }
+  }
+
+  if (transactions.length === 0) {
+    return (
+      <Box sx={transactionTableStyles.root}>
+        <EmptyState
+          title={emptyTitle}
+          description={emptyDescription}
+          actionLabel={emptyActionLabel}
+          onAction={onEmptyAction}
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={transactionTableStyles.root}
+      role="table"
+      aria-label="Tabela de transaÃ§Ãµes"
+    >
+      <Box sx={transactionTableStyles.header} role="row">
+        {renderHeader("DescriÃ§Ã£o", "description")}
+        {renderHeader("Categoria", "category")}
+        {renderHeader("Natureza", "type")}
+        {renderHeader("Tipo", "operation")}
+        {renderHeader("Conta", "account")}
+        {renderHeader("Data", "date")}
+        {renderHeader("Valor", "amount")}
+        {renderHeader("Status", "status")}
+      </Box>
+
+      {transactions.map((transaction) => {
+        const isSelected = selectedTransactionId === transaction.id;
+        const isPositive = transaction.type === "income";
+        const transactionStatus = transaction.status || "pending";
+        const attachmentsCount = transaction.attachments?.length || 0;
+
+        const formattedAmount = transaction.amount.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+        const transactionTypeLabel = TRANSACTION_TYPE_LABEL[transaction.type];
+        const transactionOperationLabel =
+          TRANSACTION_OPERATION_LABEL[transaction.operation];
+
+        const transactionLabel = `${transaction.description}, ${transactionTypeLabel}, ${transactionOperationLabel}, valor ${formattedAmount}, data ${transaction.date}, status ${TRANSACTION_STATUS_LABEL[transactionStatus]}`;
+
+        return (
+          <Box
+            key={transaction.id}
+            role="button"
+            tabIndex={0}
+            aria-label={`Selecionar transaÃ§Ã£o: ${transactionLabel}${
+              isSelected ? ". TransaÃ§Ã£o selecionada" : ""
+            }`}
+            aria-pressed={isSelected}
+            onClick={(event) => handleSelectTransaction(transaction, event)}
+            onKeyDown={(event) => handleRowKeyDown(event, transaction)}
+            sx={
+              isSelected
+                ? [transactionTableStyles.row, transactionTableStyles.rowSelected]
+                : transactionTableStyles.row
+            }
+          >
+            <Box sx={transactionTableStyles.descriptionCell}>
+              <Box
+                aria-hidden="true"
+                sx={
+                  isPositive
+                    ? [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.incomeIcon,
+                      ]
+                    : [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.expenseIcon,
+                      ]
+                }
+              >
+                {isPositive ? (
+                  <NorthEastRoundedIcon sx={transactionTableStyles.icon} />
+                ) : (
+                  <SouthEastRoundedIcon sx={transactionTableStyles.icon} />
+                )}
+              </Box>
+
+              <Box sx={transactionTableStyles.descriptionContent}>
+                <Typography sx={transactionTableStyles.description}>
+                  {transaction.description}
+                </Typography>
+
+                {attachmentsCount > 0 && (
+                  <Box sx={transactionTableStyles.attachmentIndicator}>
+                    <AttachFileRoundedIcon
+                      sx={transactionTableStyles.attachmentIndicatorIcon}
+                    />
+
+                    <Typography
+                      component="span"
+                      sx={transactionTableStyles.attachmentIndicatorText}
+                    >
+                      {attachmentsCount}{" "}
+                      {attachmentsCount > 1
+                        ? "comprovantes"
+                        : "comprovante"}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.category}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transactionTypeLabel}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transactionOperationLabel}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.account}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.date}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.amount}>
+              {isPositive ? "+ " : "- "}
+              {formattedAmount}
+            </Typography>
+
+            <StatusTag
+              status={transactionStatus}
+              label={TRANSACTION_STATUS_LABEL[transactionStatus]}
+            />
+          </Box>
+        );
+      })}
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: apps\transactions\src\components\TransactionTable.tsx
+============================================================
+"use client";
+
+import type { KeyboardEvent, MouseEvent } from "react";
+import { Box, Typography } from "@mui/material";
+
+import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
+import SouthEastRoundedIcon from "@mui/icons-material/SouthEastRounded";
+import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
+
+import { StatusTag } from "@finance/ui";
+import { EmptyState } from "@finance/ui";
+
+import { transactionTableStyles } from "@/styles/transactionTableStyles";
+import { Transaction } from "@/types/transaction";
+import {
+  TRANSACTION_OPERATION_LABEL,
+  TRANSACTION_STATUS_LABEL,
+  TRANSACTION_TYPE_LABEL,
+} from "@/constants/transaction";
+
+export type TransactionSortField =
+  | "description"
+  | "category"
+  | "type"
+  | "operation"
+  | "account"
+  | "amount"
+  | "date"
+  | "status";
+
+export type SortDirection = "asc" | "desc" | null;
+
+type TransactionTableProps = {
+  transactions?: Transaction[];
+  selectedTransactionId?: string;
+  onSelectTransaction?: (transaction: Transaction) => void;
+  sortField?: TransactionSortField | null;
+  sortDirection?: SortDirection;
+  onSort?: (field: TransactionSortField) => void;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  emptyActionLabel?: string;
+  onEmptyAction?: () => void;
+};
+
+export default function TransactionTable({
+  transactions = [],
+  selectedTransactionId,
+  onSelectTransaction,
+  sortField = null,
+  sortDirection = null,
+  onSort,
+  emptyTitle = "Nenhuma transaÃ§Ã£o encontrada",
+  emptyDescription = "Quando houver movimentaÃ§Ãµes, elas aparecerÃ£o aqui.",
+  emptyActionLabel,
+  onEmptyAction,
+}: TransactionTableProps) {
+  function getAriaSort(field: TransactionSortField) {
+    if (sortField !== field || !sortDirection) return "none";
+    return sortDirection === "asc" ? "ascending" : "descending";
+  }
+
+  function renderHeader(label: string, field: TransactionSortField) {
+    const isActive = sortField === field;
+
+    return (
+      <Box role="columnheader" aria-sort={getAriaSort(field)}>
+        <Typography
+          component="button"
+          type="button"
+          onClick={() => onSort?.(field)}
+          aria-label={`Ordenar por ${label}`}
+          sx={
+            isActive
+              ? [
+                  transactionTableStyles.sortableHeader,
+                  transactionTableStyles.sortableHeaderActive,
+                ]
+              : transactionTableStyles.sortableHeader
+          }
+        >
+          {label} {isActive ? (sortDirection === "asc" ? "â†‘" : "â†“") : ""}
+        </Typography>
+      </Box>
+    );
+  }
+
+  function handleSelectTransaction(
+    transaction: Transaction,
+    event?: MouseEvent<HTMLDivElement>
+  ) {
+    event?.stopPropagation();
+    onSelectTransaction?.(transaction);
+  }
+
+  function handleRowKeyDown(
+    event: KeyboardEvent<HTMLDivElement>,
+    transaction: Transaction
+  ) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelectTransaction?.(transaction);
+    }
+  }
+
+  if (transactions.length === 0) {
+    return (
+      <Box sx={transactionTableStyles.root}>
+        <EmptyState
+          title={emptyTitle}
+          description={emptyDescription}
+          actionLabel={emptyActionLabel}
+          onAction={onEmptyAction}
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={transactionTableStyles.root}
+      role="table"
+      aria-label="Tabela de transaÃ§Ãµes"
+    >
+      <Box sx={transactionTableStyles.header} role="row">
+        {renderHeader("DescriÃ§Ã£o", "description")}
+        {renderHeader("Categoria", "category")}
+        {renderHeader("Natureza", "type")}
+        {renderHeader("Tipo", "operation")}
+        {renderHeader("Conta", "account")}
+        {renderHeader("Data", "date")}
+        {renderHeader("Valor", "amount")}
+        {renderHeader("Status", "status")}
+      </Box>
+
+      {transactions.map((transaction) => {
+        const isSelected = selectedTransactionId === transaction.id;
+        const isPositive = transaction.type === "income";
+        const transactionStatus = transaction.status || "pending";
+        const attachmentsCount = transaction.attachments?.length || 0;
+
+        const formattedAmount = transaction.amount.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+        const transactionTypeLabel = TRANSACTION_TYPE_LABEL[transaction.type];
+        const transactionOperationLabel =
+          TRANSACTION_OPERATION_LABEL[transaction.operation];
+
+        const transactionLabel = `${transaction.description}, ${transactionTypeLabel}, ${transactionOperationLabel}, valor ${formattedAmount}, data ${transaction.date}, status ${TRANSACTION_STATUS_LABEL[transactionStatus]}`;
+
+        return (
+          <Box
+            key={transaction.id}
+            role="button"
+            tabIndex={0}
+            aria-label={`Selecionar transaÃ§Ã£o: ${transactionLabel}${
+              isSelected ? ". TransaÃ§Ã£o selecionada" : ""
+            }`}
+            aria-pressed={isSelected}
+            onClick={(event) => handleSelectTransaction(transaction, event)}
+            onKeyDown={(event) => handleRowKeyDown(event, transaction)}
+            sx={
+              isSelected
+                ? [transactionTableStyles.row, transactionTableStyles.rowSelected]
+                : transactionTableStyles.row
+            }
+          >
+            <Box sx={transactionTableStyles.descriptionCell}>
+              <Box
+                aria-hidden="true"
+                sx={
+                  isPositive
+                    ? [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.incomeIcon,
+                      ]
+                    : [
+                        transactionTableStyles.iconWrapper,
+                        transactionTableStyles.expenseIcon,
+                      ]
+                }
+              >
+                {isPositive ? (
+                  <NorthEastRoundedIcon sx={transactionTableStyles.icon} />
+                ) : (
+                  <SouthEastRoundedIcon sx={transactionTableStyles.icon} />
+                )}
+              </Box>
+
+              <Box sx={transactionTableStyles.descriptionContent}>
+                <Typography sx={transactionTableStyles.description}>
+                  {transaction.description}
+                </Typography>
+
+                {attachmentsCount > 0 && (
+                  <Box sx={transactionTableStyles.attachmentIndicator}>
+                    <AttachFileRoundedIcon
+                      sx={transactionTableStyles.attachmentIndicatorIcon}
+                    />
+
+                    <Typography
+                      component="span"
+                      sx={transactionTableStyles.attachmentIndicatorText}
+                    >
+                      {attachmentsCount}{" "}
+                      {attachmentsCount > 1
+                        ? "comprovantes"
+                        : "comprovante"}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.category}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transactionTypeLabel}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transactionOperationLabel}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.account}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.cellText}>
+              {transaction.date}
+            </Typography>
+
+            <Typography sx={transactionTableStyles.amount}>
+              {isPositive ? "+ " : "- "}
+              {formattedAmount}
+            </Typography>
+
+            <StatusTag
+              status={transactionStatus}
+              label={TRANSACTION_STATUS_LABEL[transactionStatus]}
+            />
+          </Box>
+        );
+      })}
+    </Box>
+  );
+}
+

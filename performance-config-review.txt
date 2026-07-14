@@ -1,0 +1,270 @@
+﻿============================================================
+ARQUIVO: package.json
+============================================================
+{
+  "name": "finance-app",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:shell": "npm run dev --workspace @finance/shell",
+    "dev:transactions": "npm run dev --workspace @finance/transactions",
+    "dev:api": "json-server --watch db.json --port 3001",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "storybook": "npm run storybook --workspace @finance/shell",
+    "build-storybook": "npm run build-storybook --workspace @finance/shell"
+  },
+  "devDependencies": {
+    "express": "^5.2.1",
+    "json-server": "^0.17.4"
+  }
+}
+
+============================================================
+ARQUIVO: apps\shell\package.json
+============================================================
+{
+  "name": "@finance/shell",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@finance/shared": "^0.1.0",
+    "@finance/ui": "^0.1.0",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@mui/material-nextjs": "^9.0.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "date-fns": "^4.4.0",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-redux": "^9.3.0",
+    "recharts": "^3.9.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.1.2",
+    "@storybook/addon-a11y": "^10.3.6",
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/addon-mcp": "^0.6.0",
+    "@storybook/addon-vitest": "^10.3.6",
+    "@storybook/nextjs-vite": "^10.3.6",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/browser-playwright": "^4.1.5",
+    "@vitest/coverage-v8": "^4.1.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "eslint-plugin-storybook": "^10.3.6",
+    "playwright": "^1.59.1",
+    "storybook": "^10.3.6",
+    "typescript": "^5",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
+  }
+}
+
+============================================================
+ARQUIVO: apps\transactions\package.json
+============================================================
+{
+  "name": "@finance/transactions",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@finance/shared": "^0.1.0",
+    "@finance/ui": "^0.1.0",
+    "@mui/icons-material": "^9.2.0",
+    "@mui/material": "^9.2.0",
+    "@mui/material-nextjs": "^9.0.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "date-fns": "^4.4.0",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-redux": "^9.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "typescript": "^5"
+  }
+}
+
+============================================================
+ARQUIVO: apps\shell\next.config.ts
+============================================================
+import type { NextConfig } from "next";
+
+const transactionsZoneUrl =
+  process.env.TRANSACTIONS_ZONE_URL ?? "http://localhost:3002";
+
+const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/transactions",
+        destination: `${transactionsZoneUrl}/transactions`,
+      },
+      {
+        source: "/transactions/:path*",
+        destination: `${transactionsZoneUrl}/transactions/:path*`,
+      },
+    ];
+  },
+};
+
+export default nextConfig;
+
+============================================================
+ARQUIVO: apps\transactions\next.config.ts
+============================================================
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  basePath: "/transactions",
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
+};
+
+export default nextConfig;
+
+============================================================
+ARQUIVO: apps\shell\src\store\StoreProvider.tsx
+============================================================
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { Provider } from "react-redux";
+
+import { makeStore } from "@/store";
+
+type StoreProviderProps = {
+  children: ReactNode;
+};
+
+export default function StoreProvider({
+  children,
+}: StoreProviderProps) {
+  const [store] = useState(() => makeStore());
+
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+}
+
+============================================================
+ARQUIVO: apps\transactions\src\store\StoreProvider.tsx
+============================================================
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { Provider } from "react-redux";
+
+import { makeStore } from "@/store";
+
+type StoreProviderProps = {
+  children: ReactNode;
+};
+
+export default function StoreProvider({
+  children,
+}: StoreProviderProps) {
+  const [store] = useState(() => makeStore());
+
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+}
+
+============================================================
+ARQUIVO: apps\shell\src\components\Providers.tsx
+============================================================
+"use client";
+
+import { ReactNode } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { theme } from "@/theme/theme";
+
+type ProvidersProps = {
+  children: ReactNode;
+};
+
+export default function Providers({
+  children,
+}: ProvidersProps) {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
+
+============================================================
+ARQUIVO: apps\transactions\src\components\Providers.tsx
+============================================================
+"use client";
+
+import { ReactNode } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { theme } from "@/theme/theme";
+
+type ProvidersProps = {
+  children: ReactNode;
+};
+
+export default function Providers({
+  children,
+}: ProvidersProps) {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
+

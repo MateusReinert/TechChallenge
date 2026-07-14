@@ -119,8 +119,8 @@ export default function TransactionTable({
   return (
     <Box
       sx={transactionTableStyles.root}
-      role="table"
-      aria-label="Tabela de transações"
+      role="grid"
+      aria-label="Transações"
     >
       <Box sx={transactionTableStyles.header} role="row">
         {renderHeader("Descrição", "description")}
@@ -153,12 +153,12 @@ export default function TransactionTable({
         return (
           <Box
             key={transaction.id}
-            role="button"
+            role="row"
             tabIndex={0}
             aria-label={`Selecionar transação: ${transactionLabel}${
               isSelected ? ". Transação selecionada" : ""
             }`}
-            aria-pressed={isSelected}
+            aria-selected={isSelected}
             onClick={(event) => handleSelectTransaction(transaction, event)}
             onKeyDown={(event) => handleRowKeyDown(event, transaction)}
             sx={
@@ -167,7 +167,10 @@ export default function TransactionTable({
                 : transactionTableStyles.row
             }
           >
-            <Box sx={transactionTableStyles.descriptionCell}>
+            <Box
+              role="gridcell"
+              sx={transactionTableStyles.descriptionCell}
+            >
               <Box
                 aria-hidden="true"
                 sx={
@@ -197,6 +200,7 @@ export default function TransactionTable({
                 {attachmentsCount > 0 && (
                   <Box sx={transactionTableStyles.attachmentIndicator}>
                     <AttachFileRoundedIcon
+                      aria-hidden="true"
                       sx={transactionTableStyles.attachmentIndicatorIcon}
                     />
 
@@ -214,35 +218,55 @@ export default function TransactionTable({
               </Box>
             </Box>
 
-            <Typography sx={transactionTableStyles.cellText}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.cellText}
+            >
               {transaction.category}
             </Typography>
 
-            <Typography sx={transactionTableStyles.cellText}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.cellText}
+            >
               {transactionTypeLabel}
             </Typography>
 
-            <Typography sx={transactionTableStyles.cellText}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.cellText}
+            >
               {transactionOperationLabel}
             </Typography>
 
-            <Typography sx={transactionTableStyles.cellText}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.cellText}
+            >
               {transaction.account}
             </Typography>
 
-            <Typography sx={transactionTableStyles.cellText}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.cellText}
+            >
               {transaction.date}
             </Typography>
 
-            <Typography sx={transactionTableStyles.amount}>
+            <Typography
+              role="gridcell"
+              sx={transactionTableStyles.amount}
+            >
               {isPositive ? "+ " : "- "}
               {formattedAmount}
             </Typography>
 
-            <StatusTag
-              status={transactionStatus}
-              label={TRANSACTION_STATUS_LABEL[transactionStatus]}
-            />
+            <Box role="gridcell">
+              <StatusTag
+                status={transactionStatus}
+                label={TRANSACTION_STATUS_LABEL[transactionStatus]}
+              />
+            </Box>
           </Box>
         );
       })}

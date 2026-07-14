@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import type { RootState } from "@/store";
 import type { Transaction } from "@/types/transaction";
 
 type TransactionsState = {
@@ -22,14 +23,6 @@ const transactionsSlice = createSlice({
     ) {
       if (state.initialized) return;
 
-      state.items = action.payload;
-      state.initialized = true;
-    },
-
-    setTransactions(
-      state,
-      action: PayloadAction<Transaction[]>
-    ) {
       state.items = action.payload;
       state.initialized = true;
     },
@@ -66,9 +59,16 @@ const transactionsSlice = createSlice({
   },
 });
 
+export const selectTransactions = (
+  state: RootState
+) => state.transactions.items;
+
+export const selectTransactionsInitialized = (
+  state: RootState
+) => state.transactions.initialized;
+
 export const {
   initializeTransactions,
-  setTransactions,
   addTransaction,
   updateTransaction,
   removeTransaction,

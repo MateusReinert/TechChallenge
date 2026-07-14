@@ -1,0 +1,197 @@
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=233; Line=                <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=255; Line=                <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=311; Line=                  <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\ConfirmationModal.stories.tsx; LineNumber=40; Line=        <Button variantType="primary" onClick={() => setOpen(true)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\ConfirmationModal.stories.tsx; LineNumber=71; Line=        <Button variantType="outlined" onClick={() => setOpen(true)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\ConfirmationModal.stories.tsx; LineNumber=100; Line=        <Button variantType="primary" onClick={() => setOpen(true)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\CurrencyInput.tsx; LineNumber=47; Line=    <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\CurrencyInput.tsx; LineNumber=58; Line=          "aria-label": typeof label === "string" ? label : "Valor",}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=73; Line=        <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=81; Line=        <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetailItem.tsx; LineNumber=47; Line=          <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetailItem.tsx; LineNumber=52; Line=            aria-label={`Copiar ${label}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetailItem.tsx; LineNumber=61; Line=              aria-live="polite"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=67; Line=        aria-label="Detalhes da transação"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=98; Line=        aria-label={`Detalhes da transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=187; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=190; Line=            aria-label={`Editar transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=196; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetails.tsx; LineNumber=199; Line=            aria-label={`Excluir transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.stories.tsx; LineNumber=50; Line=        <Button variantType="primary" onClick={() => setOpen(true)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.stories.tsx; LineNumber=76; Line=        <Button variantType="outlined" onClick={() => setOpen(true)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=203; Line=        role="dialog"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=204; Line=        aria-modal="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=205; Line=        aria-labelledby="transaction-modal-title"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=206; Line=        aria-describedby="transaction-modal-description"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=227; Line=          <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=231; Line=            aria-label="Fechar modal de transação"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=246; Line=          <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=274; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=283; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=294; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=303; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=313; Line=          <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=342; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=351; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=358; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionModal.tsx; LineNumber=395; Line=    <Modal}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=67; Line=      <Box role="columnheader" aria-sort={getAriaSort(field)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=72; Line=          aria-label={`Ordenar por ${label}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=122; Line=      role="table"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=123; Line=      aria-label="Tabela de transações"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=125; Line=      <Box sx={transactionTableStyles.header} role="row">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=156; Line=            role="button"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=157; Line=            tabIndex={0}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=158; Line=            aria-label={`Selecionar transação: ${transactionLabel}${}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=161; Line=            aria-pressed={isSelected}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionTable.tsx; LineNumber=172; Line=                aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Button.tsx; LineNumber=26; Line=    <button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Header.tsx; LineNumber=43; Line=            <Button size="small" onClick={onLogout} label="Log out" />}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Header.tsx; LineNumber=47; Line=            <Button size="small" onClick={onLogin} label="Log in" />}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\stories\Header.tsx; LineNumber=48; Line=            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=355; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=446; Line=                <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=452; Line=                  aria-label="Página anterior"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=460; Line=                <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=468; Line=                  aria-label="Próxima página"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=73; Line=        <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=81; Line=        <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetailItem.tsx; LineNumber=47; Line=          <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetailItem.tsx; LineNumber=52; Line=            aria-label={`Copiar ${label}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetailItem.tsx; LineNumber=61; Line=              aria-live="polite"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=67; Line=        aria-label="Detalhes da transação"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=98; Line=        aria-label={`Detalhes da transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=189; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=192; Line=            aria-label={`Editar transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=198; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetails.tsx; LineNumber=201; Line=            aria-label={`Excluir transação ${transaction.description}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=203; Line=        role="dialog"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=204; Line=        aria-modal="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=205; Line=        aria-labelledby="transaction-modal-title"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=206; Line=        aria-describedby="transaction-modal-description"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=227; Line=          <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=231; Line=            aria-label="Fechar modal de transação"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=246; Line=          <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=274; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=283; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=294; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=303; Line=            <Lookup}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=313; Line=          <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=342; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=351; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=358; Line=            <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionModal.tsx; LineNumber=395; Line=    <Modal}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=67; Line=      <Box role="columnheader" aria-sort={getAriaSort(field)}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=72; Line=          aria-label={`Ordenar por ${label}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=122; Line=      role="table"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=123; Line=      aria-label="Tabela de transações"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=125; Line=      <Box sx={transactionTableStyles.header} role="row">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=156; Line=            role="button"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=157; Line=            tabIndex={0}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=158; Line=            aria-label={`Selecionar transação: ${transactionLabel}${}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=161; Line=            aria-pressed={isSelected}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionTable.tsx; LineNumber=172; Line=                aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=68; Line=    <Modal}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=71; Line=      aria-labelledby="attachment-preview-title"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=75; Line=          role="dialog"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=76; Line=          aria-modal="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=77; Line=          aria-labelledby="attachment-preview-title"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=83; Line=                <PictureAsPdfRoundedIcon aria-hidden="true" />}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=85; Line=                <InsertPhotoRoundedIcon aria-hidden="true" />}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=96; Line=            <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=99; Line=              aria-label="Fechar visualização do comprovante"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=132; Line=            <Button variantType="outlined" onClick={onClose}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\AttachmentPreviewModal.tsx; LineNumber=136; Line=            <Button variantType="primary" onClick={handleDownload}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Button.tsx; LineNumber=8; Line=type CustomButtonProps = Omit<ButtonProps, "variant" | "sx"> & {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=47; Line=    <Modal}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=51; Line=      aria-labelledby={titleId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=52; Line=      aria-describedby={descriptionId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=55; Line=        role="dialog"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=56; Line=        aria-modal="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=57; Line=        aria-labelledby={titleId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=58; Line=        aria-describedby={descriptionId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=78; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=82; Line=            aria-label={cancelLabel}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=87; Line=          <Button}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\ConfirmationModal.tsx; LineNumber=91; Line=            aria-label={confirmLabel}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\CurrencyInput.tsx; LineNumber=50; Line=    <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\CurrencyInput.tsx; LineNumber=61; Line=          "aria-label": typeof label === "string" ? label : "Valor",}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=78; Line=      <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=90; Line=            "aria-label": label,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=94; Line=              <InputAdornment position="end">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=95; Line=                <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=98; Line=                  aria-label="Abrir calendário"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=113; Line=      <input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=124; Line=        tabIndex={-1}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\DateInput.tsx; LineNumber=125; Line=        aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\EmptyState.tsx; LineNumber=49; Line=            <Button variantType="primary" onClick={onAction}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FeedbackSnackbar.tsx; LineNumber=44; Line=        role="alert"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FeedbackSnackbar.tsx; LineNumber=45; Line=        aria-live="assertive"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=150; Line=      <input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=168; Line=                aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=181; Line=              <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=186; Line=                aria-label={`Remover comprovante ${attachment.name}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=203; Line=                aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=216; Line=              <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=219; Line=                aria-label={`Remover comprovante ${file.name}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=232; Line=        role="button"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=233; Line=        tabIndex={0}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FileDropzone.tsx; LineNumber=251; Line=          aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=85; Line=      <ButtonBase}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=87; Line=        aria-label={filter.ariaLabel}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=88; Line=        aria-haspopup="menu"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=89; Line=        aria-expanded={open ? "true" : "false"}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=102; Line=          aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=151; Line=      aria-label="Filtros"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=154; Line=        <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=164; Line=                <InputAdornment position="start">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=167; Line=                    aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=172; Line=                <InputAdornment position="end">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=173; Line=                  <IconButton}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=176; Line=                    aria-label="Limpar busca"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=201; Line=      <ButtonBase}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=203; Line=        aria-label="Limpar filtros"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\FilterBar.tsx; LineNumber=215; Line=          aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Input.tsx; LineNumber=30; Line=      aria-invalid={error ? "true" : "false"}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\InputSearch.tsx; LineNumber=36; Line=      aria-label={props["aria-label"] || "Buscar transações"}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\InputSearch.tsx; LineNumber=45; Line=            <InputAdornment position="start">}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\InputSearch.tsx; LineNumber=48; Line=                aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\LoadingOverlay.tsx; LineNumber=28; Line=      role="status"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\LoadingOverlay.tsx; LineNumber=29; Line=      aria-live="polite"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\LoadingOverlay.tsx; LineNumber=30; Line=      aria-busy={open}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\LoadingOverlay.tsx; LineNumber=31; Line=      aria-describedby={descriptionId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\LoadingOverlay.tsx; LineNumber=38; Line=          aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Lookup.tsx; LineNumber=75; Line=        aria-labelledby={labelId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Lookup.tsx; LineNumber=76; Line=        aria-describedby={helperTextId}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\PageHeader.tsx; LineNumber=27; Line=        aria-label="Navegação estrutural"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\PageHeader.tsx; LineNumber=39; Line=                aria-current={isLast ? "page" : undefined}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\PageHeader.tsx; LineNumber=51; Line=                  aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=68; Line=      aria-label="Menu lateral"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=72; Line=        <Box sx={sidebarStyles.logo} aria-label={SIDEBAR_APP_NAME}>}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=75; Line=            aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=95; Line=          aria-label="Navegação principal"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=123; Line=                    aria-current={isActive ? "page" : undefined}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=124; Line=                    aria-label={ariaLabel}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=129; Line=                      aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=138; Line=                    aria-current={isActive ? "page" : undefined}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=139; Line=                    aria-label={ariaLabel}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=147; Line=                      aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\Sidebar.tsx; LineNumber=161; Line=        aria-label="Perfil do usuário"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\StatusTag.tsx; LineNumber=19; Line=      role="status"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\StatusTag.tsx; LineNumber=20; Line=      aria-label={`Status: ${label}`}}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\components\SummaryCard.tsx; LineNumber=39; Line=          aria-hidden="true"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Input.stories.tsx; LineNumber=21; Line=      <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Input.stories.tsx; LineNumber=36; Line=      <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Input.stories.tsx; LineNumber=58; Line=      <Input}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=21; Line=      <InputSearch}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=25; Line=        aria-label="Buscar transações"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=36; Line=      <InputSearch}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=40; Line=        aria-label="Buscar transações"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=53; Line=      <InputSearch}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=57; Line=        aria-label="Buscar transações"}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\InputSearch.stories.tsx; LineNumber=68; Line=    "aria-label": "Buscar transações (desabilitado)",}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Lookup.stories.tsx; LineNumber=39; Line=    return <Lookup {...args} value={value} onChange={setValue} />;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Lookup.stories.tsx; LineNumber=54; Line=    return <Lookup {...args} value={value} onChange={setValue} />;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Lookup.stories.tsx; LineNumber=69; Line=    return <Lookup {...args} value={value} onChange={setValue} />;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\Lookup.stories.tsx; LineNumber=86; Line=    return <Lookup {...args} value={value} onChange={setValue} />;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\packages\ui\src\stories\SummaryCard.stories.tsx; LineNumber=67; Line=      <Button variantType="ghost" startIcon={<VisibilityOutlinedIcon />}>}

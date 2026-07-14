@@ -1,0 +1,25 @@
+﻿@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=4; Line=  useEffect,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=10; Line=import { useRouter } from "next/navigation";}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=79; Line=  const router = useRouter();}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=94; Line=  useEffect(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\app\(app)\dashboard\DashboardClient.tsx; LineNumber=179; Line=    window.location.assign(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=41; Line=    const link = document.createElement("a");}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionAttachmentCard.tsx; LineNumber=47; Line=    window.setTimeout(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\components\TransactionDetailItem.tsx; LineNumber=30; Line=    window.setTimeout(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\services\transactionService.ts; LineNumber=9; Line=  const response = await fetch(input, {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\shell\src\services\transactionService.ts; LineNumber=64; Line=  const response = await fetch(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=5; Line=  useEffect,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=18; Line=  useRouter,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=19; Line=  useSearchParams,}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=84; Line=  const searchParams = useSearchParams();}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=103; Line=  const router = useRouter();}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=121; Line=        ? `${window.location.pathname}?${queryString}`}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=122; Line=        : window.location.pathname;}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=124; Line=      window.history.replaceState(}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=145; Line=  useEffect(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\app\TransactionsClient.tsx; LineNumber=206; Line=  useEffect(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=41; Line=    const link = document.createElement("a");}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionAttachmentCard.tsx; LineNumber=47; Line=    window.setTimeout(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\components\TransactionDetailItem.tsx; LineNumber=30; Line=    window.setTimeout(() => {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\services\transactionService.ts; LineNumber=9; Line=  const response = await fetch(input, {}
+@{Path=C:\Users\Mateus\Fiap\TechChallenge\apps\transactions\src\services\transactionService.ts; LineNumber=69; Line=  const response = await fetch(`${API_URL}/${id}`, {}

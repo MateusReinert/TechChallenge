@@ -1,0 +1,302 @@
+============================================================
+ARQUIVO: apps\shell\src\store\features\transactions\transactionsSlice.ts
+============================================================
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+import type { Transaction } from "@/types/transaction";
+
+type TransactionsState = {
+  items: Transaction[];
+  initialized: boolean;
+};
+
+const initialState: TransactionsState = {
+  items: [],
+  initialized: false,
+};
+
+const transactionsSlice = createSlice({
+  name: "transactions",
+  initialState,
+  reducers: {
+    initializeTransactions(
+      state,
+      action: PayloadAction<Transaction[]>
+    ) {
+      if (state.initialized) return;
+
+      state.items = action.payload;
+      state.initialized = true;
+    },
+
+    setTransactions(
+      state,
+      action: PayloadAction<Transaction[]>
+    ) {
+      state.items = action.payload;
+      state.initialized = true;
+    },
+
+    addTransaction(
+      state,
+      action: PayloadAction<Transaction>
+    ) {
+      state.items.unshift(action.payload);
+      state.initialized = true;
+    },
+
+    updateTransaction(
+      state,
+      action: PayloadAction<Transaction>
+    ) {
+      const transactionIndex = state.items.findIndex(
+        (transaction) => transaction.id === action.payload.id
+      );
+
+      if (transactionIndex === -1) return;
+
+      state.items[transactionIndex] = action.payload;
+    },
+
+    removeTransaction(
+      state,
+      action: PayloadAction<string>
+    ) {
+      state.items = state.items.filter(
+        (transaction) => transaction.id !== action.payload
+      );
+    },
+  },
+});
+
+export const {
+  initializeTransactions,
+  setTransactions,
+  addTransaction,
+  updateTransaction,
+  removeTransaction,
+} = transactionsSlice.actions;
+
+export default transactionsSlice.reducer;
+
+============================================================
+ARQUIVO: apps\shell\src\store\hooks.ts
+============================================================
+"use client";
+
+import {
+  useDispatch,
+  useSelector,
+  useStore,
+} from "react-redux";
+
+import type {
+  AppDispatch,
+  AppStore,
+  RootState,
+} from "@/store";
+
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+
+export const useAppSelector = useSelector.withTypes<RootState>();
+
+export const useAppStore = useStore.withTypes<AppStore>();
+
+============================================================
+ARQUIVO: apps\shell\src\store\index.ts
+============================================================
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+import transactionsReducer from "@/store/features/transactions/transactionsSlice";
+
+const rootReducer = combineReducers({
+  transactions: transactionsReducer,
+});
+
+export function makeStore() {
+  return configureStore({
+    reducer: rootReducer,
+  });
+}
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+
+============================================================
+ARQUIVO: apps\shell\src\store\StoreProvider.tsx
+============================================================
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { Provider } from "react-redux";
+
+import { makeStore } from "@/store";
+
+type StoreProviderProps = {
+  children: ReactNode;
+};
+
+export default function StoreProvider({
+  children,
+}: StoreProviderProps) {
+  const [store] = useState(() => makeStore());
+
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+}
+
+============================================================
+ARQUIVO: apps\transactions\src\store\features\transactions\transactionsSlice.ts
+============================================================
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+import type { Transaction } from "@/types/transaction";
+
+type TransactionsState = {
+  items: Transaction[];
+  initialized: boolean;
+};
+
+const initialState: TransactionsState = {
+  items: [],
+  initialized: false,
+};
+
+const transactionsSlice = createSlice({
+  name: "transactions",
+  initialState,
+  reducers: {
+    initializeTransactions(
+      state,
+      action: PayloadAction<Transaction[]>
+    ) {
+      if (state.initialized) return;
+
+      state.items = action.payload;
+      state.initialized = true;
+    },
+
+    setTransactions(
+      state,
+      action: PayloadAction<Transaction[]>
+    ) {
+      state.items = action.payload;
+      state.initialized = true;
+    },
+
+    addTransaction(
+      state,
+      action: PayloadAction<Transaction>
+    ) {
+      state.items.unshift(action.payload);
+      state.initialized = true;
+    },
+
+    updateTransaction(
+      state,
+      action: PayloadAction<Transaction>
+    ) {
+      const transactionIndex = state.items.findIndex(
+        (transaction) => transaction.id === action.payload.id
+      );
+
+      if (transactionIndex === -1) return;
+
+      state.items[transactionIndex] = action.payload;
+    },
+
+    removeTransaction(
+      state,
+      action: PayloadAction<string>
+    ) {
+      state.items = state.items.filter(
+        (transaction) => transaction.id !== action.payload
+      );
+    },
+  },
+});
+
+export const {
+  initializeTransactions,
+  setTransactions,
+  addTransaction,
+  updateTransaction,
+  removeTransaction,
+} = transactionsSlice.actions;
+
+export default transactionsSlice.reducer;
+
+============================================================
+ARQUIVO: apps\transactions\src\store\hooks.ts
+============================================================
+"use client";
+
+import {
+  useDispatch,
+  useSelector,
+  useStore,
+} from "react-redux";
+
+import type {
+  AppDispatch,
+  AppStore,
+  RootState,
+} from "@/store";
+
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+
+export const useAppSelector = useSelector.withTypes<RootState>();
+
+export const useAppStore = useStore.withTypes<AppStore>();
+
+============================================================
+ARQUIVO: apps\transactions\src\store\index.ts
+============================================================
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+import transactionsReducer from "@/store/features/transactions/transactionsSlice";
+
+const rootReducer = combineReducers({
+  transactions: transactionsReducer,
+});
+
+export function makeStore() {
+  return configureStore({
+    reducer: rootReducer,
+  });
+}
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+
+============================================================
+ARQUIVO: apps\transactions\src\store\StoreProvider.tsx
+============================================================
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { Provider } from "react-redux";
+
+import { makeStore } from "@/store";
+
+type StoreProviderProps = {
+  children: ReactNode;
+};
+
+export default function StoreProvider({
+  children,
+}: StoreProviderProps) {
+  const [store] = useState(() => makeStore());
+
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+}
+

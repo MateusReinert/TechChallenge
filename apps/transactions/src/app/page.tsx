@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import TransactionsClient from "./TransactionsClient";
 
 import { getTransactions } from "@/services/transactionService";
@@ -5,5 +7,11 @@ import { getTransactions } from "@/services/transactionService";
 export default async function TransactionsPage() {
   const transactions = await getTransactions();
 
-  return <TransactionsClient initialTransactions={transactions} />;
+  return (
+    <Suspense>
+      <TransactionsClient
+        initialTransactions={transactions}
+      />
+    </Suspense>
+  );
 }

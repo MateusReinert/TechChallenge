@@ -42,7 +42,6 @@ export default function FeedbackSnackbar({
         severity={type}
         variant="filled"
         role="alert"
-        aria-live="assertive"
         sx={[
           feedbackSnackbarStyles.content,
           variantStyle,
