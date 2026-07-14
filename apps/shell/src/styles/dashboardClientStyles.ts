@@ -20,12 +20,15 @@ export const dashboardClientStyles = {
   content: {
     p: {
       xs: spacing.lg,
-      md: spacing.xl,
-      xl: spacing.xxl,
+      md: spacing.lg,
+      xl: spacing.xl,
     },
     display: "flex",
     flexDirection: "column",
-    gap: spacing.xl,
+    gap: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
     minHeight: 0,
     overflowY: "auto",
     overflowX: "hidden",
@@ -45,14 +48,14 @@ export const dashboardClientStyles = {
     display: "flex",
     alignItems: {
       xs: "stretch",
-      xl: "center",
+      lg: "center",
     },
     justifyContent: "space-between",
     flexDirection: {
       xs: "column",
       lg: "row",
     },
-    gap: spacing.lg,
+    gap: spacing.md,
     width: "100%",
   } as SxProps<Theme>,
 
@@ -93,17 +96,20 @@ export const dashboardClientStyles = {
       sm: "repeat(2, minmax(0, 1fr))",
       lg: "repeat(4, minmax(0, 1fr))",
     },
-    gap: spacing.lg,
+    gap: {
+      xs: spacing.md,
+      xl: spacing.lg,
+    },
   } as SxProps<Theme>,
 
   dashboardGrid: {
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap: spacing.xl,
+    gap: spacing.lg,
     alignItems: "stretch",
 
-    "@media (min-width: 1440px)": {
-      gridTemplateColumns: "minmax(300px, 1fr) minmax(0, 2fr)",
+    "@media (min-width: 1200px)": {
+      gridTemplateColumns: "minmax(260px, 0.8fr) minmax(0, 2fr)",
     },
   } as SxProps<Theme>,
 
@@ -111,7 +117,10 @@ export const dashboardClientStyles = {
     display: "flex",
     flexDirection: "column",
     gap: spacing.lg,
-    p: spacing.xl,
+    p: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
@@ -132,7 +141,7 @@ export const dashboardClientStyles = {
       xs: "column",
       md: "row",
     },
-    gap: spacing.lg,
+    gap: spacing.md,
   } as SxProps<Theme>,
 
   sectionTitle: {

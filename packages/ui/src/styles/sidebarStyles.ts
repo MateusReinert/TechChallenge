@@ -6,13 +6,13 @@ export const sidebarStyles = {
   root: {
     width: {
       xs: "100%",
-      md: 220,
-      xl: 280,
+      md: 200,
+      xl: 240,
     },
     minWidth: {
       xs: "100%",
-      md: 220,
-      xl: 280,
+      md: 200,
+      xl: 240,
     },
     height: {
       xs: "auto",
@@ -25,7 +25,8 @@ export const sidebarStyles = {
     flexShrink: 0,
     p: {
       xs: spacing.lg,
-      md: spacing.xl,
+      md: spacing.md,
+      xl: spacing.lg,
     },
     bgcolor: colors.background.default,
     borderRight: {
@@ -56,7 +57,7 @@ export const sidebarStyles = {
     flexDirection: "column",
     gap: {
       xs: spacing.lg,
-      md: spacing.xl,
+      md: spacing.lg,
     },
     minHeight: 0,
   },

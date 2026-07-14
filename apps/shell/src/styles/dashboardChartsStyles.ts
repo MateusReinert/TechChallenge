@@ -6,26 +6,29 @@ export const dashboardChartsStyles = {
   root: {
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap: spacing.xl,
+    gap: spacing.lg,
     alignItems: "stretch",
 
-    "@media (min-width: 1440px)": {
-      gridTemplateColumns: "minmax(0, 2fr) minmax(360px, 1fr)",
+    "@media (min-width: 1200px)": {
+      gridTemplateColumns: "minmax(0, 2fr) minmax(280px, 0.9fr)",
     },
   } as SxProps<Theme>,
 
   balanceCard: {
     display: "flex",
     flexDirection: "column",
-    gap: spacing.xl,
-    p: spacing.xl,
+    gap: spacing.lg,
+    p: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     boxShadow: shadow.sm,
     minHeight: {
-      xs: 320,
-      xl: 380,
+      xs: 300,
+      xl: 360,
     },
     overflow: "hidden",
   } as SxProps<Theme>,
@@ -33,15 +36,18 @@ export const dashboardChartsStyles = {
   categoryCard: {
     display: "flex",
     flexDirection: "column",
-    gap: spacing.xl,
-    p: spacing.xl,
+    gap: spacing.lg,
+    p: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     boxShadow: shadow.sm,
     minHeight: {
-      xs: 320,
-      xl: 380,
+      xs: 300,
+      xl: 360,
     },
     overflow: "hidden",
   } as SxProps<Theme>,
@@ -120,9 +126,8 @@ export const dashboardChartsStyles = {
   chartWrapper: {
     width: "100%",
     height: {
-      xs: 230,
-      md: 250,
-      xl: 292,
+      xs: 220,
+      xl: 270,
     },
   } as SxProps<Theme>,
 
@@ -136,11 +141,10 @@ export const dashboardChartsStyles = {
   pieWrapper: {
     width: "100%",
     height: {
-      xs: 200,
-      md: 220,
-      xl: 224,
+      xs: 180,
+      xl: 210,
     },
-    maxWidth: 420,
+    maxWidth: 360,
     mx: "auto",
     position: "relative",
   } as SxProps<Theme>,
