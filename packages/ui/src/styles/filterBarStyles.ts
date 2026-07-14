@@ -4,18 +4,21 @@ import { colors, radius, shadow, sizes, spacing, typography } from "./tokens";
 
 export const filterBarStyles = {
   root: {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: {
+      xs: "1fr",
+      sm: "repeat(2, minmax(0, 1fr))",
+      lg: "minmax(220px, 1.4fr) repeat(6, auto) auto",
+    },
     alignItems: "center",
     gap: spacing.sm,
-    flexWrap: "wrap",
     width: "100%",
+    minWidth: 0,
   } satisfies SystemStyleObject<Theme>,
 
   search: {
-    width: {
-      xs: "100%",
-      lg: 280,
-    },
+    width: "100%",
+    minWidth: 0,
   } satisfies SystemStyleObject<Theme>,
 
   input: {
@@ -52,6 +55,8 @@ export const filterBarStyles = {
   filterButton: {
     height: sizes.buttonHeight,
     px: spacing.lg,
+    minWidth: 0,
+    maxWidth: "100%",
     borderRadius: radius.full,
     border: `1px solid ${colors.gray[200]}`,
     bgcolor: colors.background.default,
@@ -82,6 +87,9 @@ export const filterBarStyles = {
     ...typography.body,
     color: colors.gray[900],
     fontWeight: 600,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   } satisfies SystemStyleObject<Theme>,
 
   filterIcon: {
@@ -91,6 +99,7 @@ export const filterBarStyles = {
 
   clearButton: {
     height: sizes.buttonHeight,
+    whiteSpace: "nowrap",
     px: spacing.lg,
     borderRadius: radius.full,
     border: `1px solid ${colors.primary[500]}`,
