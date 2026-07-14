@@ -1,9 +1,9 @@
 import { SxProps, Theme } from "@mui/material";
+
 import { colors, spacing, typography, sizes, radius } from "@/styles/tokens";
 
 export const transactionDetailsStyles = {
   root: {
-    root: {
     width: {
       xs: "calc(100% - 32px)",
       md: "calc(100% - 48px)",
@@ -218,7 +218,6 @@ export const transactionDetailsStyles = {
     flexDirection: {
       xs: "column",
       sm: "row",
-      lg: "row",
     },
   } as SxProps<Theme>,
 
