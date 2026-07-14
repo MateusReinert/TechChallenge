@@ -86,7 +86,7 @@ export const filterBarStyles = {
   filterButtonText: {
     ...typography.body,
     color: colors.gray[900],
-    fontWeight: 600,
+    fontWeight: 500,
     whiteSpace: "nowrap",
   } satisfies SystemStyleObject<Theme>,
 

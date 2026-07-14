@@ -23,17 +23,19 @@ export const transactionsClientStyles = {
   } as SxProps<Theme>,
 
   toolbar: {
-    display: "grid",
-
-    gridTemplateColumns: {
-      xs: "1fr",
-      xl: "1fr auto",
-    },
-
-    alignItems: "start",
-
-    gap: spacing.lg,
-  } as SxProps<Theme>,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: {
+    xs: "stretch",
+    lg: "flex-start",
+  },
+  flexDirection: {
+    xs: "column",
+    lg: "row",
+  },
+  gap: spacing.lg,
+  width: "100%",
+} as SxProps<Theme>,
 
   searchWrapper: {
     width: {
@@ -92,7 +94,11 @@ export const transactionsClientStyles = {
     whiteSpace: "nowrap",
   } as SxProps<Theme>,
   newTransactionButton: {
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  } as SxProps<Theme>,
+  flexShrink: 0,
+  alignSelf: {
+    xs: "stretch",
+    lg: "flex-start",
+  },
+  whiteSpace: "nowrap",
+} as SxProps<Theme>,
 };
