@@ -5,7 +5,7 @@ const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 server.use(middlewares);
 server.use(
@@ -17,5 +17,5 @@ server.use(
 server.use(router);
 
 server.listen(port, () => {
-  console.log(`JSON Server disponível em http://localhost:${port}`);
+  console.log(`JSON Server disponível na porta ${port}`);
 });
