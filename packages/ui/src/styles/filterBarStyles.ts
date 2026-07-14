@@ -4,22 +4,22 @@ import { colors, radius, shadow, sizes, spacing, typography } from "./tokens";
 
 export const filterBarStyles = {
   root: {
-  display: "flex",
-  alignItems: "center",
-  gap: spacing.sm,
-  flexWrap: "wrap",
-  width: "100%",
-  minWidth: 0,
-} satisfies SystemStyleObject<Theme>,
+    display: "flex",
+    alignItems: "center",
+    gap: spacing.sm,
+    flexWrap: "wrap",
+    width: "100%",
+    minWidth: 0,
+  } satisfies SystemStyleObject<Theme>,
 
   search: {
-  width: {
-    xs: "100%",
-    lg: 240,
-    xl: 280,
-  },
-  flexShrink: 0,
-} satisfies SystemStyleObject<Theme>,
+    width: {
+      xs: "100%",
+      lg: 240,
+      xl: 280,
+    },
+    flexShrink: 0,
+  } satisfies SystemStyleObject<Theme>,
 
   input: {
     "& .MuiOutlinedInput-root": {
@@ -53,19 +53,19 @@ export const filterBarStyles = {
   } satisfies SystemStyleObject<Theme>,
 
   filterButton: {
-  height: sizes.buttonHeight,
-  px: spacing.md,
-  minWidth: "fit-content",
-  borderRadius: radius.full,
-  border: `1px solid ${colors.gray[200]}`,
-  bgcolor: colors.background.default,
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: spacing.sm,
-  transition:
-    "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease",
-  whiteSpace: "nowrap",
+    height: sizes.buttonHeight,
+    px: spacing.md,
+    minWidth: "fit-content",
+    borderRadius: radius.full,
+    border: `1px solid ${colors.gray[200]}`,
+    bgcolor: colors.background.default,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.sm,
+    transition:
+      "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease",
+    whiteSpace: "nowrap",
 
     "&:hover": {
       borderColor: colors.primary[500],
@@ -84,11 +84,11 @@ export const filterBarStyles = {
   } satisfies SystemStyleObject<Theme>,
 
   filterButtonText: {
-  ...typography.body,
-  color: colors.gray[900],
-  fontWeight: 600,
-  whiteSpace: "nowrap",
-} satisfies SystemStyleObject<Theme>,
+    ...typography.body,
+    color: colors.gray[900],
+    fontWeight: 600,
+    whiteSpace: "nowrap",
+  } satisfies SystemStyleObject<Theme>,
 
   filterIcon: {
     fontSize: 18,

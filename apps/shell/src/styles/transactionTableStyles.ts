@@ -3,15 +3,15 @@ import { colors, spacing, radius, typography, sizes } from "@/styles/tokens";
 
 export const transactionTableStyles = {
   root: {
-  width: "100%",
-  minWidth: 980,
-  bgcolor: colors.background.default,
-},
+    width: "100%",
+    minWidth: 980,
+    bgcolor: colors.background.default,
+  },
 
   header: {
     display: "grid",
     gridTemplateColumns:
-  "minmax(220px, 2.4fr) minmax(110px, 1fr) minmax(100px, 0.9fr) minmax(110px, 0.9fr) minmax(130px, 1.1fr) minmax(100px, 0.9fr) minmax(120px, 1fr) 110px",
+      "minmax(220px, 2.4fr) minmax(110px, 1fr) minmax(100px, 0.9fr) minmax(110px, 0.9fr) minmax(130px, 1.1fr) minmax(100px, 0.9fr) minmax(120px, 1fr) 110px",
     px: spacing.md,
     py: spacing.sm,
     bgcolor: colors.gray[50],
@@ -47,7 +47,7 @@ export const transactionTableStyles = {
   row: {
     display: "grid",
     gridTemplateColumns:
-  "minmax(220px, 2.4fr) minmax(110px, 1fr) minmax(100px, 0.9fr) minmax(110px, 0.9fr) minmax(130px, 1.1fr) minmax(100px, 0.9fr) minmax(120px, 1fr) 110px",
+      "minmax(220px, 2.4fr) minmax(110px, 1fr) minmax(100px, 0.9fr) minmax(110px, 0.9fr) minmax(130px, 1.1fr) minmax(100px, 0.9fr) minmax(120px, 1fr) 110px",
     alignItems: "center",
     px: spacing.md,
     py: spacing.md,

@@ -13,16 +13,16 @@ export const summaryCardStyles = {
   root: {
     width: "100%",
     minHeight: {
-  xs: 150,
-  xl: 170,
-},
+      xs: 150,
+      xl: 170,
+    },
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     p: {
-  xs: spacing.lg,
-  xl: spacing.xl,
-},
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -40,13 +40,13 @@ export const summaryCardStyles = {
 
   icon: {
     width: {
-  xs: 38,
-  xl: sizes.summaryIcon,
-},
-height: {
-  xs: 38,
-  xl: sizes.summaryIcon,
-},
+      xs: 38,
+      xl: sizes.summaryIcon,
+    },
+    height: {
+      xs: 38,
+      xl: sizes.summaryIcon,
+    },
     borderRadius: radius.md,
     display: "flex",
     alignItems: "center",
@@ -55,9 +55,9 @@ height: {
 
     "& svg": {
       fontSize: {
-  xs: 18,
-  xl: sizes.icon,
-},
+        xs: 18,
+        xl: sizes.icon,
+      },
     },
   },
 
@@ -97,14 +97,14 @@ height: {
   },
 
   value: {
-  ...typography.title,
-  fontSize: {
-    xs: "1.5rem",
-    xl: typography.title.fontSize,
+    ...typography.title,
+    fontSize: {
+      xs: "1.5rem",
+      xl: typography.title.fontSize,
+    },
+    lineHeight: 1.1,
+    color: colors.gray[900],
   },
-  lineHeight: 1.1,
-  color: colors.gray[900],
-},
 
   trend: {
     width: "fit-content",
@@ -146,13 +146,13 @@ height: {
   sparkline: {
     height: 34,
     mx: {
-  xs: `-${spacing.lg}`,
-  xl: `-${spacing.xl}`,
-},
+      xs: `-${spacing.lg}`,
+      xl: `-${spacing.xl}`,
+    },
     mb: {
-  xs: `-${spacing.lg}`,
-  xl: `-${spacing.xl}`,
-},
+      xs: `-${spacing.lg}`,
+      xl: `-${spacing.xl}`,
+    },
     overflow: "hidden",
   },
 } satisfies SummaryCardStyles;

@@ -32,13 +32,22 @@ function getGreeting() {
   return "Boa noite";
 }
 
-function getCurrentDate() {
-  return new Date().toLocaleDateString("pt-BR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
+function getCurrentDates() {
+  const currentDate = new Date();
+
+  return {
+    compact: currentDate.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }),
+    full: currentDate.toLocaleDateString("pt-BR", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }),
+  };
 }
 
 export default function Sidebar({
@@ -50,7 +59,7 @@ export default function Sidebar({
   const pathnameFromRouter = usePathname();
   const pathname = currentPath ?? pathnameFromRouter;
   const greeting = getGreeting();
-  const currentDate = getCurrentDate();
+  const currentDates = getCurrentDates();
 
   function handleNavigation(
     event: MouseEvent<HTMLAnchorElement>,
@@ -81,7 +90,22 @@ export default function Sidebar({
             {greeting}, {SIDEBAR_USER.shortName}!
           </Typography>
 
-          <Typography sx={sidebarStyles.greetingDate}>{currentDate}</Typography>
+          <>
+            <Typography
+              sx={[
+                sidebarStyles.greetingDate,
+                sidebarStyles.greetingDateCompact,
+              ]}
+            >
+              {currentDates.compact}
+            </Typography>
+
+            <Typography
+              sx={[sidebarStyles.greetingDate, sidebarStyles.greetingDateFull]}
+            >
+              {currentDates.full}
+            </Typography>
+          </>
         </Box>
 
         <Box

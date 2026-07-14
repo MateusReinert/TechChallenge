@@ -11,87 +11,87 @@ import {
 
 export const transactionDetailsStyles = {
   root: {
-  width: {
-    xs: "calc(100% - 32px)",
-    md: 340,
-    xl: 320,
-  },
-  minWidth: {
-    xs: 0,
-    md: 340,
-    xl: 320,
-  },
-  maxWidth: {
-    xs: 760,
-    md: 340,
-    xl: 320,
-  },
-  height: {
-    xs: "auto",
-    md: "100dvh",
-    xl: "100%",
-  },
-  maxHeight: {
-    xs: "none",
-    md: "100dvh",
-  },
-  position: {
-    xs: "relative",
-    md: "fixed",
-    xl: "relative",
-  },
-  top: {
-    md: 0,
-    xl: "auto",
-  },
-  right: {
-    md: 0,
-    xl: "auto",
-  },
-  zIndex: {
-    md: 1200,
-    xl: "auto",
-  },
-  justifySelf: {
-    xs: "center",
-    xl: "stretch",
-  },
-  mx: {
-    xs: spacing.lg,
-    md: 0,
-  },
-  mb: {
-    xs: spacing.lg,
-    md: 0,
-  },
-  p: {
-    xs: spacing.lg,
-    md: spacing.xl,
-  },
-  bgcolor: colors.background.default,
-  border: {
-    xs: `1px solid ${colors.gray[200]}`,
-    md: "none",
-  },
-  borderLeft: {
-    md: `1px solid ${colors.gray[200]}`,
-  },
-  borderRadius: {
-    xs: radius.lg,
-    md: 0,
-  },
-  boxShadow: {
-    xs: shadow.sm,
-    md: shadow.lg,
-    xl: "none",
-  },
-  display: "flex",
-  flexDirection: "column",
-  gap: spacing.xl,
-  overflowY: {
-    md: "auto",
-  },
-} as SxProps<Theme>,
+    width: {
+      xs: "calc(100% - 32px)",
+      md: 340,
+      xl: 320,
+    },
+    minWidth: {
+      xs: 0,
+      md: 340,
+      xl: 320,
+    },
+    maxWidth: {
+      xs: 760,
+      md: 340,
+      xl: 320,
+    },
+    height: {
+      xs: "auto",
+      md: "100dvh",
+      xl: "100%",
+    },
+    maxHeight: {
+      xs: "none",
+      md: "100dvh",
+    },
+    position: {
+      xs: "relative",
+      md: "fixed",
+      xl: "relative",
+    },
+    top: {
+      md: 0,
+      xl: "auto",
+    },
+    right: {
+      md: 0,
+      xl: "auto",
+    },
+    zIndex: {
+      md: 1200,
+      xl: "auto",
+    },
+    justifySelf: {
+      xs: "center",
+      xl: "stretch",
+    },
+    mx: {
+      xs: spacing.lg,
+      md: 0,
+    },
+    mb: {
+      xs: spacing.lg,
+      md: 0,
+    },
+    p: {
+      xs: spacing.lg,
+      md: spacing.xl,
+    },
+    bgcolor: colors.background.default,
+    border: {
+      xs: `1px solid ${colors.gray[200]}`,
+      md: "none",
+    },
+    borderLeft: {
+      md: `1px solid ${colors.gray[200]}`,
+    },
+    borderRadius: {
+      xs: radius.lg,
+      md: 0,
+    },
+    boxShadow: {
+      xs: shadow.sm,
+      md: shadow.lg,
+      xl: "none",
+    },
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.xl,
+    overflowY: {
+      md: "auto",
+    },
+  } as SxProps<Theme>,
 
   summary: {
     display: "flex",

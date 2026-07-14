@@ -6,13 +6,13 @@ export const sidebarStyles = {
   root: {
     width: {
       xs: "100%",
-      md: 200,
-      xl: 240,
+      md: 220,
+      xl: 260,
     },
     minWidth: {
       xs: "100%",
-      md: 200,
-      xl: 240,
+      md: 220,
+      xl: 260,
     },
     height: {
       xs: "auto",
@@ -79,17 +79,40 @@ export const sidebarStyles = {
       md: "flex",
     },
     flexDirection: "column",
-    gap: spacing.xs,
+    gap: spacing.sm,
   },
 
   greetingTitle: {
     ...typography.subtitle,
     color: colors.gray[900],
+    fontSize: {
+      md: "1rem",
+      xl: typography.subtitle.fontSize,
+    },
+    lineHeight: 1.35,
   },
 
   greetingDate: {
     ...typography.body,
     color: colors.gray[600],
+  },
+
+  greetingDateCompact: {
+    display: {
+      xs: "none",
+      md: "block",
+      xl: "none",
+    },
+    whiteSpace: "nowrap",
+  },
+
+  greetingDateFull: {
+    display: {
+      xs: "none",
+      md: "none",
+      xl: "block",
+    },
+    lineHeight: 1.5,
   },
 
   nav: {
