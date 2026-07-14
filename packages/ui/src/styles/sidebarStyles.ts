@@ -6,11 +6,13 @@ export const sidebarStyles = {
   root: {
     width: {
       xs: "100%",
-      md: 280,
+      md: 220,
+      xl: 280,
     },
     minWidth: {
       xs: "100%",
-      md: 280,
+      md: 220,
+      xl: 280,
     },
     height: {
       xs: "auto",

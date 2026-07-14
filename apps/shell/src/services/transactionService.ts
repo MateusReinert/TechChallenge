@@ -1,8 +1,7 @@
 import type { Transaction } from "@/types/transaction";
 
 const API_URL =
-  process.env.TRANSACTIONS_API_URL ??
-  "http://localhost:3001/transactions";
+  process.env.TRANSACTIONS_API_URL ?? "http://localhost:3001/transactions";
 
 async function request<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   const response = await fetch(input, {

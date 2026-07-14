@@ -21,7 +21,7 @@ export const dashboardClientStyles = {
     p: {
       xs: spacing.lg,
       md: spacing.xl,
-      lg: spacing.xxl,
+      xl: spacing.xxl,
     },
     display: "flex",
     flexDirection: "column",
@@ -50,7 +50,7 @@ export const dashboardClientStyles = {
     justifyContent: "space-between",
     flexDirection: {
       xs: "column",
-      xl: "row",
+      lg: "row",
     },
     gap: spacing.lg,
     width: "100%",
@@ -90,8 +90,8 @@ export const dashboardClientStyles = {
     display: "grid",
     gridTemplateColumns: {
       xs: "1fr",
-      sm: "1fr 1fr",
-      xl: "repeat(4, 1fr)",
+      sm: "repeat(2, minmax(0, 1fr))",
+      lg: "repeat(4, minmax(0, 1fr))",
     },
     gap: spacing.lg,
   } as SxProps<Theme>,
@@ -100,7 +100,7 @@ export const dashboardClientStyles = {
     display: "grid",
     gridTemplateColumns: {
       xs: "1fr",
-      xl: "1fr 2fr",
+      lg: "minmax(280px, 1fr) minmax(0, 2fr)",
     },
     gap: spacing.xl,
     alignItems: "stretch",

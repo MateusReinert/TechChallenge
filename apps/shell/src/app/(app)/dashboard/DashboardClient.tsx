@@ -171,7 +171,7 @@ export default function DashboardClient({
           ...dashboardClientStyles.layout,
           gridTemplateColumns: {
             xs: "1fr",
-            lg: selectedTransaction ? "1fr 320px" : "1fr",
+            xl: selectedTransaction ? "minmax(0, 1fr) 320px" : "1fr",
           },
         }}
       >

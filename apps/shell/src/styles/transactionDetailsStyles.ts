@@ -5,15 +5,15 @@ export const transactionDetailsStyles = {
   root: {
     width: {
       xs: "100%",
-      lg: 320,
+      xl: 320,
     },
     minWidth: {
       xs: "100%",
-      lg: 320,
+      xl: 320,
     },
     minHeight: {
       xs: "auto",
-      lg: "100vh",
+      xl: "100%",
     },
     p: {
       xs: spacing.lg,
@@ -22,11 +22,11 @@ export const transactionDetailsStyles = {
     bgcolor: colors.background.default,
     borderLeft: {
       xs: "none",
-      lg: `1px solid ${colors.gray[200]}`,
+      xl: `1px solid ${colors.gray[200]}`,
     },
     borderTop: {
       xs: `1px solid ${colors.gray[200]}`,
-      lg: "none",
+      xl: "none",
     },
     display: "flex",
     flexDirection: "column",
@@ -187,7 +187,7 @@ export const transactionDetailsStyles = {
     flexDirection: {
       xs: "column",
       sm: "row",
-      lg: "column",
+      xl: "column",
     },
   } as SxProps<Theme>,
 

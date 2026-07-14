@@ -7,7 +7,7 @@ export const dashboardChartsStyles = {
     display: "grid",
     gridTemplateColumns: {
       xs: "1fr",
-      xl: "2fr 1fr",
+      lg: "minmax(0, 2fr) minmax(300px, 1fr)",
     },
     gap: spacing.xl,
     alignItems: "stretch",
@@ -22,7 +22,10 @@ export const dashboardChartsStyles = {
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     boxShadow: shadow.sm,
-    minHeight: 380,
+    minHeight: {
+      xs: 320,
+      xl: 380,
+    },
     overflow: "hidden",
   } as SxProps<Theme>,
 
@@ -35,7 +38,10 @@ export const dashboardChartsStyles = {
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
     boxShadow: shadow.sm,
-    minHeight: 380,
+    minHeight: {
+      xs: 320,
+      xl: 380,
+    },
     overflow: "hidden",
   } as SxProps<Theme>,
 
@@ -112,7 +118,11 @@ export const dashboardChartsStyles = {
 
   chartWrapper: {
     width: "100%",
-    height: 292,
+    height: {
+      xs: 230,
+      md: 250,
+      xl: 292,
+    },
   } as SxProps<Theme>,
 
   pieContent: {
@@ -124,7 +134,10 @@ export const dashboardChartsStyles = {
 
   pieWrapper: {
     width: "100%",
-    height: 224,
+    height: {
+      xs: 190,
+      xl: 224,
+    },
     position: "relative",
   } as SxProps<Theme>,
 
