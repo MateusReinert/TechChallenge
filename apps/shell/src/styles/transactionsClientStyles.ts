@@ -84,13 +84,13 @@ export const transactionsClientStyles = {
     borderRadius: radius.sm,
   } as SxProps<Theme>,
   buttonContent: {
-  display: "flex",
-  alignItems: "center",
-  gap: spacing.sm,
-  whiteSpace: "nowrap",
-} as SxProps<Theme>,
-newTransactionButton: {
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-} as SxProps<Theme>,
+    display: "flex",
+    alignItems: "center",
+    gap: spacing.sm,
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
+  newTransactionButton: {
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
 };

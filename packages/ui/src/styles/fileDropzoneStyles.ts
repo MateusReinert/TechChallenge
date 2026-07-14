@@ -1,12 +1,6 @@
 import type { SystemStyleObject, Theme } from "@mui/system";
 
-import {
-  colors,
-  radius,
-  shadow,
-  spacing,
-  typography,
-} from "./tokens";
+import { colors, radius, shadow, spacing, typography } from "./tokens";
 
 export const fileDropzoneStyles = {
   root: {

@@ -22,13 +22,7 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = React.useState("");
 
-    return (
-      <DateInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <DateInput {...args} value={value} onChange={setValue} />;
   },
 };
 
@@ -41,13 +35,7 @@ export const Filled: Story = {
   render: (args) => {
     const [value, setValue] = React.useState("25/04/2026");
 
-    return (
-      <DateInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <DateInput {...args} value={value} onChange={setValue} />;
   },
 };
 
@@ -62,13 +50,7 @@ export const Error: Story = {
   render: (args) => {
     const [value, setValue] = React.useState("");
 
-    return (
-      <DateInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <DateInput {...args} value={value} onChange={setValue} />;
   },
 };
 
@@ -81,12 +63,6 @@ export const Required: Story = {
   render: (args) => {
     const [value, setValue] = React.useState("");
 
-    return (
-      <DateInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <DateInput {...args} value={value} onChange={setValue} />;
   },
 };

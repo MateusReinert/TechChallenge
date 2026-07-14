@@ -1,16 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type {
-  ChangeEvent,
-  DragEvent,
-  KeyboardEvent,
-} from "react";
-import {
-  Box,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import type { ChangeEvent, DragEvent, KeyboardEvent } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
@@ -73,47 +65,32 @@ export default function FileDropzone({
       .split(",")
       .map((type) => type.trim().toLowerCase());
 
-    const extension = `.${file.name
-      .split(".")
-      .pop()
-      ?.toLowerCase()}`;
+    const extension = `.${file.name.split(".").pop()?.toLowerCase()}`;
 
-    const allowedMimeTypesByExtension: Record<
-      string,
-      string[]
-    > = {
+    const allowedMimeTypesByExtension: Record<string, string[]> = {
       ".pdf": ["application/pdf"],
       ".png": ["image/png"],
       ".jpg": ["image/jpeg"],
       ".jpeg": ["image/jpeg"],
     };
 
-    const allowedMimeTypes =
-      allowedMimeTypesByExtension[extension];
+    const allowedMimeTypes = allowedMimeTypesByExtension[extension];
 
     if (
       !acceptedTypes.includes(extension) ||
-      !allowedMimeTypes?.includes(
-        file.type.toLowerCase()
-      )
+      !allowedMimeTypes?.includes(file.type.toLowerCase())
     ) {
-      setLocalError(
-        "Um ou mais arquivos possuem formato não permitido."
-      );
+      setLocalError("Um ou mais arquivos possuem formato não permitido.");
       return false;
     }
 
     if (file.size > maxSize) {
-      setLocalError(
-        `Cada arquivo deve possuir no máximo ${maxSizeLabel}.`
-      );
+      setLocalError(`Cada arquivo deve possuir no máximo ${maxSizeLabel}.`);
       return false;
     }
 
     if (file.size <= 0) {
-      setLocalError(
-        "Não é possível adicionar arquivos vazios."
-      );
+      setLocalError("Não é possível adicionar arquivos vazios.");
       return false;
     }
 
@@ -136,9 +113,7 @@ export default function FileDropzone({
     }
   }
 
-  function handleInputChange(
-    event: ChangeEvent<HTMLInputElement>
-  ) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     handleFiles(event.target.files);
   }
 
@@ -150,18 +125,14 @@ export default function FileDropzone({
     handleFiles(event.dataTransfer.files);
   }
 
-  function handleKeyDown(
-    event: KeyboardEvent<HTMLDivElement>
-  ) {
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "Enter" && event.key !== " ") return;
 
     event.preventDefault();
     openPicker();
   }
 
-  function handleDragOver(
-    event: DragEvent<HTMLDivElement>
-  ) {
+  function handleDragOver(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
     setIsDragging(true);
   }
@@ -184,10 +155,7 @@ export default function FileDropzone({
       {hasFiles && (
         <Box sx={fileDropzoneStyles.fileList}>
           {attachments.map((attachment) => (
-            <Box
-              key={attachment.id}
-              sx={fileDropzoneStyles.fileItem}
-            >
+            <Box key={attachment.id} sx={fileDropzoneStyles.fileItem}>
               <InsertDriveFileRoundedIcon
                 sx={fileDropzoneStyles.fileIcon}
                 aria-hidden="true"
@@ -205,15 +173,11 @@ export default function FileDropzone({
 
               <IconButton
                 type="button"
-                onClick={() =>
-                  onRemoveAttachment?.(attachment.id)
-                }
+                onClick={() => onRemoveAttachment?.(attachment.id)}
                 aria-label={`Remover comprovante ${attachment.name}`}
                 sx={fileDropzoneStyles.removeButton}
               >
-                <DeleteOutlineRoundedIcon
-                  sx={fileDropzoneStyles.removeIcon}
-                />
+                <DeleteOutlineRoundedIcon sx={fileDropzoneStyles.removeIcon} />
               </IconButton>
             </Box>
           ))}
@@ -244,9 +208,7 @@ export default function FileDropzone({
                 aria-label={`Remover comprovante ${file.name}`}
                 sx={fileDropzoneStyles.removeButton}
               >
-                <DeleteOutlineRoundedIcon
-                  sx={fileDropzoneStyles.removeIcon}
-                />
+                <DeleteOutlineRoundedIcon sx={fileDropzoneStyles.removeIcon} />
               </IconButton>
             </Box>
           ))}
@@ -264,12 +226,8 @@ export default function FileDropzone({
         onDrop={handleDrop}
         sx={{
           ...fileDropzoneStyles.dropzone,
-          ...(isDragging
-            ? fileDropzoneStyles.dropzoneActive
-            : {}),
-          ...(hasError
-            ? fileDropzoneStyles.dropzoneError
-            : {}),
+          ...(isDragging ? fileDropzoneStyles.dropzoneActive : {}),
+          ...(hasError ? fileDropzoneStyles.dropzoneError : {}),
         }}
       >
         <UploadFileRoundedIcon

@@ -5,9 +5,7 @@ export {
   getTransactionUrlState,
 } from "./transactions/transactionUrlFilters";
 
-export {
-  suggestTransactionCategory,
-} from "./transactions/transactionCategorySuggestion";
+export { suggestTransactionCategory } from "./transactions/transactionCategorySuggestion";
 
 export type {
   TransactionFilters,

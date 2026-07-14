@@ -81,7 +81,7 @@ function TransactionModalContent({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const [isCategoryManuallySelected, setIsCategoryManuallySelected] =
-  useState(isEditing);
+    useState(isEditing);
 
   function updateForm(field: TransactionFormField, value: string) {
     setForm((currentForm) => ({
@@ -110,21 +110,21 @@ function TransactionModalContent({
           description,
         };
       }
-    
+
       return {
         ...currentForm,
         description,
         category: suggestTransactionCategory(description) ?? "",
       };
     });
-  
+
     setErrors((currentErrors) => ({
       ...currentErrors,
       description: undefined,
       category: undefined,
     }));
   }
-  
+
   function updateCategory(category: string) {
     setIsCategoryManuallySelected(true);
     updateForm("category", category);
@@ -133,9 +133,7 @@ function TransactionModalContent({
   function removeFile(index: number) {
     setForm((currentForm) => ({
       ...currentForm,
-      files: currentForm.files.filter(
-        (_, fileIndex) => fileIndex !== index
-      ),
+      files: currentForm.files.filter((_, fileIndex) => fileIndex !== index),
     }));
   }
 
@@ -207,10 +205,7 @@ function TransactionModalContent({
       >
         <Box sx={modalHeaderStyle}>
           <Box>
-            <Typography
-              id="transaction-modal-title"
-              sx={modalTitleStyle}
-            >
+            <Typography id="transaction-modal-title" sx={modalTitleStyle}>
               {isEditing ? "Editar transação" : "Nova transação"}
             </Typography>
 
@@ -313,9 +308,7 @@ function TransactionModalContent({
           <Input
             label="Observação"
             value={form.note}
-            onChange={(event) =>
-              updateForm("note", event.target.value)
-            }
+            onChange={(event) => updateForm("note", event.target.value)}
           />
 
           <FileDropzone
@@ -331,13 +324,7 @@ function TransactionModalContent({
           />
         </Box>
 
-        <Box
-          sx={
-            isEditing
-              ? modalFooterEditingStyle
-              : modalFooterStyle
-          }
-        >
+        <Box sx={isEditing ? modalFooterEditingStyle : modalFooterStyle}>
           {isEditing && (
             <Button
               variantType="dangerOutlined"
@@ -348,20 +335,12 @@ function TransactionModalContent({
           )}
 
           <Box sx={modalActionsGroupStyle}>
-            <Button
-              variantType="outlined"
-              onClick={onClose}
-            >
+            <Button variantType="outlined" onClick={onClose}>
               Cancelar
             </Button>
 
-            <Button
-              variantType="primary"
-              onClick={handleSave}
-            >
-              {isEditing
-                ? "Salvar alterações"
-                : "Salvar transação"}
+            <Button variantType="primary" onClick={handleSave}>
+              {isEditing ? "Salvar alterações" : "Salvar transação"}
             </Button>
           </Box>
         </Box>
@@ -392,11 +371,7 @@ export function TransactionModal({
   const initialData = getInitialTransactionForm(transaction);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      sx={modalOverlayStyle}
-    >
+    <Modal open={open} onClose={onClose} sx={modalOverlayStyle}>
       <TransactionModalContent
         key={transaction?.id || "new"}
         initialData={initialData}

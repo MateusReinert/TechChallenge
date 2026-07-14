@@ -1,12 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  spacing,
-  radius,
-  shadow,
-  typography,
-} from "@/styles/tokens";
+import { colors, spacing, radius, shadow, typography } from "@/styles/tokens";
 
 export const dashboardChartsStyles = {
   root: {

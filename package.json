@@ -13,10 +13,12 @@
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "storybook": "npm run storybook --workspace @finance/shell",
-    "build-storybook": "npm run build-storybook --workspace @finance/shell"
+    "build-storybook": "npm run build-storybook --workspace @finance/shell",
+    "format": "prettier . --write"
   },
   "devDependencies": {
     "express": "^5.2.1",
-    "json-server": "^0.17.4"
+    "json-server": "^0.17.4",
+    "prettier": "^3.9.5"
   }
 }

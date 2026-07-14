@@ -57,8 +57,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Interactive: Story = {
   render: () => {
-    const [selectedTransaction, setSelectedTransaction] =
-      React.useState<Transaction | undefined>();
+    const [selectedTransaction, setSelectedTransaction] = React.useState<
+      Transaction | undefined
+    >();
 
     return (
       <Box

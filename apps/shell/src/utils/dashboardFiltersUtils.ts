@@ -1,7 +1,4 @@
-import type {
-  FilterBarOption,
-  FilterBarValue,
-} from "@finance/ui";
+import type { FilterBarOption, FilterBarValue } from "@finance/ui";
 import { Transaction } from "@/types/transaction";
 
 export function getUniqueOptions(values: string[]): FilterBarOption[] {

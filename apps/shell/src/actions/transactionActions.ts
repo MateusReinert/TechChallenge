@@ -9,9 +9,7 @@ import {
   deleteTransaction,
 } from "@/services/transactionService";
 
-import {
-  validateTransactionAttachments,
-} from "@finance/shared";
+import { validateTransactionAttachments } from "@finance/shared";
 
 function validateTransaction(transaction: Transaction) {
   if (!transaction.description?.trim()) {
@@ -42,11 +40,10 @@ function validateTransaction(transaction: Transaction) {
     throw new Error("Selecione a conta da transação.");
   }
 
-  const attachmentValidationError =
-    validateTransactionAttachments(
-      transaction.attachments
-    );
-  
+  const attachmentValidationError = validateTransactionAttachments(
+    transaction.attachments
+  );
+
   if (attachmentValidationError) {
     throw new Error(attachmentValidationError);
   }

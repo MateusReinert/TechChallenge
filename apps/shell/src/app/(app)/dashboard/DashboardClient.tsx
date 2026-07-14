@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useState,
-  useTransition,
-} from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -44,10 +39,7 @@ import {
   selectTransactions,
   selectTransactionsInitialized,
 } from "@/store/features/transactions/transactionsSlice";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import type { Transaction } from "@/types/transaction";
 
@@ -68,10 +60,9 @@ type DashboardClientProps = {
 export default function DashboardClient({
   initialTransactions,
 }: DashboardClientProps) {
-  const [filters, setFilters] =
-    useState<FilterBarValue>(
-      INITIAL_TRANSACTION_FILTERS
-    );
+  const [filters, setFilters] = useState<FilterBarValue>(
+    INITIAL_TRANSACTION_FILTERS
+  );
 
   const [showValues, setShowValues] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -79,22 +70,16 @@ export default function DashboardClient({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const storedTransactions = useAppSelector(
-    selectTransactions
-  );
+  const storedTransactions = useAppSelector(selectTransactions);
 
-  const transactionsInitialized = useAppSelector(
-    selectTransactionsInitialized
-  );
+  const transactionsInitialized = useAppSelector(selectTransactionsInitialized);
 
   const transactions = transactionsInitialized
     ? storedTransactions
     : initialTransactions;
 
   useEffect(() => {
-    dispatch(
-      initializeTransactions(initialTransactions)
-    );
+    dispatch(initializeTransactions(initialTransactions));
   }, [dispatch, initialTransactions]);
 
   const {
@@ -103,11 +88,7 @@ export default function DashboardClient({
     runWithLoading,
   } = useLoadingAction();
 
-  const {
-    feedback,
-    showFeedback,
-    closeFeedback,
-  } = useFeedback();
+  const { feedback, showFeedback, closeFeedback } = useFeedback();
 
   const isLoading = isLoadingAction || isPending;
 
@@ -124,74 +105,56 @@ export default function DashboardClient({
     clearSelectedTransactionImmediately,
   } = useTransactionModal(isLoading);
 
-  const {
-    handleSaveTransaction,
-    handleDeleteTransaction,
-  } = useTransactionCrud({
-    transactions,
-    isLoading,
-    startTransition,
-    runWithLoading,
-    showFeedback,
-    setSelectedTransaction,
-    clearSelectedTransactionImmediately,
-    closeTransactionModalImmediately,
-    refresh: router.refresh,
-  });
+  const { handleSaveTransaction, handleDeleteTransaction } = useTransactionCrud(
+    {
+      transactions,
+      isLoading,
+      startTransition,
+      runWithLoading,
+      showFeedback,
+      setSelectedTransaction,
+      clearSelectedTransactionImmediately,
+      closeTransactionModalImmediately,
+      refresh: router.refresh,
+    }
+  );
 
   const filteredTransactions = useMemo(
-    () =>
-      filterDashboardTransactions(
-        transactions,
-        filters
-      ),
+    () => filterDashboardTransactions(transactions, filters),
     [transactions, filters]
   );
 
-  const filterItems =
-    useTransactionFilterItems(transactions);
+  const filterItems = useTransactionFilterItems(transactions);
 
   const summary = useMemo(
     () => getDashboardSummary(filteredTransactions),
     [filteredTransactions]
   );
-  
+
   const { monthlyData, categoryData } = useMemo(
     () => getDashboardChartsData(filteredTransactions),
     [filteredTransactions]
   );
-  
+
   const latestTransactions = useMemo(
-    () =>
-      getLatestTransactions(
-        filteredTransactions,
-        DASHBOARD_LATEST_LIMIT
-      ),
+    () => getLatestTransactions(filteredTransactions, DASHBOARD_LATEST_LIMIT),
     [filteredTransactions]
   );
 
-  function handleToggleValues(
-    event?: React.MouseEvent<HTMLElement>
-  ) {
+  function handleToggleValues(event?: React.MouseEvent<HTMLElement>) {
     event?.stopPropagation();
 
-    setShowValues(
-      (currentValue) => !currentValue
-    );
+    setShowValues((currentValue) => !currentValue);
   }
 
   function handleGoToTransactions() {
     if (isLoading) return;
 
-    window.location.assign(
-      createTransactionsUrl(filters)
-    );
+    window.location.assign(createTransactionsUrl(filters));
   }
 
   function handleClearFilters() {
-    setFilters(
-      INITIAL_TRANSACTION_FILTERS
-    );
+    setFilters(INITIAL_TRANSACTION_FILTERS);
 
     clearSelectedTransaction();
   }
@@ -208,22 +171,15 @@ export default function DashboardClient({
           ...dashboardClientStyles.layout,
           gridTemplateColumns: {
             xs: "1fr",
-            lg: selectedTransaction
-              ? "1fr 320px"
-              : "1fr",
+            lg: selectedTransaction ? "1fr 320px" : "1fr",
           },
         }}
       >
         <Box sx={dashboardClientStyles.content}>
           <Box sx={dashboardClientStyles.pageTop}>
-            <PageHeader
-              title="Dashboard"
-              breadcrumb={DASHBOARD_BREADCRUMB}
-            />
+            <PageHeader title="Dashboard" breadcrumb={DASHBOARD_BREADCRUMB} />
 
-            <Box
-              sx={dashboardClientStyles.topControls}
-            >
+            <Box sx={dashboardClientStyles.topControls}>
               <FilterBar
                 value={filters}
                 filters={filterItems}
@@ -232,30 +188,20 @@ export default function DashboardClient({
                 onClear={handleClearFilters}
               />
 
-              <Box
-                sx={
-                  dashboardClientStyles.headerActions
-                }
-              >
+              <Box sx={dashboardClientStyles.headerActions}>
                 <Button
                   variantType="outlined"
                   onClick={handleToggleValues}
                   disabled={isLoading}
                 >
-                  <Box
-                    sx={
-                      dashboardClientStyles.buttonContent
-                    }
-                  >
+                  <Box sx={dashboardClientStyles.buttonContent}>
                     {showValues ? (
                       <VisibilityOutlinedIcon fontSize="small" />
                     ) : (
                       <VisibilityOffOutlinedIcon fontSize="small" />
                     )}
 
-                    {showValues
-                      ? "Ocultar valores"
-                      : "Mostrar valores"}
+                    {showValues ? "Ocultar valores" : "Mostrar valores"}
                   </Box>
                 </Button>
 
@@ -264,11 +210,7 @@ export default function DashboardClient({
                   onClick={openNewTransactionModal}
                   disabled={isLoading}
                 >
-                  <Box
-                    sx={
-                      dashboardClientStyles.buttonContent
-                    }
-                  >
+                  <Box sx={dashboardClientStyles.buttonContent}>
                     Nova transação
                     <AddRoundedIcon fontSize="small" />
                   </Box>
@@ -277,44 +219,23 @@ export default function DashboardClient({
             </Box>
           </Box>
 
-          <DashboardSummaryCards
-            summary={summary}
-            showValues={showValues}
-          />
+          <DashboardSummaryCards summary={summary} showValues={showValues} />
 
           <DashboardCharts
             monthlyData={monthlyData}
             categoryData={categoryData}
           />
 
-          <Box
-            sx={dashboardClientStyles.dashboardGrid}
-          >
-            <DashboardInsights
-              transactions={filteredTransactions}
-            />
+          <Box sx={dashboardClientStyles.dashboardGrid}>
+            <DashboardInsights transactions={filteredTransactions} />
 
-            <Box
-              sx={
-                dashboardClientStyles.transactionsCard
-              }
-            >
-              <Box
-                sx={
-                  dashboardClientStyles.sectionHeader
-                }
-              >
-                <Typography
-                  sx={
-                    dashboardClientStyles.sectionTitle
-                  }
-                >
+            <Box sx={dashboardClientStyles.transactionsCard}>
+              <Box sx={dashboardClientStyles.sectionHeader}>
+                <Typography sx={dashboardClientStyles.sectionTitle}>
                   Últimas transações
                 </Typography>
 
-                <Box
-                  sx={dashboardClientStyles.actions}
-                >
+                <Box sx={dashboardClientStyles.actions}>
                   <Button
                     variantType="ghost"
                     onClick={handleGoToTransactions}
@@ -325,28 +246,18 @@ export default function DashboardClient({
                 </Box>
               </Box>
 
-              <Box
-                sx={
-                  dashboardClientStyles.tableWrapper
-                }
-              >
+              <Box sx={dashboardClientStyles.tableWrapper}>
                 <TransactionTable
                   transactions={latestTransactions}
-                  selectedTransactionId={
-                    selectedTransaction?.id
-                  }
+                  selectedTransactionId={selectedTransaction?.id}
                   onSelectTransaction={
-                    isLoading
-                      ? undefined
-                      : selectTransaction
+                    isLoading ? undefined : selectTransaction
                   }
                   emptyTitle="Nenhuma movimentação encontrada"
                   emptyDescription="Ajuste os filtros ou cadastre uma nova transação."
                   emptyActionLabel="Nova transação"
                   onEmptyAction={
-                    isLoading
-                      ? undefined
-                      : openNewTransactionModal
+                    isLoading ? undefined : openNewTransactionModal
                   }
                 />
               </Box>
@@ -371,10 +282,7 @@ export default function DashboardClient({
         onDelete={handleDeleteTransaction}
       />
 
-      <LoadingOverlay
-        open={Boolean(loadingMessage)}
-        message={loadingMessage}
-      />
+      <LoadingOverlay open={Boolean(loadingMessage)} message={loadingMessage} />
 
       <FeedbackSnackbar
         open={feedback.open}

@@ -2,11 +2,7 @@
 
 import { useRef } from "react";
 import type { ClipboardEvent } from "react";
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { Box, IconButton, InputAdornment } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import Input from "./Input";

@@ -3,11 +3,7 @@
 import { useState, type MouseEvent } from "react";
 import { Box, Typography } from "@mui/material";
 
-import {
-  Button,
-  ConfirmationModal,
-  AttachmentPreviewModal,
-} from "@finance/ui";
+import { Button, ConfirmationModal, AttachmentPreviewModal } from "@finance/ui";
 import { StatusTag } from "@finance/ui";
 import TransactionAttachmentCard from "@/components/TransactionAttachmentCard";
 import TransactionDetailItem from "@/components/TransactionDetailItem";
@@ -20,10 +16,7 @@ import {
 
 import { transactionDetailsStyles } from "@/styles/transactionDetailsStyles";
 
-import type {
-  Transaction,
-  TransactionAttachment,
-} from "@/types/transaction";
+import type { Transaction, TransactionAttachment } from "@/types/transaction";
 
 type TransactionDetailsProps = {
   transaction?: Transaction;
@@ -31,10 +24,7 @@ type TransactionDetailsProps = {
   onDelete?: (transactionId: string) => void;
 };
 
-function formatCurrency(
-  value: number,
-  type: Transaction["type"]
-) {
+function formatCurrency(value: number, type: Transaction["type"]) {
   const formattedValue = value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -78,16 +68,12 @@ export default function TransactionDetails({
     );
   }
 
-  const transactionTypeLabel =
-    TRANSACTION_TYPE_LABEL[transaction.type];
+  const transactionTypeLabel = TRANSACTION_TYPE_LABEL[transaction.type];
 
   const transactionOperationLabel =
     TRANSACTION_OPERATION_LABEL[transaction.operation];
 
-  const formattedAmount = formatCurrency(
-    transaction.amount,
-    transaction.type
-  );
+  const formattedAmount = formatCurrency(transaction.amount, transaction.type);
 
   const attachments = transaction.attachments || [];
 
@@ -96,9 +82,7 @@ export default function TransactionDetails({
       <Box
         component="aside"
         aria-label={`Detalhes da transação ${transaction.description}`}
-        onClick={(event: MouseEvent<HTMLDivElement>) =>
-          event.stopPropagation()
-        }
+        onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}
         sx={transactionDetailsStyles.root}
       >
         <Box sx={transactionDetailsStyles.summary}>
@@ -125,21 +109,14 @@ export default function TransactionDetails({
         </Box>
 
         <Box sx={transactionDetailsStyles.detailsList}>
-          <TransactionDetailItem
-            label="ID"
-            value={transaction.id}
-            copyable
-          />
+          <TransactionDetailItem label="ID" value={transaction.id} copyable />
 
           <TransactionDetailItem
             label="Descrição"
             value={transaction.description}
           />
 
-          <TransactionDetailItem
-            label="Data"
-            value={transaction.date}
-          />
+          <TransactionDetailItem label="Data" value={transaction.date} />
 
           <TransactionDetailItem
             label="Natureza da transação"
@@ -156,15 +133,9 @@ export default function TransactionDetails({
             value={transaction.category}
           />
 
-          <TransactionDetailItem
-            label="Conta"
-            value={transaction.account}
-          />
+          <TransactionDetailItem label="Conta" value={transaction.account} />
 
-          <TransactionDetailItem
-            label="Observação"
-            value={transaction.note}
-          />
+          <TransactionDetailItem label="Observação" value={transaction.note} />
         </Box>
 
         {attachments.length > 0 && (

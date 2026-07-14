@@ -1,10 +1,6 @@
 import type { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  spacing,
-  typography,
-} from "./tokens";
+import { colors, spacing, typography } from "./tokens";
 
 export const pageHeaderStyles = {
   root: {

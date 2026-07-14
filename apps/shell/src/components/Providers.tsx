@@ -10,9 +10,7 @@ type ProvidersProps = {
   children: ReactNode;
 };
 
-export default function Providers({
-  children,
-}: ProvidersProps) {
+export default function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

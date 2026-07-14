@@ -1,13 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  spacing,
-  radius,
-  typography,
-  sizes,
-  zIndex,
-} from "./tokens";
+import { colors, spacing, radius, typography, sizes, zIndex } from "./tokens";
 
 export const sidebarStyles = {
   root: {

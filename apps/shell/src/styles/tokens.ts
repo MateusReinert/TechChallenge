@@ -42,9 +42,9 @@ export const colors = {
   },
 
   neutral: {
-      100: "#F5F3FF",
-      500: "#7C3AED",
-    },
+    100: "#F5F3FF",
+    500: "#7C3AED",
+  },
 };
 
 export const spacing = {

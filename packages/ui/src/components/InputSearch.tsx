@@ -1,18 +1,12 @@
 "use client";
 
 import type { TextFieldProps } from "@mui/material";
-import {
-  InputAdornment,
-  TextField,
-} from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { inputSearchStyles } from "../styles/inputSearchStyles";
 
-export type InputSearchProps = Omit<
-  TextFieldProps,
-  "onChange"
-> & {
+export type InputSearchProps = Omit<TextFieldProps, "onChange"> & {
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
@@ -43,10 +37,7 @@ export default function InputSearch({
           sx: inputSearchStyles.input,
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon
-                sx={inputSearchStyles.icon}
-                aria-hidden="true"
-              />
+              <SearchIcon sx={inputSearchStyles.icon} aria-hidden="true" />
             </InputAdornment>
           ),
         },

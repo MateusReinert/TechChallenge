@@ -17,9 +17,7 @@ type SearchParamsReader = {
   get: (name: string) => string | null;
 };
 
-const TRANSACTION_FILTER_KEYS: Array<
-  keyof TransactionFilters
-> = [
+const TRANSACTION_FILTER_KEYS: Array<keyof TransactionFilters> = [
   "search",
   "category",
   "type",
@@ -39,9 +37,7 @@ export const INITIAL_TRANSACTION_FILTERS: TransactionFilters = {
   amountRange: "",
 };
 
-function getPageFromSearchParams(
-  searchParams: SearchParamsReader
-) {
+function getPageFromSearchParams(searchParams: SearchParamsReader) {
   const page = Number(searchParams.get("page"));
 
   if (!Number.isInteger(page) || page < 1) {
@@ -92,16 +88,11 @@ export function createTransactionsUrl(
   filters: TransactionFiltersInput,
   page = 1
 ) {
-  const searchParams = createTransactionSearchParams(
-    filters,
-    page
-  );
+  const searchParams = createTransactionSearchParams(filters, page);
 
   const queryString = searchParams.toString();
 
-  return queryString
-    ? `/transactions?${queryString}`
-    : "/transactions";
+  return queryString ? `/transactions?${queryString}` : "/transactions";
 }
 
 type TransactionFiltersInput = Partial<

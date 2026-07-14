@@ -67,8 +67,9 @@ export const TRANSACTION_ACCOUNT_OPTIONS = [
   { label: "Investimentos", value: "Investimentos" },
 ];
 
-export const TRANSACTION_MODAL_TYPE_OPTIONS =
-  TRANSACTION_TYPE_OPTIONS.filter((option) => option.value !== "");
+export const TRANSACTION_MODAL_TYPE_OPTIONS = TRANSACTION_TYPE_OPTIONS.filter(
+  (option) => option.value !== ""
+);
 
 export const TRANSACTION_MODAL_OPERATION_OPTIONS =
   TRANSACTION_OPERATION_OPTIONS.filter((option) => option.value !== "");
@@ -81,10 +82,6 @@ export const TRANSACTION_MODAL_ACCOUNT_OPTIONS =
 
 export const TRANSACTION_ITEMS_PER_PAGE = 10;
 
-export const TRANSACTION_BREADCRUMB = [
-  "Movimentações",
-  "Transações",
-];
+export const TRANSACTION_BREADCRUMB = ["Movimentações", "Transações"];
 
-export const TRANSACTION_SEARCH_PLACEHOLDER =
-  "Buscar transação";
+export const TRANSACTION_SEARCH_PLACEHOLDER = "Buscar transação";

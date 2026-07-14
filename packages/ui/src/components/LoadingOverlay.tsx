@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Backdrop,
-  Box,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
 
 import { loadingOverlayStyles } from "../styles/loadingOverlayStyles";
 import { sizes } from "../styles/tokens";
@@ -38,14 +33,9 @@ export default function LoadingOverlay({
           aria-hidden="true"
         />
 
-        <Typography sx={loadingOverlayStyles.title}>
-          {message}
-        </Typography>
+        <Typography sx={loadingOverlayStyles.title}>{message}</Typography>
 
-        <Typography
-          id={descriptionId}
-          sx={loadingOverlayStyles.subtitle}
-        >
+        <Typography id={descriptionId} sx={loadingOverlayStyles.subtitle}>
           Aguarde só um instante.
         </Typography>
       </Box>

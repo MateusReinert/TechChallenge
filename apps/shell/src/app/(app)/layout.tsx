@@ -3,11 +3,7 @@ import { Box } from "@mui/material";
 import { Sidebar } from "@finance/ui";
 import { colors } from "@finance/ui";
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Box
       sx={{

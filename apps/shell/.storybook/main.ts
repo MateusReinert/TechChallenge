@@ -13,7 +13,6 @@ const config: StorybookConfig = {
     "@storybook/addon-docs",
   ],
   framework: "@storybook/nextjs-vite",
-  staticDirs: ["../public"],
 };
 
 export default config;

@@ -1,7 +1,4 @@
-import type {
-  Transaction,
-  TransactionAttachment,
-} from "@/types/transaction";
+import type { Transaction, TransactionAttachment } from "@/types/transaction";
 
 import { isValidDateBR } from "@finance/ui";
 

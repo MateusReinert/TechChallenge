@@ -34,9 +34,7 @@ export default function TransactionDetailItem({
 
   return (
     <Box sx={transactionDetailsStyles.detailsItem}>
-      <Typography sx={transactionDetailsStyles.label}>
-        {label}
-      </Typography>
+      <Typography sx={transactionDetailsStyles.label}>{label}</Typography>
 
       {copyable ? (
         <Box sx={transactionDetailsStyles.valueRow}>

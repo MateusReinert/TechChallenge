@@ -50,13 +50,8 @@ type FilterSelectProps = {
   onChange: (value: string) => void;
 };
 
-function FilterSelect({
-  filter,
-  value,
-  onChange,
-}: FilterSelectProps) {
-  const [anchorElement, setAnchorElement] =
-    useState<HTMLElement | null>(null);
+function FilterSelect({ filter, value, onChange }: FilterSelectProps) {
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorElement);
 
@@ -145,27 +140,18 @@ export default function FilterBar({
   }
 
   return (
-    <Box
-      component="section"
-      sx={filterBarStyles.root}
-      aria-label="Filtros"
-    >
+    <Box component="section" sx={filterBarStyles.root} aria-label="Filtros">
       <Box sx={filterBarStyles.search}>
         <Input
           label=""
           placeholder={searchPlaceholder}
           value={value.search}
-          onChange={(event) =>
-            updateFilter("search", event.target.value)
-          }
+          onChange={(event) => updateFilter("search", event.target.value)}
           slotProps={{
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchRoundedIcon
-                    fontSize="small"
-                    aria-hidden="true"
-                  />
+                  <SearchRoundedIcon fontSize="small" aria-hidden="true" />
                 </InputAdornment>
               ),
               endAdornment: value.search ? (
@@ -192,9 +178,7 @@ export default function FilterBar({
           key={filter.key}
           filter={filter}
           value={value[filter.key] || ""}
-          onChange={(selectedValue) =>
-            updateFilter(filter.key, selectedValue)
-          }
+          onChange={(selectedValue) => updateFilter(filter.key, selectedValue)}
         />
       ))}
 
@@ -205,15 +189,10 @@ export default function FilterBar({
         onClick={onClear}
         sx={{
           ...filterBarStyles.clearButton,
-          ...(!hasActiveFilters
-            ? filterBarStyles.clearButtonDisabled
-            : {}),
+          ...(!hasActiveFilters ? filterBarStyles.clearButtonDisabled : {}),
         }}
       >
-        <TuneRoundedIcon
-          sx={filterBarStyles.clearIcon}
-          aria-hidden="true"
-        />
+        <TuneRoundedIcon sx={filterBarStyles.clearIcon} aria-hidden="true" />
         Limpar
       </ButtonBase>
     </Box>

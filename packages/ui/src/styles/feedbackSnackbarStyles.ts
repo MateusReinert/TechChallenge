@@ -1,12 +1,6 @@
 import type { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  radius,
-  shadow,
-  spacing,
-  typography,
-} from "./tokens";
+import { colors, radius, shadow, spacing, typography } from "./tokens";
 
 export const feedbackSnackbarStyles = {
   success: {

@@ -33,7 +33,7 @@ export const dashboardClientStyles = {
     "&::-webkit-scrollbar": {
       display: "none",
     },
-} as SxProps<Theme>,
+  } as SxProps<Theme>,
 
   pageTop: {
     display: "flex",

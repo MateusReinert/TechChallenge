@@ -1,7 +1,4 @@
-import {
-  Button as MuiButton,
-  type ButtonProps,
-} from "@mui/material";
+import { Button as MuiButton, type ButtonProps } from "@mui/material";
 
 import { buttonStyles } from "../styles/buttonStyles";
 
@@ -22,8 +19,8 @@ export default function Button({
     variantType === "primary" || variantType === "danger"
       ? "contained"
       : variantType === "outlined" || variantType === "dangerOutlined"
-      ? "outlined"
-      : "text";
+        ? "outlined"
+        : "text";
 
   return (
     <MuiButton
