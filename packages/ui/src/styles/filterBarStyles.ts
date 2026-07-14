@@ -6,10 +6,10 @@ export const filterBarStyles = {
   root: {
     display: "grid",
     gridTemplateColumns: {
-      xs: "1fr",
-      sm: "repeat(2, minmax(0, 1fr))",
-      lg: "minmax(220px, 1.4fr) repeat(6, auto) auto",
-    },
+  xs: "1fr",
+  sm: "repeat(2, minmax(0, 1fr))",
+  lg: "minmax(180px, 1.3fr) repeat(6, minmax(88px, auto)) auto",
+},
     alignItems: "center",
     gap: spacing.sm,
     width: "100%",
@@ -53,10 +53,12 @@ export const filterBarStyles = {
   } satisfies SystemStyleObject<Theme>,
 
   filterButton: {
-    height: sizes.buttonHeight,
-    px: spacing.lg,
-    minWidth: 0,
-    maxWidth: "100%",
+  height: sizes.buttonHeight,
+  px: spacing.md,
+  minWidth: 88,
+  maxWidth: "100%",
+  width: "100%",
+  justifyContent: "space-between",
     borderRadius: radius.full,
     border: `1px solid ${colors.gray[200]}`,
     bgcolor: colors.background.default,
@@ -84,13 +86,16 @@ export const filterBarStyles = {
   } satisfies SystemStyleObject<Theme>,
 
   filterButtonText: {
-    ...typography.body,
-    color: colors.gray[900],
-    fontWeight: 600,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-  } satisfies SystemStyleObject<Theme>,
+  ...typography.body,
+  color: colors.gray[900],
+  fontWeight: 600,
+  minWidth: 0,
+  flex: 1,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  textAlign: "left",
+} satisfies SystemStyleObject<Theme>,
 
   filterIcon: {
     fontSize: 18,
