@@ -208,24 +208,24 @@ Algumas decisões tomadas durante o desenvolvimento:
 
 ## Requisitos atendidos
 
-| Requisito | Implementação |
-|-----------|---------------|
-| Dashboard | ✔ |
-| Gráficos | ✔ |
-| CRUD | ✔ |
-| Busca | ✔ |
-| Filtros | ✔ |
-| Paginação | ✔ |
-| Upload | ✔ |
-| Sugestão de categoria | ✔ |
-| Docker | ✔ |
-| Docker Compose | ✔ |
-| Cloud | ✔ |
-| Microfrontends | ✔ |
-| Redux | ✔ |
-| TypeScript | ✔ |
-| SSR | ✔ |
-| Acessibilidade | ✔ |
+| Requisito             | Implementação |
+| --------------------- | ------------- |
+| Dashboard             | ✔             |
+| Gráficos              | ✔             |
+| CRUD                  | ✔             |
+| Busca                 | ✔             |
+| Filtros               | ✔             |
+| Paginação             | ✔             |
+| Upload                | ✔             |
+| Sugestão de categoria | ✔             |
+| Docker                | ✔             |
+| Docker Compose        | ✔             |
+| Cloud                 | ✔             |
+| Microfrontends        | ✔             |
+| Redux                 | ✔             |
+| TypeScript            | ✔             |
+| SSR                   | ✔             |
+| Acessibilidade        | ✔             |
 
 ---
 

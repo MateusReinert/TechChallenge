@@ -93,7 +93,9 @@ export default function Sidebar({
     event: MouseEvent<HTMLAnchorElement>,
     path: string
   ) {
-    if (!onNavigate) return;
+    if (!onNavigate) {
+      return;
+    }
 
     event.preventDefault();
     onNavigate(path);
