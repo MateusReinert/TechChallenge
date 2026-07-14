@@ -9,12 +9,14 @@ Aplicação web de controle financeiro desenvolvida com foco em organização, e
 A proposta inicial do projeto foi desenvolver uma aplicação financeira moderna, limpa e profissional, inspirada em interfaces de fintechs e bancos digitais.
 
 O design foi construído utilizando tons de azul como cor principal para transmitir:
+
 - confiança
 - estabilidade
 - segurança
 - clareza visual
 
 Além disso, toda a interface foi pensada para priorizar:
+
 - fácil leitura das informações financeiras
 - feedback visual claro
 - boa experiência de uso
@@ -45,6 +47,7 @@ https://www.figma.com/design/9AaP8DCnZxKsxg1xk6Kvcq/FIAP---Tech-Challenge---Fase
 ## Funcionalidades
 
 ### Dashboard
+
 - Saldo atual
 - Total de entradas e saídas
 - Total de transações
@@ -52,6 +55,7 @@ https://www.figma.com/design/9AaP8DCnZxKsxg1xk6Kvcq/FIAP---Tech-Challenge---Fase
 - Ocultar/mostrar valores
 
 ### Transações
+
 - Listagem completa
 - Busca
 - Ordenação
@@ -59,11 +63,13 @@ https://www.figma.com/design/9AaP8DCnZxKsxg1xk6Kvcq/FIAP---Tech-Challenge---Fase
 - Detalhes em painel lateral
 
 ### CRUD
+
 - Criar
 - Editar
 - Excluir (com confirmação)
 
 ### UX
+
 - Loading overlay
 - Feedback com snackbar
 - Empty states
@@ -82,14 +88,14 @@ Recomenda-se utilizar exatamente esta versão para evitar incompatibilidades com
 
 Verificar versão instalada:
 
-```bash
+````bash
 node -v
 
 ### 1. Instalar dependências
 
 ```bash
 npm install
-```
+````
 
 ---
 
@@ -153,4 +159,4 @@ src/
 - Projeto focado em front-end e experiência do usuário
 - Estrutura preparada para evolução futura (API/backend)
 
---- 
+---

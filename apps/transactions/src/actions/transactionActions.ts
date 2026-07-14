@@ -9,9 +9,7 @@ import {
   deleteTransaction,
 } from "@/services/transactionService";
 
-import {
-  validateTransactionAttachments,
-} from "@finance/shared";
+import { validateTransactionAttachments } from "@finance/shared";
 
 function validateTransaction(transaction: Transaction) {
   if (!transaction.description?.trim()) {
@@ -41,6 +39,14 @@ function validateTransaction(transaction: Transaction) {
   if (!transaction.account?.trim()) {
     throw new Error("Selecione a conta da transação.");
   }
+
+  const attachmentValidationError = validateTransactionAttachments(
+    transaction.attachments
+  );
+
+  if (attachmentValidationError) {
+    throw new Error(attachmentValidationError);
+  }
 }
 
 export async function saveTransactionAction(
@@ -65,15 +71,6 @@ export async function saveTransactionAction(
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
-    }
-
-    const attachmentValidationError =
-      validateTransactionAttachments(
-        transaction.attachments
-      );
-    
-    if (attachmentValidationError) {
-      throw new Error(attachmentValidationError);
     }
 
     throw new Error("Não foi possível salvar a transação.");

@@ -45,9 +45,7 @@ export const WithValue: Story = {
 
 export const LongText: Story = {
   render: () => {
-    const [value, setValue] = React.useState(
-      "transferência nubank abril"
-    );
+    const [value, setValue] = React.useState("transferência nubank abril");
 
     return (
       <InputSearch

@@ -25,13 +25,8 @@ type UseTransactionCrudParams = {
     message: string,
     action: () => Promise<void>
   ) => Promise<void>;
-  showFeedback: (
-    message: string,
-    type?: FeedbackType
-  ) => void;
-  setSelectedTransaction: Dispatch<
-    SetStateAction<Transaction | null>
-  >;
+  showFeedback: (message: string, type?: FeedbackType) => void;
+  setSelectedTransaction: Dispatch<SetStateAction<Transaction | null>>;
   clearSelectedTransactionImmediately: () => void;
   closeTransactionModalImmediately: () => void;
   refresh: () => void;
@@ -39,10 +34,7 @@ type UseTransactionCrudParams = {
   onTransactionDeleted?: (transactionId: string) => void;
 };
 
-function getErrorMessage(
-  error: unknown,
-  fallbackMessage: string
-) {
+function getErrorMessage(error: unknown, fallbackMessage: string) {
   if (error instanceof Error && error.message) {
     return error.message;
   }
@@ -65,9 +57,7 @@ export function useTransactionCrud({
 }: UseTransactionCrudParams) {
   const dispatch = useAppDispatch();
 
-  function handleSaveTransaction(
-    savedTransaction: Transaction
-  ) {
+  function handleSaveTransaction(savedTransaction: Transaction) {
     if (isLoading) return;
 
     const isEditing = Boolean(savedTransaction.id);
@@ -83,8 +73,7 @@ export function useTransactionCrud({
     startTransition(async () => {
       await runWithLoading(loadingMessage, async () => {
         try {
-          const saved =
-            await saveTransactionAction(savedTransaction);
+          const saved = await saveTransactionAction(savedTransaction);
 
           const transactionExists = transactions.some(
             (transaction) => transaction.id === saved.id
@@ -92,73 +81,56 @@ export function useTransactionCrud({
 
           if (transactionExists) {
             dispatch(updateTransaction(saved));
-            showFeedback(
-              "Transação atualizada com sucesso."
-            );
+            showFeedback("Transação atualizada com sucesso.");
           } else {
             dispatch(addTransaction(saved));
             onTransactionCreated?.(saved);
-            showFeedback(
-              "Transação criada com sucesso."
-            );
+            showFeedback("Transação criada com sucesso.");
           }
 
           setSelectedTransaction(saved);
           closeTransactionModalImmediately();
           refresh();
         } catch (error) {
-          showFeedback(
-            getErrorMessage(error, errorMessage),
-            "error"
-          );
+          showFeedback(getErrorMessage(error, errorMessage), "error");
         }
       });
     });
   }
 
-  function handleDeleteTransaction(
-    transactionId: string
-  ) {
+  function handleDeleteTransaction(transactionId: string) {
     if (isLoading) return;
 
     if (!transactionId) {
-      showFeedback(
-        "Não foi possível identificar a transação.",
-        "error"
-      );
+      showFeedback("Não foi possível identificar a transação.", "error");
 
       return;
     }
 
     startTransition(async () => {
-      await runWithLoading(
-        "Excluindo transação...",
-        async () => {
-          try {
-            await deleteTransactionAction(transactionId);
+      await runWithLoading("Excluindo transação...", async () => {
+        try {
+          await deleteTransactionAction(transactionId);
 
-            dispatch(removeTransaction(transactionId));
+          dispatch(removeTransaction(transactionId));
 
-            clearSelectedTransactionImmediately();
-            closeTransactionModalImmediately();
-            onTransactionDeleted?.(transactionId);
+          clearSelectedTransactionImmediately();
+          closeTransactionModalImmediately();
+          onTransactionDeleted?.(transactionId);
 
-            showFeedback(
-              "Transação excluída com sucesso."
-            );
+          showFeedback("Transação excluída com sucesso.");
 
-            refresh();
-          } catch (error) {
-            showFeedback(
-              getErrorMessage(
-                error,
-                "Não foi possível excluir a transação. Tente novamente."
-              ),
-              "error"
-            );
-          }
+          refresh();
+        } catch (error) {
+          showFeedback(
+            getErrorMessage(
+              error,
+              "Não foi possível excluir a transação. Tente novamente."
+            ),
+            "error"
+          );
         }
-      );
+      });
     });
   }
 

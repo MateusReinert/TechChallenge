@@ -225,9 +225,7 @@ function normalize(value: string) {
     .trim();
 }
 
-export function suggestTransactionCategory(
-  description: string
-): string | null {
+export function suggestTransactionCategory(description: string): string | null {
   const normalizedDescription = normalize(description);
 
   if (!normalizedDescription) {

@@ -5,7 +5,10 @@ import { TextFieldProps } from "@mui/material";
 
 import { Input } from "@finance/ui";
 
-type CurrencyInputProps = Omit<TextFieldProps, "type" | "onChange" | "value"> & {
+type CurrencyInputProps = Omit<
+  TextFieldProps,
+  "type" | "onChange" | "value"
+> & {
   value?: string;
   onChange?: (value: string) => void;
 };

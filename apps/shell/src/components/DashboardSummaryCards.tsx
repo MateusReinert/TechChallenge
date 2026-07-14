@@ -87,10 +87,7 @@ export default function DashboardSummaryCards({
         trend={getPercentageTrend(summary.balanceHistory)}
         trendIcon={<NorthEastRoundedIcon />}
         sparkline={
-          <SummarySparkline
-            data={summary.balanceHistory}
-            variant="neutral"
-          />
+          <SummarySparkline data={summary.balanceHistory} variant="neutral" />
         }
       />
 
@@ -102,10 +99,7 @@ export default function DashboardSummaryCards({
         trend={getPercentageTrend(summary.incomeHistory)}
         trendIcon={<NorthEastRoundedIcon />}
         sparkline={
-          <SummarySparkline
-            data={summary.incomeHistory}
-            variant="positive"
-          />
+          <SummarySparkline data={summary.incomeHistory} variant="positive" />
         }
       />
 
@@ -117,10 +111,7 @@ export default function DashboardSummaryCards({
         trend={getPercentageTrend(summary.expenseHistory)}
         trendIcon={<SouthEastRoundedIcon />}
         sparkline={
-          <SummarySparkline
-            data={summary.expenseHistory}
-            variant="negative"
-          />
+          <SummarySparkline data={summary.expenseHistory} variant="negative" />
         }
       />
 

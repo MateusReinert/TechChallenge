@@ -24,10 +24,7 @@ export function base64ToBlob(base64: string, type: string) {
   return new Blob([byteArray], { type });
 }
 
-export function createObjectUrlFromBase64(
-  base64: string,
-  type: string
-) {
+export function createObjectUrlFromBase64(base64: string, type: string) {
   const blob = base64ToBlob(base64, type);
 
   return URL.createObjectURL(blob);

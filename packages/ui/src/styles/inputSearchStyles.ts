@@ -1,10 +1,6 @@
 import type { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  radius,
-  sizes,
-} from "./tokens";
+import { colors, radius, sizes } from "./tokens";
 
 export const inputSearchStyles = {
   root: {

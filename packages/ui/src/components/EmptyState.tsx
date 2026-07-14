@@ -40,9 +40,7 @@ export default function EmptyState({
 
         <Typography sx={emptyStateTitleStyle}>{title}</Typography>
 
-        <Typography sx={emptyStateDescriptionStyle}>
-          {description}
-        </Typography>
+        <Typography sx={emptyStateDescriptionStyle}>{description}</Typography>
 
         {actionLabel && onAction && (
           <Box sx={emptyStateActionStyle}>

@@ -1,12 +1,7 @@
 import type { CSSProperties } from "react";
 import type { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  radius,
-  sizes,
-  typography,
-} from "./tokens";
+import { colors, radius, sizes, typography } from "./tokens";
 
 export const lookupStyles = {
   root: {

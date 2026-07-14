@@ -8,16 +8,9 @@ import {
   useTransition,
 } from "react";
 
-import {
-  Box,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   createTransactionSearchParams,
@@ -28,16 +21,9 @@ import {
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import {
-  FilterBar,
-  type FilterBarValue,
-} from "@finance/ui";
+import { FilterBar, type FilterBarValue } from "@finance/ui";
 import { LoadingOverlay } from "@finance/ui";
-import {
-  Button,
-  FeedbackSnackbar,
-  PageHeader,
-} from "@finance/ui";
+import { Button, FeedbackSnackbar, PageHeader } from "@finance/ui";
 import TransactionDetails from "@/components/TransactionDetails";
 import { TransactionModal } from "@/components/TransactionModal";
 import TransactionTable from "@/components/TransactionTable";
@@ -83,69 +69,48 @@ export default function TransactionsClient({
 }: TransactionsClientProps) {
   const searchParams = useSearchParams();
 
-  const {
-    filters,
-    page: currentPage,
-  } = useMemo(
+  const { filters, page: currentPage } = useMemo(
     () => getTransactionUrlState(searchParams),
     [searchParams]
   );
 
-  const [sortField, setSortField] =
-    useState<TransactionSortField | null>(null);
+  const [sortField, setSortField] = useState<TransactionSortField | null>(null);
 
-  const [sortDirection, setSortDirection] =
-    useState<SortDirection>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>(null);
 
-  const [isPending, startTransition] =
-    useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const updateTransactionUrl = useCallback(
-    (
-      nextFilters: FilterBarValue,
-      nextPage: number
-    ) => {
-      const nextSearchParams =
-        createTransactionSearchParams(
-          nextFilters,
-          nextPage
-        );
-      
-      const queryString =
-        nextSearchParams.toString();
-      
+    (nextFilters: FilterBarValue, nextPage: number) => {
+      const nextSearchParams = createTransactionSearchParams(
+        nextFilters,
+        nextPage
+      );
+
+      const queryString = nextSearchParams.toString();
+
       const nextUrl = queryString
         ? `${window.location.pathname}?${queryString}`
         : window.location.pathname;
-      
-      window.history.replaceState(
-        null,
-        "",
-        nextUrl
-      );
+
+      window.history.replaceState(null, "", nextUrl);
     },
     []
   );
 
-  const storedTransactions = useAppSelector(
-    selectTransactions
-  );
+  const storedTransactions = useAppSelector(selectTransactions);
 
-  const transactionsInitialized = useAppSelector(
-    selectTransactionsInitialized
-  );
+  const transactionsInitialized = useAppSelector(selectTransactionsInitialized);
 
   const transactions = transactionsInitialized
     ? storedTransactions
     : initialTransactions;
 
   useEffect(() => {
-    dispatch(
-      initializeTransactions(initialTransactions)
-    );
+    dispatch(initializeTransactions(initialTransactions));
   }, [dispatch, initialTransactions]);
 
   const {
@@ -154,14 +119,9 @@ export default function TransactionsClient({
     runWithLoading,
   } = useLoadingAction();
 
-  const {
-    feedback,
-    showFeedback,
-    closeFeedback,
-  } = useFeedback();
+  const { feedback, showFeedback, closeFeedback } = useFeedback();
 
-  const isLoading =
-    isLoadingAction || isPending;
+  const isLoading = isLoadingAction || isPending;
 
   const {
     selectedTransaction,
@@ -177,117 +137,73 @@ export default function TransactionsClient({
   } = useTransactionModal(isLoading);
 
   const filteredTransactions = useMemo(
-    () =>
-      filterDashboardTransactions(
-        transactions,
-        filters
-      ),
+    () => filterDashboardTransactions(transactions, filters),
     [transactions, filters]
   );
 
-  const filterItems =
-    useTransactionFilterItems(transactions);
+  const filterItems = useTransactionFilterItems(transactions);
 
- const sortedTransactions = useMemo(
-  () =>
-    sortTransactions(
-      filteredTransactions,
-      sortField,
-      sortDirection
-    ),
-  [
-    filteredTransactions,
-    sortField,
-    sortDirection,
-  ]
-);
+  const sortedTransactions = useMemo(
+    () => sortTransactions(filteredTransactions, sortField, sortDirection),
+    [filteredTransactions, sortField, sortDirection]
+  );
 
-const {
-  totalPages,
-  paginatedTransactions,
-} = useMemo(
-  () =>
-    getPaginatedTransactions({
-      transactions: sortedTransactions,
-      currentPage,
-      itemsPerPage: TRANSACTION_ITEMS_PER_PAGE,
-    }),
-  [sortedTransactions, currentPage]
-);
+  const { totalPages, paginatedTransactions } = useMemo(
+    () =>
+      getPaginatedTransactions({
+        transactions: sortedTransactions,
+        currentPage,
+        itemsPerPage: TRANSACTION_ITEMS_PER_PAGE,
+      }),
+    [sortedTransactions, currentPage]
+  );
 
   useEffect(() => {
-    if (
-      totalPages > 0 &&
-      currentPage > totalPages
-    ) {
-      updateTransactionUrl(
-        filters,
-        totalPages
-      );
+    if (totalPages > 0 && currentPage > totalPages) {
+      updateTransactionUrl(filters, totalPages);
     }
-  }, [
-    currentPage,
-    filters,
-    totalPages,
-    updateTransactionUrl,
-  ]);
-  
-  const {
-    handleSaveTransaction,
-    handleDeleteTransaction,
-  } = useTransactionCrud({
-    transactions,
-    isLoading,
-    startTransition,
-    runWithLoading,
-    showFeedback,
-    setSelectedTransaction,
-    clearSelectedTransactionImmediately,
-    closeTransactionModalImmediately,
-    refresh: router.refresh,
-    onTransactionCreated: () => {
-      updateTransactionUrl(filters, 1);
-    },
-    onTransactionDeleted: () => {
-      const remainingTransactions =
-        filteredTransactions.length - 1;
+  }, [currentPage, filters, totalPages, updateTransactionUrl]);
 
-      const newTotalPages = Math.ceil(
-        remainingTransactions /
-          TRANSACTION_ITEMS_PER_PAGE
-      );
+  const { handleSaveTransaction, handleDeleteTransaction } = useTransactionCrud(
+    {
+      transactions,
+      isLoading,
+      startTransition,
+      runWithLoading,
+      showFeedback,
+      setSelectedTransaction,
+      clearSelectedTransactionImmediately,
+      closeTransactionModalImmediately,
+      refresh: router.refresh,
+      onTransactionCreated: () => {
+        updateTransactionUrl(filters, 1);
+      },
+      onTransactionDeleted: () => {
+        const remainingTransactions = filteredTransactions.length - 1;
 
-      if (
-        currentPage > newTotalPages &&
-        currentPage > 1
-      ) {
-        updateTransactionUrl(
-          filters,
-          currentPage - 1
+        const newTotalPages = Math.ceil(
+          remainingTransactions / TRANSACTION_ITEMS_PER_PAGE
         );
-      }
-    },
-  });
 
-  function handleFiltersChange(
-    nextFilters: FilterBarValue
-  ) {
+        if (currentPage > newTotalPages && currentPage > 1) {
+          updateTransactionUrl(filters, currentPage - 1);
+        }
+      },
+    }
+  );
+
+  function handleFiltersChange(nextFilters: FilterBarValue) {
     updateTransactionUrl(nextFilters, 1);
     clearSelectedTransaction();
   }
 
   function handleClearFilters() {
-    updateTransactionUrl(
-      INITIAL_TRANSACTION_FILTERS,
-      1
-    );
+    updateTransactionUrl(INITIAL_TRANSACTION_FILTERS, 1);
 
     clearSelectedTransaction();
   }
 
-  function handleSort(
-    field: TransactionSortField
-  ) {
+  function handleSort(field: TransactionSortField) {
     if (isLoading) return;
 
     if (sortField !== field) {
@@ -307,27 +223,18 @@ const {
   function handlePreviousPage() {
     if (isLoading || currentPage <= 1) return;
 
-    updateTransactionUrl(
-      filters,
-      currentPage - 1
-    );
+    updateTransactionUrl(filters, currentPage - 1);
 
     clearSelectedTransaction();
   }
 
   function handleNextPage() {
-    if (
-      isLoading ||
-      currentPage >= totalPages
-    ) {
+    if (isLoading || currentPage >= totalPages) {
       return;
     }
-  
-    updateTransactionUrl(
-      filters,
-      currentPage + 1
-    );
-  
+
+    updateTransactionUrl(filters, currentPage + 1);
+
     clearSelectedTransaction();
   }
 
@@ -343,17 +250,12 @@ const {
           ...transactionsClientStyles.layout,
           gridTemplateColumns: {
             xs: "1fr",
-            lg: selectedTransaction
-              ? "1fr 320px"
-              : "1fr",
+            lg: selectedTransaction ? "1fr 320px" : "1fr",
           },
         }}
       >
         <Box sx={transactionsClientStyles.content}>
-          <PageHeader
-            title="Transações"
-            breadcrumb={TRANSACTION_BREADCRUMB}
-          />
+          <PageHeader title="Transações" breadcrumb={TRANSACTION_BREADCRUMB} />
 
           <Box sx={transactionsClientStyles.toolbar}>
             <FilterBar
@@ -368,36 +270,20 @@ const {
               variantType="primary"
               onClick={openNewTransactionModal}
               disabled={isLoading}
-              sx={
-                transactionsClientStyles.newTransactionButton
-              }
+              sx={transactionsClientStyles.newTransactionButton}
             >
-              <Box
-                sx={
-                  transactionsClientStyles.buttonContent
-                }
-              >
+              <Box sx={transactionsClientStyles.buttonContent}>
                 Nova transação
                 <AddRoundedIcon fontSize="small" />
               </Box>
             </Button>
           </Box>
 
-          <Box
-            sx={
-              transactionsClientStyles.tableWrapper
-            }
-          >
+          <Box sx={transactionsClientStyles.tableWrapper}>
             <TransactionTable
               transactions={paginatedTransactions}
-              selectedTransactionId={
-                selectedTransaction?.id
-              }
-              onSelectTransaction={
-                isLoading
-                  ? undefined
-                  : selectTransaction
-              }
+              selectedTransactionId={selectedTransaction?.id}
+              onSelectTransaction={isLoading ? undefined : selectTransaction}
               sortField={sortField}
               sortDirection={sortDirection}
               onSort={handleSort}
@@ -412,59 +298,31 @@ const {
                   : "Ajuste os filtros para encontrar outras movimentações."
               }
               emptyActionLabel={
-                transactions.length === 0
-                  ? "Nova transação"
-                  : undefined
+                transactions.length === 0 ? "Nova transação" : undefined
               }
               onEmptyAction={
-                transactions.length === 0
-                  ? openNewTransactionModal
-                  : undefined
+                transactions.length === 0 ? openNewTransactionModal : undefined
               }
             />
           </Box>
 
-          <Box
-            sx={transactionsClientStyles.pagination}
-          >
-            <Typography
-              sx={
-                transactionsClientStyles.paginationText
-              }
-            >
-              {sortedTransactions.length} registros
-              encontrados
+          <Box sx={transactionsClientStyles.pagination}>
+            <Typography sx={transactionsClientStyles.paginationText}>
+              {sortedTransactions.length} registros encontrados
             </Typography>
 
-            <Box
-              sx={
-                transactionsClientStyles.paginationActions
-              }
-            >
-              <Typography
-                sx={
-                  transactionsClientStyles.paginationText
-                }
-              >
-                Página {currentPage} de{" "}
-                {totalPages || 1}
+            <Box sx={transactionsClientStyles.paginationActions}>
+              <Typography sx={transactionsClientStyles.paginationText}>
+                Página {currentPage} de {totalPages || 1}
               </Typography>
 
-              <Box
-                sx={
-                  transactionsClientStyles.paginationButtons
-                }
-              >
+              <Box sx={transactionsClientStyles.paginationButtons}>
                 <IconButton
                   size="small"
                   onClick={handlePreviousPage}
-                  disabled={
-                    currentPage === 1 || isLoading
-                  }
+                  disabled={currentPage === 1 || isLoading}
                   aria-label="Página anterior"
-                  sx={
-                    transactionsClientStyles.paginationButton
-                  }
+                  sx={transactionsClientStyles.paginationButton}
                 >
                   <KeyboardArrowLeftIcon fontSize="small" />
                 </IconButton>
@@ -473,14 +331,10 @@ const {
                   size="small"
                   onClick={handleNextPage}
                   disabled={
-                    currentPage === totalPages ||
-                    totalPages === 0 ||
-                    isLoading
+                    currentPage === totalPages || totalPages === 0 || isLoading
                   }
                   aria-label="Próxima página"
-                  sx={
-                    transactionsClientStyles.paginationButton
-                  }
+                  sx={transactionsClientStyles.paginationButton}
                 >
                   <KeyboardArrowRightIcon fontSize="small" />
                 </IconButton>
@@ -506,10 +360,7 @@ const {
         onDelete={handleDeleteTransaction}
       />
 
-      <LoadingOverlay
-        open={Boolean(loadingMessage)}
-        message={loadingMessage}
-      />
+      <LoadingOverlay open={Boolean(loadingMessage)} message={loadingMessage} />
 
       <FeedbackSnackbar
         open={feedback.open}

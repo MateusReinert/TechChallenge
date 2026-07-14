@@ -26,18 +26,9 @@ export default function Loading() {
         }}
       >
         <Box>
-          <Skeleton
-            variant="text"
-            width={120}
-            height={18}
-            sx={{ mb: 1 }}
-          />
+          <Skeleton variant="text" width={120} height={18} sx={{ mb: 1 }} />
 
-          <Skeleton
-            variant="text"
-            width={220}
-            height={36}
-          />
+          <Skeleton variant="text" width={220} height={36} />
         </Box>
 
         <Box
@@ -61,25 +52,11 @@ export default function Loading() {
                 border: "1px solid #E5E7EB",
               }}
             >
-              <Skeleton
-                variant="text"
-                width="60%"
-                height={22}
-                sx={{ mb: 1 }}
-              />
+              <Skeleton variant="text" width="60%" height={22} sx={{ mb: 1 }} />
 
-              <Skeleton
-                variant="text"
-                width="80%"
-                height={38}
-                sx={{ mb: 1 }}
-              />
+              <Skeleton variant="text" width="80%" height={38} sx={{ mb: 1 }} />
 
-              <Skeleton
-                variant="text"
-                width="70%"
-                height={18}
-              />
+              <Skeleton variant="text" width="70%" height={18} />
             </Box>
           ))}
         </Box>
@@ -92,24 +69,12 @@ export default function Loading() {
             flexWrap: "wrap",
           }}
         >
-          <Skeleton
-            variant="text"
-            width={180}
-            height={30}
-          />
+          <Skeleton variant="text" width={180} height={30} />
 
           <Box sx={{ display: "flex", gap: "12px" }}>
-            <Skeleton
-              variant="rounded"
-              width={110}
-              height={40}
-            />
+            <Skeleton variant="rounded" width={110} height={40} />
 
-            <Skeleton
-              variant="rounded"
-              width={150}
-              height={40}
-            />
+            <Skeleton variant="rounded" width={150} height={40} />
           </Box>
         </Box>
 
@@ -124,8 +89,7 @@ export default function Loading() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns:
-                "2fr 1fr 1fr 1fr 1fr 1fr",
+              gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr",
               gap: "16px",
               px: "16px",
               py: "14px",
@@ -133,12 +97,7 @@ export default function Loading() {
             }}
           >
             {Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton
-                key={index}
-                variant="text"
-                width="80%"
-                height={20}
-              />
+              <Skeleton key={index} variant="text" width="80%" height={20} />
             ))}
           </Box>
 
@@ -147,24 +106,15 @@ export default function Loading() {
               key={row}
               sx={{
                 display: "grid",
-                gridTemplateColumns:
-                  "2fr 1fr 1fr 1fr 1fr 1fr",
+                gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 1fr",
                 gap: "16px",
                 px: "16px",
                 py: "18px",
-                borderBottom:
-                  row !== 5
-                    ? "1px solid #F3F4F6"
-                    : "none",
+                borderBottom: row !== 5 ? "1px solid #F3F4F6" : "none",
               }}
             >
               {Array.from({ length: 6 }).map((_, col) => (
-                <Skeleton
-                  key={col}
-                  variant="text"
-                  width="85%"
-                  height={20}
-                />
+                <Skeleton key={col} variant="text" width="85%" height={20} />
               ))}
             </Box>
           ))}
@@ -182,25 +132,11 @@ export default function Loading() {
           p: "24px",
         }}
       >
-        <Skeleton
-          variant="text"
-          width={160}
-          height={32}
-          sx={{ mb: 3 }}
-        />
+        <Skeleton variant="text" width={160} height={32} sx={{ mb: 3 }} />
 
-        <Skeleton
-          variant="rounded"
-          width="100%"
-          height={120}
-          sx={{ mb: 2 }}
-        />
+        <Skeleton variant="rounded" width="100%" height={120} sx={{ mb: 2 }} />
 
-        <Skeleton
-          variant="rounded"
-          width="100%"
-          height={120}
-        />
+        <Skeleton variant="rounded" width="100%" height={120} />
       </Box>
     </Box>
   );

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Box,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 
 import { lookupStyles } from "../styles/lookupStyles";
@@ -46,9 +41,7 @@ export default function Lookup({
 }: LookupProps) {
   const inputId = id || `lookup-${createIdFromLabel(label)}`;
   const labelId = `${inputId}-label`;
-  const helperTextId = helperText
-    ? `${inputId}-helper-text`
-    : undefined;
+  const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
 
   return (
     <Box sx={lookupStyles.root}>
@@ -56,10 +49,7 @@ export default function Lookup({
         id={labelId}
         component="label"
         htmlFor={inputId}
-        sx={[
-          lookupStyles.label,
-          error && lookupStyles.labelError,
-        ]}
+        sx={[lookupStyles.label, error && lookupStyles.labelError]}
       >
         {label}
       </Typography>
@@ -74,10 +64,7 @@ export default function Lookup({
         onChange={(event) => onChange?.(event.target.value)}
         aria-labelledby={labelId}
         aria-describedby={helperTextId}
-        sx={[
-          lookupStyles.textField,
-          lookupStyles.helperText,
-        ]}
+        sx={[lookupStyles.textField, lookupStyles.helperText]}
         slotProps={{
           formHelperText: {
             id: helperTextId,
@@ -108,10 +95,7 @@ export default function Lookup({
         </MenuItem>
 
         {options.map((option) => (
-          <MenuItem
-            key={option.value}
-            value={option.value}
-          >
+          <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}

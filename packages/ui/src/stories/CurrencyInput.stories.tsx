@@ -17,13 +17,7 @@ export const Default: Story = {
   render: () => {
     const [value, setValue] = React.useState("");
 
-    return (
-      <CurrencyInput
-        label="Valor"
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <CurrencyInput label="Valor" value={value} onChange={setValue} />;
   },
 };
 
@@ -31,13 +25,7 @@ export const Filled: Story = {
   render: () => {
     const [value, setValue] = React.useState("R$ 1.250,00");
 
-    return (
-      <CurrencyInput
-        label="Valor"
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <CurrencyInput label="Valor" value={value} onChange={setValue} />;
   },
 };
 
@@ -45,13 +33,7 @@ export const HighValue: Story = {
   render: () => {
     const [value, setValue] = React.useState("R$ 25.999,90");
 
-    return (
-      <CurrencyInput
-        label="Valor"
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <CurrencyInput label="Valor" value={value} onChange={setValue} />;
   },
 };
 

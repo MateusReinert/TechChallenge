@@ -53,9 +53,7 @@ export default function TransactionAttachmentCard({
     <Box sx={transactionDetailsStyles.attachmentCard}>
       <Box sx={transactionDetailsStyles.attachmentHeader}>
         <Box sx={transactionDetailsStyles.attachmentIconWrapper}>
-          <AttachFileRoundedIcon
-            sx={transactionDetailsStyles.attachmentIcon}
-          />
+          <AttachFileRoundedIcon sx={transactionDetailsStyles.attachmentIcon} />
         </Box>
 
         <Box sx={transactionDetailsStyles.attachmentInfo}>
@@ -78,11 +76,7 @@ export default function TransactionAttachmentCard({
           Visualizar
         </Button>
 
-        <Button
-          variantType="primary"
-          fullWidth
-          onClick={handleDownload}
-        >
+        <Button variantType="primary" fullWidth onClick={handleDownload}>
           Baixar
         </Button>
       </Box>

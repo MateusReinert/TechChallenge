@@ -2,10 +2,7 @@ import type { Transaction } from "@/types/transaction";
 
 const API_URL = "http://localhost:3001/transactions";
 
-async function request<T>(
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<T> {
+async function request<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   const response = await fetch(input, {
     ...init,
     headers: {
@@ -15,9 +12,7 @@ async function request<T>(
   });
 
   if (!response.ok) {
-   throw new Error(
-     "Não foi possível realizar a operação."
-   );
+    throw new Error("Não foi possível realizar a operação.");
   }
 
   return response.json();
@@ -51,25 +46,18 @@ export async function createTransaction(
 export async function updateTransaction(
   transaction: Transaction
 ): Promise<Transaction> {
-  return request<Transaction>(
-    `${API_URL}/${transaction.id}`,
-    {
-      method: "PUT",
-      body: JSON.stringify(transaction),
-    }
-  );
+  return request<Transaction>(`${API_URL}/${transaction.id}`, {
+    method: "PUT",
+    body: JSON.stringify(transaction),
+  });
 }
 
-export async function deleteTransaction(
-  id: string
-): Promise<void> {
+export async function deleteTransaction(id: string): Promise<void> {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
   });
 
   if (!response.ok) {
-    throw new Error(
-      "Não foi possível excluir a transação."
-    );
+    throw new Error("Não foi possível excluir a transação.");
   }
 }

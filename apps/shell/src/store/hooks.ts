@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  useDispatch,
-  useSelector,
-  useStore,
-} from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 
-import type {
-  AppDispatch,
-  AppStore,
-  RootState,
-} from "@/store";
+import type { AppDispatch, AppStore, RootState } from "@/store";
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 

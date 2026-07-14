@@ -9,14 +9,8 @@ type StoreProviderProps = {
   children: ReactNode;
 };
 
-export default function StoreProvider({
-  children,
-}: StoreProviderProps) {
+export default function StoreProvider({ children }: StoreProviderProps) {
   const [store] = useState(() => makeStore());
 
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+  return <Provider store={store}>{children}</Provider>;
 }

@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import {
-  Box,
-  IconButton,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
 import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
@@ -35,10 +30,7 @@ export default function AttachmentPreviewModal({
   const objectUrl = useMemo(() => {
     if (!attachment) return "";
 
-    return createObjectUrlFromBase64(
-      attachment.base64,
-      attachment.type
-    );
+    return createObjectUrlFromBase64(attachment.base64, attachment.type);
   }, [attachment]);
 
   useEffect(() => {
@@ -51,18 +43,18 @@ export default function AttachmentPreviewModal({
 
   if (!attachment) return null;
 
-    const currentAttachment = attachment;
+  const currentAttachment = attachment;
 
-    const isImage = currentAttachment.type.startsWith("image/");
-    const isPdf = currentAttachment.type === "application/pdf";
+  const isImage = currentAttachment.type.startsWith("image/");
+  const isPdf = currentAttachment.type === "application/pdf";
 
-    function handleDownload() {
-      const link = document.createElement("a");
+  function handleDownload() {
+    const link = document.createElement("a");
 
-      link.href = objectUrl;
-      link.download = currentAttachment.name;
-      link.click();
-    }
+    link.href = objectUrl;
+    link.download = currentAttachment.name;
+    link.click();
+  }
 
   return (
     <Modal

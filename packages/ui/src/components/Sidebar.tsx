@@ -63,11 +63,7 @@ export default function Sidebar({
   }
 
   return (
-    <Box
-      component="aside"
-      aria-label="Menu lateral"
-      sx={sidebarStyles.root}
-    >
+    <Box component="aside" aria-label="Menu lateral" sx={sidebarStyles.root}>
       <Box sx={sidebarStyles.topContent}>
         <Box sx={sidebarStyles.logo} aria-label={SIDEBAR_APP_NAME}>
           <AccountBalanceWalletIcon
@@ -85,9 +81,7 @@ export default function Sidebar({
             {greeting}, {SIDEBAR_USER.shortName}!
           </Typography>
 
-          <Typography sx={sidebarStyles.greetingDate}>
-            {currentDate}
-          </Typography>
+          <Typography sx={sidebarStyles.greetingDate}>{currentDate}</Typography>
         </Box>
 
         <Box
@@ -97,8 +91,7 @@ export default function Sidebar({
         >
           {SIDEBAR_MENU_ITEMS.map((item) => {
             const isActive = pathname.startsWith(item.href);
-            const isInternalNavigation =
-              item.href === basePath;
+            const isInternalNavigation = item.href === basePath;
             const Icon = item.icon;
 
             const itemSx = [
@@ -106,9 +99,7 @@ export default function Sidebar({
               ...(isActive ? [sidebarStyles.itemActive] : []),
             ];
 
-            const ariaLabel = `${item.label}${
-              isActive ? " página atual" : ""
-            }`;
+            const ariaLabel = `${item.label}${isActive ? " página atual" : ""}`;
 
             return (
               <Box key={item.href} sx={sidebarStyles.navGroup}>
@@ -124,10 +115,7 @@ export default function Sidebar({
                     aria-label={ariaLabel}
                     sx={itemSx}
                   >
-                    <Icon
-                      sx={sidebarStyles.itemIcon}
-                      aria-hidden="true"
-                    />
+                    <Icon sx={sidebarStyles.itemIcon} aria-hidden="true" />
 
                     {item.label}
                   </Box>
@@ -137,15 +125,10 @@ export default function Sidebar({
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     aria-label={ariaLabel}
-                    onClick={(event) =>
-                      handleNavigation(event, item.href)
-                    }
+                    onClick={(event) => handleNavigation(event, item.href)}
                     sx={itemSx}
                   >
-                    <Icon
-                      sx={sidebarStyles.itemIcon}
-                      aria-hidden="true"
-                    />
+                    <Icon sx={sidebarStyles.itemIcon} aria-hidden="true" />
 
                     {item.label}
                   </Box>
@@ -156,10 +139,7 @@ export default function Sidebar({
         </Box>
       </Box>
 
-      <Box
-        sx={sidebarStyles.profile}
-        aria-label="Perfil do usuário"
-      >
+      <Box sx={sidebarStyles.profile} aria-label="Perfil do usuário">
         <Typography sx={sidebarStyles.profileName}>
           {SIDEBAR_USER.fullName}
         </Typography>

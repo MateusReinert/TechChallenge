@@ -9,9 +9,7 @@ export default async function TransactionsPage() {
 
   return (
     <Suspense>
-      <TransactionsClient
-        initialTransactions={transactions}
-      />
+      <TransactionsClient initialTransactions={transactions} />
     </Suspense>
   );
 }

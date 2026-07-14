@@ -43,3 +43,6 @@ yarn-error.log*
 
 # storybook
 storybook-static/
+
+# temporary reports
+lint-errors.txt

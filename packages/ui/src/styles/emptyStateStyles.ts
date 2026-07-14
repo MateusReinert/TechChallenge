@@ -1,11 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
-import {
-  colors,
-  radius,
-  sizes,
-  spacing,
-  typography,
-} from "./tokens";
+import { colors, radius, sizes, spacing, typography } from "./tokens";
 
 export const emptyStateRootStyle = {
   width: "100%",

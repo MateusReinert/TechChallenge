@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 
 import Button from "./Button";
 
@@ -59,17 +55,11 @@ export default function ConfirmationModal({
         sx={confirmationModalContainerStyle}
       >
         <Box sx={confirmationModalHeaderStyle}>
-          <Typography
-            id={titleId}
-            sx={confirmationModalTitleStyle}
-          >
+          <Typography id={titleId} sx={confirmationModalTitleStyle}>
             {title}
           </Typography>
 
-          <Typography
-            id={descriptionId}
-            sx={confirmationModalDescriptionStyle}
-          >
+          <Typography id={descriptionId} sx={confirmationModalDescriptionStyle}>
             {description}
           </Typography>
         </Box>

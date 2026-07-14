@@ -9,18 +9,9 @@ type StatusTagProps = {
   label: string;
 };
 
-export default function StatusTag({
-  status,
-  label,
-}: StatusTagProps) {
+export default function StatusTag({ status, label }: StatusTagProps) {
   return (
-    <Box
-      component="span"
-      sx={[
-        statusTagStyles.base,
-        statusTagStyles[status],
-      ]}
-    >
+    <Box component="span" sx={[statusTagStyles.base, statusTagStyles[status]]}>
       {label}
     </Box>
   );

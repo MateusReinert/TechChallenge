@@ -3,11 +3,7 @@ export type TransactionStatus = "success" | "error" | "pending";
 export type TransactionType = "income" | "expense";
 
 export type TransactionOperation =
-  | "deposit"
-  | "transfer"
-  | "payment"
-  | "purchase"
-  | "receipt";
+  "deposit" | "transfer" | "payment" | "purchase" | "receipt";
 
 export type TransactionAttachment = {
   id: string;

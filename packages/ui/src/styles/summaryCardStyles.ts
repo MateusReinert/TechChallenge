@@ -1,18 +1,8 @@
 import type { SxProps, Theme } from "@mui/material";
 
-import {
-  colors,
-  radius,
-  shadow,
-  sizes,
-  spacing,
-  typography,
-} from "./tokens";
+import { colors, radius, shadow, sizes, spacing, typography } from "./tokens";
 
-export type SummaryCardVariant =
-  | "positive"
-  | "negative"
-  | "neutral";
+export type SummaryCardVariant = "positive" | "negative" | "neutral";
 
 type SummaryCardStyles = Record<string, SxProps<Theme>> & {
   iconVariants: Record<SummaryCardVariant, SxProps<Theme>>;

@@ -17,28 +17,19 @@ const transactionsSlice = createSlice({
   name: "transactions",
   initialState,
   reducers: {
-    initializeTransactions(
-      state,
-      action: PayloadAction<Transaction[]>
-    ) {
+    initializeTransactions(state, action: PayloadAction<Transaction[]>) {
       if (state.initialized) return;
 
       state.items = action.payload;
       state.initialized = true;
     },
 
-    addTransaction(
-      state,
-      action: PayloadAction<Transaction>
-    ) {
+    addTransaction(state, action: PayloadAction<Transaction>) {
       state.items.unshift(action.payload);
       state.initialized = true;
     },
 
-    updateTransaction(
-      state,
-      action: PayloadAction<Transaction>
-    ) {
+    updateTransaction(state, action: PayloadAction<Transaction>) {
       const transactionIndex = state.items.findIndex(
         (transaction) => transaction.id === action.payload.id
       );
@@ -48,10 +39,7 @@ const transactionsSlice = createSlice({
       state.items[transactionIndex] = action.payload;
     },
 
-    removeTransaction(
-      state,
-      action: PayloadAction<string>
-    ) {
+    removeTransaction(state, action: PayloadAction<string>) {
       state.items = state.items.filter(
         (transaction) => transaction.id !== action.payload
       );
@@ -59,13 +47,11 @@ const transactionsSlice = createSlice({
   },
 });
 
-export const selectTransactions = (
-  state: RootState
-) => state.transactions.items;
+export const selectTransactions = (state: RootState) =>
+  state.transactions.items;
 
-export const selectTransactionsInitialized = (
-  state: RootState
-) => state.transactions.initialized;
+export const selectTransactionsInitialized = (state: RootState) =>
+  state.transactions.initialized;
 
 export const {
   initializeTransactions,

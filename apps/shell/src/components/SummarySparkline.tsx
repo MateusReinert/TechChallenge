@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-} from "recharts";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
 
 import { colors } from "@finance/ui";
 import { SummaryHistoryItem } from "@/utils/getDashboardSummary";
@@ -43,17 +39,9 @@ export default function SummarySparkline({
             x2="0"
             y2="1"
           >
-            <stop
-              offset="0%"
-              stopColor={strokeColor}
-              stopOpacity={0.28}
-            />
+            <stop offset="0%" stopColor={strokeColor} stopOpacity={0.28} />
 
-            <stop
-              offset="100%"
-              stopColor={strokeColor}
-              stopOpacity={0}
-            />
+            <stop offset="100%" stopColor={strokeColor} stopOpacity={0} />
           </linearGradient>
         </defs>
 

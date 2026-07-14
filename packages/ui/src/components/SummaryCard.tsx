@@ -1,10 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import {
   summaryCardStyles,
@@ -45,21 +42,13 @@ export default function SummaryCard({
           {icon}
         </Box>
 
-        {action && (
-          <Box sx={summaryCardStyles.action}>
-            {action}
-          </Box>
-        )}
+        {action && <Box sx={summaryCardStyles.action}>{action}</Box>}
       </Box>
 
       <Box sx={summaryCardStyles.content}>
-        <Typography sx={summaryCardStyles.label}>
-          {label}
-        </Typography>
+        <Typography sx={summaryCardStyles.label}>{label}</Typography>
 
-        <Typography sx={summaryCardStyles.value}>
-          {value}
-        </Typography>
+        <Typography sx={summaryCardStyles.value}>{value}</Typography>
 
         {trend && (
           <Box
@@ -74,11 +63,7 @@ export default function SummaryCard({
         )}
       </Box>
 
-      {sparkline && (
-        <Box sx={summaryCardStyles.sparkline}>
-          {sparkline}
-        </Box>
-      )}
+      {sparkline && <Box sx={summaryCardStyles.sparkline}>{sparkline}</Box>}
     </Box>
   );
 }
