@@ -59,7 +59,9 @@ function FilterSelect({ filter, value, onChange }: FilterSelectProps) {
     (option) => option.value === value
   );
 
-  const displayValue = selectedOption?.label || filter.label;
+  const displayValue = value
+    ? `${filter.label}: ${selectedOption?.label}`
+    : `${filter.label}: ${filter.options[0]?.label}`;
   const isActive = Boolean(value);
 
   function handleOpen(event: MouseEvent<HTMLElement>) {

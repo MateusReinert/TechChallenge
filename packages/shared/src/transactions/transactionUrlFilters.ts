@@ -71,7 +71,9 @@ export function createTransactionSearchParams(
   const searchParams = new URLSearchParams();
 
   TRANSACTION_FILTER_KEYS.forEach((key) => {
-    const value = filters[key]?.trim() ?? "";
+    const rawValue = filters[key] ?? "";
+
+    const value = key === "search" ? rawValue : rawValue.trim();
 
     if (value) {
       searchParams.set(key, value);

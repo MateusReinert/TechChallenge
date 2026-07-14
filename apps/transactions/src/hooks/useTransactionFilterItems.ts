@@ -29,7 +29,7 @@ export function useTransactionFilterItems(transactions: Transaction[]) {
       },
       {
         key: "type",
-        label: "Natureza",
+        label: "Operação",
         ariaLabel: "Filtrar por natureza",
         options: DASHBOARD_TYPE_OPTIONS,
       },
@@ -53,7 +53,7 @@ export function useTransactionFilterItems(transactions: Transaction[]) {
       },
       {
         key: "amountRange",
-        label: "Valor",
+        label: "Faixa de valor",
         ariaLabel: "Filtrar por valor",
         options: DASHBOARD_AMOUNT_RANGE_OPTIONS,
       },

@@ -23,16 +23,15 @@ export const transactionsClientStyles = {
   } as SxProps<Theme>,
 
   toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: {
-      xs: "stretch",
-      md: "center",
+    display: "grid",
+
+    gridTemplateColumns: {
+      xs: "1fr",
+      xl: "1fr auto",
     },
-    flexDirection: {
-      xs: "column",
-      md: "row",
-    },
+
+    alignItems: "start",
+
     gap: spacing.lg,
   } as SxProps<Theme>,
 
