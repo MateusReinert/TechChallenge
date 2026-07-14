@@ -90,9 +90,14 @@ function FilterSelect({ filter, value, onChange }: FilterSelectProps) {
           ...(isActive ? filterBarStyles.filterButtonActive : {}),
         }}
       >
-        <Typography sx={filterBarStyles.filterButtonText}>
-          {displayValue}
-        </Typography>
+        <Typography
+  sx={[
+    filterBarStyles.filterButtonText,
+    ...(isActive ? [filterBarStyles.filterButtonTextActive] : []),
+  ]}
+>
+  {displayValue}
+</Typography>
 
         <KeyboardArrowDownRoundedIcon
           sx={filterBarStyles.filterIcon}

@@ -90,6 +90,11 @@ export const filterBarStyles = {
     whiteSpace: "nowrap",
   } satisfies SystemStyleObject<Theme>,
 
+  filterButtonTextActive: {
+  fontWeight: 700,
+  color: colors.primary[600],
+} satisfies SystemStyleObject<Theme>,
+
   filterIcon: {
     fontSize: 18,
     color: colors.gray[500],
