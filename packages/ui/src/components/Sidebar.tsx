@@ -66,15 +66,15 @@ export default function Sidebar({
   const greeting = getGreeting();
   const currentDates = getCurrentDates();
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
 
-  useEffect(() => {
-    const savedValue = window.localStorage.getItem(
-      SIDEBAR_COLLAPSED_STORAGE_KEY
+    return (
+      window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === "true"
     );
-
-    setCollapsed(savedValue === "true");
-  }, []);
+  });
 
   function handleToggleCollapsed() {
     setCollapsed((currentValue) => {
