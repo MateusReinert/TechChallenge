@@ -1,0 +1,13 @@
+FROM node:22.13.0-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+COPY db.json json-server.cjs ./
+
+EXPOSE 3001
+
+CMD ["node", "json-server.cjs"]

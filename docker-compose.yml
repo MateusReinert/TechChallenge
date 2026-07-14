@@ -1,20 +1,71 @@
 services:
-  shell:
-    container_name: finance-shell
+  api:
+    container_name: finance-api
     build:
       context: .
-      dockerfile: Dockerfile.shell
+      dockerfile: Dockerfile.api
     ports:
-      - "8000:8000"
-    environment:
-      NODE_ENV: production
+      - "3001:3001"
+    volumes:
+      - ./db.json:/app/db.json
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3001/transactions",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
 
   transactions:
     container_name: finance-transactions
     build:
       context: .
       dockerfile: Dockerfile.transactions
-    ports:
-      - "3001:3001"
     environment:
       NODE_ENV: production
+      TRANSACTIONS_API_URL: http://api:3001/transactions
+    ports:
+      - "3002:3002"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3002/transactions",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  shell:
+    container_name: finance-shell
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      TRANSACTIONS_ZONE_URL: http://transactions:3002
+      TRANSACTIONS_API_URL: http://api:3001/transactions
+    ports:
+      - "8000:8000"
+    depends_on:
+      api:
+        condition: service_healthy
+      transactions:
+        condition: service_healthy
+    restart: unless-stopped

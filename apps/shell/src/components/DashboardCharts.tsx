@@ -86,8 +86,6 @@ export default function DashboardCharts({
 
           <Box sx={dashboardChartsStyles.periodGroup}>
             <Box sx={dashboardChartsStyles.periodActive}>Mensal</Box>
-            <Box sx={dashboardChartsStyles.period}>Trimestral</Box>
-            <Box sx={dashboardChartsStyles.period}>Anual</Box>
           </Box>
         </Box>
 
