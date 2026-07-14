@@ -27,9 +27,9 @@ export const dashboardChartsStyles = {
     borderRadius: radius.lg,
     boxShadow: shadow.sm,
     minHeight: {
-      xs: 300,
-      xl: 360,
-    },
+  xs: 260,
+  xl: 320,
+},
     overflow: "hidden",
   } as SxProps<Theme>,
 
@@ -126,9 +126,9 @@ export const dashboardChartsStyles = {
   chartWrapper: {
     width: "100%",
     height: {
-      xs: 220,
-      xl: 270,
-    },
+  xs: 185,
+  xl: 245,
+},
   } as SxProps<Theme>,
 
   pieContent: {
@@ -141,9 +141,9 @@ export const dashboardChartsStyles = {
   pieWrapper: {
     width: "100%",
     height: {
-      xs: 180,
-      xl: 210,
-    },
+  xs: 160,
+  xl: 195,
+},
     maxWidth: 360,
     mx: "auto",
     position: "relative",

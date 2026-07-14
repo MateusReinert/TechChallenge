@@ -1,0 +1,531 @@
+﻿============================================================
+ARQUIVO: packages\ui\src\components\SummaryCard.tsx
+============================================================
+"use client";
+
+import type { ReactNode } from "react";
+import { Box, Typography } from "@mui/material";
+
+import {
+  summaryCardStyles,
+  type SummaryCardVariant,
+} from "../styles/summaryCardStyles";
+
+export type SummaryCardProps = {
+  label: string;
+  value: string;
+  icon: ReactNode;
+  trend?: string;
+  trendIcon?: ReactNode;
+  action?: ReactNode;
+  iconVariant?: SummaryCardVariant;
+  sparkline?: ReactNode;
+};
+
+export default function SummaryCard({
+  label,
+  value,
+  icon,
+  trend,
+  trendIcon,
+  action,
+  iconVariant = "neutral",
+  sparkline,
+}: SummaryCardProps) {
+  return (
+    <Box sx={summaryCardStyles.root}>
+      <Box sx={summaryCardStyles.header}>
+        <Box
+          aria-hidden="true"
+          sx={[
+            summaryCardStyles.icon,
+            summaryCardStyles.iconVariants[iconVariant],
+          ]}
+        >
+          {icon}
+        </Box>
+
+        {action && <Box sx={summaryCardStyles.action}>{action}</Box>}
+      </Box>
+
+      <Box sx={summaryCardStyles.content}>
+        <Typography sx={summaryCardStyles.label}>{label}</Typography>
+
+        <Typography sx={summaryCardStyles.value}>{value}</Typography>
+
+        {trend && (
+          <Box
+            sx={[
+              summaryCardStyles.trend,
+              summaryCardStyles.trendVariants[iconVariant],
+            ]}
+          >
+            {trendIcon}
+            <span>{trend}</span>
+          </Box>
+        )}
+      </Box>
+
+      {sparkline && <Box sx={summaryCardStyles.sparkline}>{sparkline}</Box>}
+    </Box>
+  );
+}
+
+============================================================
+ARQUIVO: packages\ui\src\styles\summaryCardStyles.ts
+============================================================
+import type { SxProps, Theme } from "@mui/material";
+
+import { colors, radius, shadow, sizes, spacing, typography } from "./tokens";
+
+export type SummaryCardVariant = "positive" | "negative" | "neutral";
+
+type SummaryCardStyles = Record<string, SxProps<Theme>> & {
+  iconVariants: Record<SummaryCardVariant, SxProps<Theme>>;
+  trendVariants: Record<SummaryCardVariant, SxProps<Theme>>;
+};
+
+export const summaryCardStyles = {
+  root: {
+    width: "100%",
+    minHeight: "180px",
+    bgcolor: colors.background.default,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.lg,
+    p: spacing.xl,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: spacing.lg,
+    boxShadow: shadow.sm,
+    overflow: "hidden",
+  },
+
+  header: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: spacing.md,
+  },
+
+  icon: {
+    width: sizes.summaryIcon,
+    height: sizes.summaryIcon,
+    borderRadius: radius.md,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+
+    "& svg": {
+      fontSize: sizes.icon,
+    },
+  },
+
+  iconVariants: {
+    positive: {
+      bgcolor: colors.success[100],
+      color: colors.success[500],
+    },
+
+    negative: {
+      bgcolor: colors.error[100],
+      color: colors.error[500],
+    },
+
+    neutral: {
+      bgcolor: colors.neutral[100],
+      color: colors.neutral[500],
+    },
+  },
+
+  action: {
+    display: "flex",
+    alignItems: "center",
+    ml: "auto",
+  },
+
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.sm,
+  },
+
+  label: {
+    ...typography.body,
+    fontWeight: 700,
+    color: colors.gray[600],
+  },
+
+  value: {
+    ...typography.title,
+    lineHeight: 1.1,
+    color: colors.gray[900],
+  },
+
+  trend: {
+    width: "fit-content",
+    display: "flex",
+    alignItems: "center",
+    gap: spacing.xs,
+    px: spacing.sm,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    ...typography.label,
+    fontWeight: 700,
+
+    "& svg": {
+      fontSize: 16,
+    },
+
+    "& span": {
+      fontWeight: 700,
+    },
+  },
+
+  trendVariants: {
+    positive: {
+      bgcolor: colors.success[100],
+      color: colors.success[500],
+    },
+
+    negative: {
+      bgcolor: colors.error[100],
+      color: colors.error[500],
+    },
+
+    neutral: {
+      bgcolor: colors.neutral[100],
+      color: colors.neutral[500],
+    },
+  },
+
+  sparkline: {
+    height: 44,
+    mx: `-${spacing.xl}`,
+    mb: `-${spacing.xl}`,
+    overflow: "hidden",
+  },
+} satisfies SummaryCardStyles;
+
+============================================================
+ARQUIVO: apps\shell\src\components\SummarySparkline.tsx
+============================================================
+"use client";
+
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
+
+import { colors } from "@finance/ui";
+import { SummaryHistoryItem } from "@/utils/getDashboardSummary";
+
+type SummarySparklineProps = {
+  data: SummaryHistoryItem[];
+  variant: "positive" | "negative" | "neutral";
+};
+
+export default function SummarySparkline({
+  data,
+  variant,
+}: SummarySparklineProps) {
+  const strokeColor = {
+    positive: colors.success[500],
+    negative: colors.error[500],
+    neutral: colors.primary[500],
+  }[variant];
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        data={data}
+        margin={{
+          top: 6,
+          right: 0,
+          left: 0,
+          bottom: 0,
+        }}
+      >
+        <defs>
+          <linearGradient
+            id={`sparkline-${variant}`}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop offset="0%" stopColor={strokeColor} stopOpacity={0.28} />
+
+            <stop offset="100%" stopColor={strokeColor} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+
+        <Area
+          type="monotone"
+          dataKey="value"
+          stroke={strokeColor}
+          strokeWidth={2.5}
+          fill={`url(#sparkline-${variant})`}
+          dot={false}
+          activeDot={{
+            r: 4,
+            fill: strokeColor,
+            stroke: "#FFF",
+            strokeWidth: 2,
+          }}
+          isAnimationActive
+          animationDuration={900}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
+
+============================================================
+ARQUIVO: apps\shell\src\styles\dashboardChartsStyles.ts
+============================================================
+import { SxProps, Theme } from "@mui/material";
+
+import { colors, spacing, radius, shadow, typography } from "@/styles/tokens";
+
+export const dashboardChartsStyles = {
+  root: {
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: spacing.lg,
+    alignItems: "stretch",
+
+    "@media (min-width: 1200px)": {
+      gridTemplateColumns: "minmax(0, 2fr) minmax(280px, 0.9fr)",
+    },
+  } as SxProps<Theme>,
+
+  balanceCard: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.lg,
+    p: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
+    bgcolor: colors.background.default,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.lg,
+    boxShadow: shadow.sm,
+    minHeight: {
+      xs: 300,
+      xl: 360,
+    },
+    overflow: "hidden",
+  } as SxProps<Theme>,
+
+  categoryCard: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.lg,
+    p: {
+      xs: spacing.lg,
+      xl: spacing.xl,
+    },
+    bgcolor: colors.background.default,
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.lg,
+    boxShadow: shadow.sm,
+    minHeight: {
+      xs: 300,
+      xl: 360,
+    },
+    overflow: "hidden",
+  } as SxProps<Theme>,
+
+  cardHeader: {
+    display: "flex",
+    alignItems: {
+      xs: "flex-start",
+      sm: "center",
+    },
+    justifyContent: "space-between",
+    gap: spacing.md,
+    flexDirection: {
+      xs: "column",
+      sm: "row",
+    },
+  } as SxProps<Theme>,
+
+  eyebrow: {
+    ...typography.label,
+    color: colors.gray[500],
+    fontWeight: 700,
+    textTransform: "uppercase",
+    letterSpacing: "0.06em",
+    mb: spacing.xs,
+  } as SxProps<Theme>,
+
+  title: {
+    ...typography.subtitle,
+    color: colors.gray[900],
+  } as SxProps<Theme>,
+
+  periodGroup: {
+    display: "flex",
+    alignItems: "center",
+    gap: spacing.xs,
+    p: spacing.xs,
+    borderRadius: radius.full,
+    bgcolor: colors.gray[100],
+    flexShrink: 0,
+  } as SxProps<Theme>,
+
+  period: {
+    ...typography.label,
+    px: spacing.md,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    color: colors.gray[500],
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
+
+  periodActive: {
+    ...typography.label,
+    px: spacing.md,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    bgcolor: colors.background.default,
+    color: colors.primary[600],
+    fontWeight: 800,
+    whiteSpace: "nowrap",
+    boxShadow: shadow.sm,
+  } as SxProps<Theme>,
+
+  selectBadge: {
+    ...typography.label,
+    px: spacing.md,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    bgcolor: colors.primary[100],
+    color: colors.primary[600],
+    fontWeight: 800,
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
+
+  chartWrapper: {
+    width: "100%",
+    height: {
+      xs: 220,
+      xl: 270,
+    },
+  } as SxProps<Theme>,
+
+  pieContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.lg,
+    flex: 1,
+  } as SxProps<Theme>,
+
+  pieWrapper: {
+    width: "100%",
+    height: {
+      xs: 180,
+      xl: 210,
+    },
+    maxWidth: 360,
+    mx: "auto",
+    position: "relative",
+  } as SxProps<Theme>,
+
+  pieCenter: {
+    position: "absolute",
+    inset: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
+  } as SxProps<Theme>,
+
+  pieCenterLabel: {
+    ...typography.label,
+    color: colors.gray[500],
+    fontWeight: 700,
+  } as SxProps<Theme>,
+
+  pieCenterValue: {
+    ...typography.body,
+    color: colors.gray[900],
+    fontWeight: 800,
+  } as SxProps<Theme>,
+
+  legend: {
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing.sm,
+  } as SxProps<Theme>,
+
+  legendItem: {
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr) auto auto",
+    alignItems: "center",
+    gap: spacing.sm,
+  } as SxProps<Theme>,
+
+  legendInfo: {
+    display: "flex",
+    alignItems: "center",
+    gap: spacing.sm,
+    minWidth: 0,
+  } as SxProps<Theme>,
+
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: radius.full,
+    flexShrink: 0,
+  } as SxProps<Theme>,
+
+  legendName: {
+    ...typography.body,
+    color: colors.gray[600],
+    fontWeight: 600,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
+
+  legendAmount: {
+    ...typography.label,
+    color: colors.gray[500],
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+  } as SxProps<Theme>,
+
+  legendValue: {
+    ...typography.label,
+    px: spacing.sm,
+    py: spacing.xs,
+    borderRadius: radius.full,
+    bgcolor: colors.gray[100],
+    color: colors.gray[600],
+    fontWeight: 800,
+    flexShrink: 0,
+  } as SxProps<Theme>,
+
+  axisTick: {
+    fill: colors.gray[500],
+    fontSize: 12,
+    fontWeight: 600,
+  },
+
+  tooltip: {
+    border: `1px solid ${colors.gray[200]}`,
+    borderRadius: radius.md,
+    boxShadow: shadow.md,
+    backgroundColor: colors.background.default,
+    color: colors.gray[900],
+  },
+
+  tooltipLabel: {
+    color: colors.gray[500],
+    fontWeight: 700,
+  },
+};
+

@@ -12,15 +12,21 @@ type SummaryCardStyles = Record<string, SxProps<Theme>> & {
 export const summaryCardStyles = {
   root: {
     width: "100%",
-    minHeight: "180px",
+    minHeight: {
+  xs: 150,
+  xl: 170,
+},
     bgcolor: colors.background.default,
     border: `1px solid ${colors.gray[200]}`,
     borderRadius: radius.lg,
-    p: spacing.xl,
+    p: {
+  xs: spacing.lg,
+  xl: spacing.xl,
+},
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    gap: spacing.lg,
+    gap: spacing.md,
     boxShadow: shadow.sm,
     overflow: "hidden",
   },
@@ -33,8 +39,14 @@ export const summaryCardStyles = {
   },
 
   icon: {
-    width: sizes.summaryIcon,
-    height: sizes.summaryIcon,
+    width: {
+  xs: 38,
+  xl: sizes.summaryIcon,
+},
+height: {
+  xs: 38,
+  xl: sizes.summaryIcon,
+},
     borderRadius: radius.md,
     display: "flex",
     alignItems: "center",
@@ -42,7 +54,10 @@ export const summaryCardStyles = {
     flexShrink: 0,
 
     "& svg": {
-      fontSize: sizes.icon,
+      fontSize: {
+  xs: 18,
+  xl: sizes.icon,
+},
     },
   },
 
@@ -72,7 +87,7 @@ export const summaryCardStyles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
 
   label: {
@@ -82,10 +97,14 @@ export const summaryCardStyles = {
   },
 
   value: {
-    ...typography.title,
-    lineHeight: 1.1,
-    color: colors.gray[900],
+  ...typography.title,
+  fontSize: {
+    xs: "1.5rem",
+    xl: typography.title.fontSize,
   },
+  lineHeight: 1.1,
+  color: colors.gray[900],
+},
 
   trend: {
     width: "fit-content",
@@ -125,9 +144,15 @@ export const summaryCardStyles = {
   },
 
   sparkline: {
-    height: 44,
-    mx: `-${spacing.xl}`,
-    mb: `-${spacing.xl}`,
+    height: 34,
+    mx: {
+  xs: `-${spacing.lg}`,
+  xl: `-${spacing.xl}`,
+},
+    mb: {
+  xs: `-${spacing.lg}`,
+  xl: `-${spacing.xl}`,
+},
     overflow: "hidden",
   },
 } satisfies SummaryCardStyles;

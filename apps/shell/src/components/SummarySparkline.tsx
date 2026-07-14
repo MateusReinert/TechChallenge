@@ -49,11 +49,11 @@ export default function SummarySparkline({
           type="monotone"
           dataKey="value"
           stroke={strokeColor}
-          strokeWidth={2.5}
+          strokeWidth={2}
           fill={`url(#sparkline-${variant})`}
           dot={false}
           activeDot={{
-            r: 4,
+            r: 3,
             fill: strokeColor,
             stroke: "#FFF",
             strokeWidth: 2,
