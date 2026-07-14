@@ -5,12 +5,13 @@ import { colors, spacing, radius, shadow, typography } from "@/styles/tokens";
 export const dashboardChartsStyles = {
   root: {
     display: "grid",
-    gridTemplateColumns: {
-      xs: "1fr",
-      lg: "minmax(0, 2fr) minmax(300px, 1fr)",
-    },
+    gridTemplateColumns: "1fr",
     gap: spacing.xl,
     alignItems: "stretch",
+
+    "@media (min-width: 1440px)": {
+      gridTemplateColumns: "minmax(0, 2fr) minmax(360px, 1fr)",
+    },
   } as SxProps<Theme>,
 
   balanceCard: {
@@ -135,9 +136,12 @@ export const dashboardChartsStyles = {
   pieWrapper: {
     width: "100%",
     height: {
-      xs: 190,
+      xs: 200,
+      md: 220,
       xl: 224,
     },
+    maxWidth: 420,
+    mx: "auto",
     position: "relative",
   } as SxProps<Theme>,
 

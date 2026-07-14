@@ -3,30 +3,50 @@ import { colors, spacing, typography, sizes, radius } from "@/styles/tokens";
 
 export const transactionDetailsStyles = {
   root: {
+    root: {
     width: {
-      xs: "100%",
+      xs: "calc(100% - 32px)",
+      md: "calc(100% - 48px)",
       xl: 320,
     },
     minWidth: {
-      xs: "100%",
+      xs: 0,
       xl: 320,
     },
-    minHeight: {
-      xs: "auto",
-      xl: "100%",
+    maxWidth: {
+      xs: 760,
+      xl: 320,
+    },
+    minHeight: "auto",
+    justifySelf: {
+      xs: "center",
+      xl: "stretch",
+    },
+    mx: {
+      xs: spacing.lg,
+      md: spacing.xl,
+      xl: 0,
+    },
+    mb: {
+      xs: spacing.lg,
+      md: spacing.xl,
+      xl: 0,
     },
     p: {
       xs: spacing.lg,
       md: spacing.xl,
     },
     bgcolor: colors.background.default,
-    borderLeft: {
-      xs: "none",
-      xl: `1px solid ${colors.gray[200]}`,
-    },
-    borderTop: {
+    border: {
       xs: `1px solid ${colors.gray[200]}`,
       xl: "none",
+    },
+    borderLeft: {
+      xl: `1px solid ${colors.gray[200]}`,
+    },
+    borderRadius: {
+      xs: radius.lg,
+      xl: 0,
     },
     display: "flex",
     flexDirection: "column",

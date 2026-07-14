@@ -194,8 +194,8 @@ export default function DashboardCharts({
                   data={categoryData}
                   dataKey="value"
                   nameKey="name"
-                  innerRadius={66}
-                  outerRadius={102}
+                  innerRadius="54%"
+                  outerRadius="82%"
                   paddingAngle={4}
                   cornerRadius={8}
                 >

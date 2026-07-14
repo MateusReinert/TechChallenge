@@ -98,12 +98,13 @@ export const dashboardClientStyles = {
 
   dashboardGrid: {
     display: "grid",
-    gridTemplateColumns: {
-      xs: "1fr",
-      lg: "minmax(280px, 1fr) minmax(0, 2fr)",
-    },
+    gridTemplateColumns: "1fr",
     gap: spacing.xl,
     alignItems: "stretch",
+
+    "@media (min-width: 1440px)": {
+      gridTemplateColumns: "minmax(300px, 1fr) minmax(0, 2fr)",
+    },
   } as SxProps<Theme>,
 
   transactionsCard: {
@@ -117,6 +118,7 @@ export const dashboardClientStyles = {
     boxShadow: shadow.sm,
     minWidth: 0,
     height: "100%",
+    overflow: "hidden",
   } as SxProps<Theme>,
 
   sectionHeader: {

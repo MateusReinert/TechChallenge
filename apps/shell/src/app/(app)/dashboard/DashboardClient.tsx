@@ -169,9 +169,11 @@ export default function DashboardClient({
         }}
         sx={{
           ...dashboardClientStyles.layout,
-          gridTemplateColumns: {
-            xs: "1fr",
-            xl: selectedTransaction ? "minmax(0, 1fr) 320px" : "1fr",
+          gridTemplateColumns: "1fr",
+          "@media (min-width: 1536px)": {
+            gridTemplateColumns: selectedTransaction
+              ? "minmax(0, 1fr) 320px"
+              : "1fr",
           },
         }}
       >
